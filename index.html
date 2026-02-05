@@ -1288,6 +1288,30 @@
       }
     }
 
+    /* Scroll Reveal Animations */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scroll-reveal-delay-1 { transition-delay: 0.1s; }
+    .scroll-reveal-delay-2 { transition-delay: 0.2s; }
+    .scroll-reveal-delay-3 { transition-delay: 0.3s; }
+    .scroll-reveal-delay-4 { transition-delay: 0.4s; }
+    .scroll-reveal-delay-5 { transition-delay: 0.5s; }
+    .scroll-reveal-delay-6 { transition-delay: 0.6s; }
+
+    /* Active Nav Link */
+    nav ul a.active {
+      color: var(--brass);
+    }
+
   </style>
 </head>
 <body>
@@ -1329,7 +1353,7 @@
     <p class="section-label">Ventures</p>
     <h2>What I'm Working On</h2>
     <div class="ventures-grid">
-      <a href="https://build.samrahim.com/" target="_blank" rel="noopener" class="venture-card">
+      <a href="https://build.samrahim.com/" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-1">
         <span class="venture-status live">Live</span>
         <div class="venture-header">
           <h3>SR Studio</h3>
@@ -1337,7 +1361,7 @@
         </div>
         <p>I build it, we own it together.</p>
       </a>
-      <a href="https://www.callingcard.site/" target="_blank" rel="noopener" class="venture-card">
+      <a href="https://www.callingcard.site/" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-2">
         <span class="venture-status live">Live</span>
         <div class="venture-header">
           <h3>Calling Card</h3>
@@ -1345,7 +1369,7 @@
         </div>
         <p>Custom, one-page personal websites. Dozens delivered.</p>
       </a>
-      <a href="https://jnkml-site.vercel.app/" target="_blank" rel="noopener" class="venture-card">
+      <a href="https://jnkml-site.vercel.app/" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-3">
         <span class="venture-status live">Live</span>
         <div class="venture-header">
           <h3>JNKML Mailing Club</h3>
@@ -1353,7 +1377,7 @@
         </div>
         <p>Curated postcards, book pages + journaling treasures. Hundreds of subscribers.</p>
       </a>
-      <div class="venture-card">
+      <div class="venture-card scroll-reveal scroll-reveal-delay-4">
         <span class="venture-status soon">Coming Soon</span>
         <div class="venture-header">
           <h3>Haul</h3>
@@ -1361,7 +1385,7 @@
         </div>
         <p>The social sharing tool for estate sale buyers.</p>
       </div>
-      <div class="venture-card">
+      <div class="venture-card scroll-reveal scroll-reveal-delay-5">
         <span class="venture-status soon">Coming Soon</span>
         <div class="venture-header">
           <h3>LawnHQ</h3>
@@ -1369,7 +1393,7 @@
         </div>
         <p>AI lawn care, personalized to your grass type + zip code.</p>
       </div>
-      <a href="https://florida-pickleball-site.vercel.app/" target="_blank" rel="noopener" class="venture-card">
+      <a href="https://florida-pickleball-site.vercel.app/" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-6">
         <span class="venture-status live">Live</span>
         <div class="venture-header">
           <h3>Florida Pickleball</h3>
@@ -1825,6 +1849,42 @@
       if (!clickedVideo && !clickedUnmute) {
         closeArsenalVideo();
       }
+    });
+
+    // Scroll Reveal Animation
+    var revealElements = document.querySelectorAll('.scroll-reveal');
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    revealElements.forEach(function(el) {
+      revealObserver.observe(el);
+    });
+
+    // Active Nav Highlight
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('nav ul a[href^="#"]');
+
+    var navObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          navLinks.forEach(function(link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '-100px 0px -50% 0px' });
+
+    sections.forEach(function(section) {
+      navObserver.observe(section);
     });
   </script>
 </body>
