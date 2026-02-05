@@ -58,8 +58,9 @@ Redesigned audio button for world-class mobile UX:
 **Status:** Live
 
 Improved video modal UX:
-- Click anywhere outside the video to close (not just X button)
-- Clicking on video or unmute button keeps modal open
+- Tap/click anywhere outside the video to close (not just X button)
+- Uses `closest()` for robust click detection
+- Event listener moved after modal HTML (was failing because DOM element didn't exist yet)
 
 ### 2026-02-05: Arsenal Audio Toggle
 **Status:** Live
