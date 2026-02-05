@@ -44,6 +44,13 @@ sam-rahim-site/
 
 ## Features & Changelog
 
+### 2026-02-05: Video Modal Click-to-Close
+**Status:** Live
+
+Improved video modal UX:
+- Click anywhere outside the video to close (not just X button)
+- Clicking on video or unmute button keeps modal open
+
 ### 2026-02-05: Arsenal Audio Toggle
 **Status:** Live
 
