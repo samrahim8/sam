@@ -1307,6 +1307,19 @@
     .scroll-reveal-delay-5 { transition-delay: 0.5s; }
     .scroll-reveal-delay-6 { transition-delay: 0.6s; }
 
+    /* Faster animations on mobile */
+    @media (max-width: 768px) {
+      .scroll-reveal {
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+      .scroll-reveal-delay-1 { transition-delay: 0.05s; }
+      .scroll-reveal-delay-2 { transition-delay: 0.1s; }
+      .scroll-reveal-delay-3 { transition-delay: 0.15s; }
+      .scroll-reveal-delay-4 { transition-delay: 0.2s; }
+      .scroll-reveal-delay-5 { transition-delay: 0.25s; }
+      .scroll-reveal-delay-6 { transition-delay: 0.3s; }
+    }
+
     /* Active Nav Link */
     nav ul a.active {
       color: var(--brass);
