@@ -1800,14 +1800,6 @@
       video.currentTime = 0;
     }
 
-    document.getElementById('arsenalVideoModal').addEventListener('click', function(e) {
-      var clickedVideo = e.target.closest('video');
-      var clickedUnmute = e.target.closest('.video-unmute');
-      // Close if not clicking video or unmute button
-      if (!clickedVideo && !clickedUnmute) {
-        closeArsenalVideo();
-      }
-    });
   </script>
 
   <!-- Arsenal Video Modal -->
@@ -1818,5 +1810,15 @@
       <button class="video-unmute" onclick="document.getElementById('arsenalVideo').muted = false; this.style.display = 'none';">Tap for sound</button>
     </div>
   </div>
+
+  <script>
+    document.getElementById('arsenalVideoModal').addEventListener('click', function(e) {
+      var clickedVideo = e.target.closest('video');
+      var clickedUnmute = e.target.closest('.video-unmute');
+      if (!clickedVideo && !clickedUnmute) {
+        closeArsenalVideo();
+      }
+    });
+  </script>
 </body>
 </html>
