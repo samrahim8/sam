@@ -49,8 +49,10 @@ sam-rahim-site/
 
 Interactive scroll-triggered effects:
 - **Staggered card reveal:** Venture cards fade + slide up one by one as section enters viewport
-- **Active nav highlight:** Nav links highlight in brass when scrolling through their section
-- Uses Intersection Observer for smooth, performant animations
+- **Active nav highlight:** Nav links highlight in brass based on current scroll position
+- **Bottom detection:** Contact highlights when scrolled to page bottom
+- **Mobile optimized:** Faster animations on mobile (0.4s vs 0.6s, tighter stagger delays)
+- Uses Intersection Observer for card reveals, scroll position for nav highlight
 
 ### 2026-02-05: Contact Section Copy Update
 **Status:** Live
@@ -82,9 +84,10 @@ Improved video modal UX:
 
 Added audio toggle button to Arsenal section:
 - Button appears inline after "Arsenal since '95..." intro text
-- Toggle plays/pauses `arsenal-audio.mp3` (loops)
-- Visual feedback: button pulses and changes to "Pause" when playing
+- Toggle plays/pauses `arsenal-audio.mp3` (plays once, no loop)
+- Visual feedback: equalizer bars animate when playing
 - **Auto-stop:** Audio automatically stops when user clicks Arsenal row to open video modal
+- **Auto-reset:** Button resets to "Play" when audio ends
 - Styled with brass accent colors to match site design
 
 ---
@@ -92,18 +95,19 @@ Added audio toggle button to Arsenal section:
 ## Site Sections
 
 1. **Hero** - Name, title, profile photo
-2. **About** - Bio with timeline toggle
-3. **Experience** - Work history
-4. **Ventures** - Current projects/companies
-5. **Arsenal** - Live Premier League data, competitions, next match, video easter egg
-6. **Contact** - Email link
+2. **Ventures** - Current projects/companies (with scroll reveal animation)
+3. **About** - Bio with timeline toggle
+4. **Experience** - Work history
+5. **Arsenal** - Live Premier League data, competitions, next match, audio toggle, video easter egg
+6. **Contact** - Email + LinkedIn links
 
 ## Decisions & Notes
 
 - **Single HTML file:** Keeps deployment simple, no build step needed
-- **Dark/light theme:** Toggle in nav, persists via localStorage
+- **Dark/light theme:** Toggle in nav, respects system preference for first-time visitors, persists choice via localStorage
 - **Arsenal video:** Opens when clicking Arsenal row if they're top of the table (crown icon shown)
 - **ESPN APIs:** Free, no auth required, fetches live data on page load
+- **Mobile-first animations:** Faster, snappier on mobile devices
 
 ---
 
