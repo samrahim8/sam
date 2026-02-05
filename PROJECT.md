@@ -49,7 +49,7 @@ sam-rahim-site/
 
 Updated to feel warmer and more personal:
 - Headline: "Got an Idea?" (matches hero CTA)
-- Subheadline: "It's fine if you don't! I love meeting new people and learning about what they do."
+- Subheadline: "It's fine if you don't! I love meeting new people and learning what they're up to."
 
 ### 2026-02-05: Audio Toggle Mobile Redesign
 **Status:** Live
