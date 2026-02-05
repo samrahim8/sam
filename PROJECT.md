@@ -44,6 +44,13 @@ sam-rahim-site/
 
 ## Features & Changelog
 
+### 2026-02-05: Contact Section Copy Update
+**Status:** Live
+
+Updated to feel warmer and more personal:
+- Headline: "Got an Idea?" (matches hero CTA)
+- Subheadline: "It's fine if you don't! I love meeting new people and learning about what they do."
+
 ### 2026-02-05: Audio Toggle Mobile Redesign
 **Status:** Live
 
