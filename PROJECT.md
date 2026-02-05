@@ -44,6 +44,16 @@ sam-rahim-site/
 
 ## Features & Changelog
 
+### 2026-02-05: Audio Toggle Mobile Redesign
+**Status:** Live
+
+Redesigned audio button for world-class mobile UX:
+- **Touch target:** 48px minimum height on mobile (Apple/Google guidelines)
+- **Visual:** Pill-shaped button with clean border, transparent background
+- **Animation:** Equalizer bars animate when playing (3 bars with staggered timing)
+- **Layout:** Stacks below intro text on mobile (<600px), inline on desktop
+- **Feedback:** Active state scales down, smooth color transitions
+
 ### 2026-02-05: Video Modal Click-to-Close
 **Status:** Live
 
