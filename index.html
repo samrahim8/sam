@@ -1477,7 +1477,7 @@
           <span class="audio-text">Play</span>
         </button>
       </span></p>
-    <audio id="arsenalAudio" src="arsenal-audio.mp3" loop></audio>
+    <audio id="arsenalAudio" src="arsenal-audio.mp3"></audio>
     <div class="arsenal-grid">
       <div class="arsenal-table-wrap">
         <h3>Premier League Table</h3>
@@ -1781,6 +1781,13 @@
       btn.classList.remove('playing');
       textSpan.textContent = 'Play';
     }
+
+    // Reset button when audio ends
+    document.getElementById('arsenalAudio').addEventListener('ended', function() {
+      var btn = document.getElementById('arsenalAudioToggle');
+      btn.classList.remove('playing');
+      btn.querySelector('.audio-text').textContent = 'Play';
+    });
 
     // Arsenal video modal
     function openArsenalVideo() {
