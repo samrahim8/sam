@@ -1325,6 +1325,113 @@
       color: var(--brass);
     }
 
+    /* In-App Browser Modal */
+    .browser-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.3s, opacity 0.3s;
+    }
+
+    .browser-modal.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .browser-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .browser-modal-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 90vh;
+      background: var(--cream);
+      border-radius: 16px 16px 0 0;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .browser-modal.open .browser-modal-content {
+      transform: translateY(0);
+    }
+
+    .browser-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--plaster);
+      background: var(--warm-white);
+    }
+
+    .browser-modal-url {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 1rem;
+    }
+
+    .browser-modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-soft);
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      line-height: 1;
+    }
+
+    .browser-modal-open {
+      background: none;
+      border: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--brass);
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .browser-modal iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: white;
+    }
+
+    .browser-modal-error {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .browser-modal-error p {
+      color: var(--text-soft);
+      margin-bottom: 1rem;
+    }
+
+    .browser-modal-error a {
+      color: var(--brass);
+      font-weight: 600;
+    }
+
   </style>
 </head>
 <body>
@@ -1910,6 +2017,76 @@
 
     window.addEventListener('scroll', updateActiveNav);
     updateActiveNav();
+
+    // In-App Browser for Mobile
+    var browserModal = null;
+    var browserIframe = null;
+    var browserUrl = null;
+    var currentBrowserUrl = '';
+
+    function initBrowserModal() {
+      browserModal = document.getElementById('browserModal');
+      browserIframe = document.getElementById('browserIframe');
+      browserUrl = document.getElementById('browserUrl');
+    }
+
+    function openInAppBrowser(url) {
+      if (!browserModal) initBrowserModal();
+      currentBrowserUrl = url;
+
+      // Extract domain for display
+      try {
+        var domain = new URL(url).hostname.replace('www.', '');
+        browserUrl.textContent = domain;
+      } catch(e) {
+        browserUrl.textContent = url;
+      }
+
+      browserIframe.src = url;
+      browserModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeInAppBrowser() {
+      if (!browserModal) return;
+      browserModal.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(function() {
+        browserIframe.src = 'about:blank';
+      }, 350);
+    }
+
+    function openInNewTab() {
+      window.open(currentBrowserUrl, '_blank');
+      closeInAppBrowser();
+    }
+
+    // Intercept venture card clicks on mobile
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    document.querySelectorAll('a.venture-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (isMobile()) {
+          e.preventDefault();
+          openInAppBrowser(this.href);
+        }
+      });
+    });
   </script>
+
+  <!-- In-App Browser Modal -->
+  <div id="browserModal" class="browser-modal">
+    <div class="browser-modal-backdrop" onclick="closeInAppBrowser()"></div>
+    <div class="browser-modal-content">
+      <div class="browser-modal-header">
+        <button class="browser-modal-close" onclick="closeInAppBrowser()">&times;</button>
+        <span class="browser-modal-url" id="browserUrl"></span>
+        <button class="browser-modal-open" onclick="openInNewTab()">Open</button>
+      </div>
+      <iframe id="browserIframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    </div>
+  </div>
 </body>
 </html>
