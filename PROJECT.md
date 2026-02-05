@@ -61,6 +61,7 @@ Slide-up browser modal for venture card links on mobile:
 - Florida Pickleball changed to "Coming Soon"
 - Arsenal video replaced with new clip
 - SR Studio copy: "I build your idea, we own it together."
+- Street FC description shortened to high-signal version
 
 ### 2026-02-05: Scroll Animations + Active Nav
 **Status:** Live
