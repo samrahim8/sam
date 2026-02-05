@@ -44,6 +44,13 @@ sam-rahim-site/
 
 ## Features & Changelog
 
+### 2026-02-05: Misc Updates
+**Status:** Live
+
+- Page title and og:title simplified to just "Sam Rahim"
+- Florida Pickleball changed to "Coming Soon"
+- Arsenal video replaced with new clip
+
 ### 2026-02-05: Scroll Animations + Active Nav
 **Status:** Live
 
