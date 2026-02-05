@@ -1873,13 +1873,19 @@
       var scrollPos = window.scrollY + 150;
       var current = '';
 
-      sections.forEach(function(section) {
-        var top = section.offsetTop;
-        var height = section.offsetHeight;
-        if (scrollPos >= top && scrollPos < top + height) {
-          current = section.getAttribute('id');
-        }
-      });
+      // Check if at bottom of page
+      var atBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50;
+      if (atBottom) {
+        current = 'contact';
+      } else {
+        sections.forEach(function(section) {
+          var top = section.offsetTop;
+          var height = section.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            current = section.getAttribute('id');
+          }
+        });
+      }
 
       navLinks.forEach(function(link) {
         link.classList.remove('active');
