@@ -44,6 +44,14 @@ sam-rahim-site/
 
 ## Features & Changelog
 
+### 2026-02-05: Scroll Animations + Active Nav
+**Status:** Live
+
+Interactive scroll-triggered effects:
+- **Staggered card reveal:** Venture cards fade + slide up one by one as section enters viewport
+- **Active nav highlight:** Nav links highlight in brass when scrolling through their section
+- Uses Intersection Observer for smooth, performant animations
+
 ### 2026-02-05: Contact Section Copy Update
 **Status:** Live
 
