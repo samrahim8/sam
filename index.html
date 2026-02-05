@@ -1746,7 +1746,9 @@
     }
 
     document.getElementById('arsenalVideoModal').addEventListener('click', function(e) {
-      if (e.target === this) closeArsenalVideo();
+      var video = document.getElementById('arsenalVideo');
+      var unmuteBtn = document.querySelector('.video-unmute');
+      if (e.target !== video && e.target !== unmuteBtn) closeArsenalVideo();
     });
   </script>
 
