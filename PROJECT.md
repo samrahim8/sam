@@ -44,12 +44,23 @@ sam-rahim-site/
 
 ## Features & Changelog
 
+### 2026-02-05: In-App Browser (Mobile)
+**Status:** Live
+
+Slide-up browser modal for venture card links on mobile:
+- Tapping a venture card opens the site in a slide-up iframe modal
+- Header shows domain, close button, and "Open" to launch in new tab
+- Tap backdrop to close
+- Desktop still opens links in new tab (standard pattern)
+- Note: Some sites may block iframes
+
 ### 2026-02-05: Misc Updates
 **Status:** Live
 
 - Page title and og:title simplified to just "Sam Rahim"
 - Florida Pickleball changed to "Coming Soon"
 - Arsenal video replaced with new clip
+- SR Studio copy: "I build your idea, we own it together."
 
 ### 2026-02-05: Scroll Animations + Active Nav
 **Status:** Live
