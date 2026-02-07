@@ -133,15 +133,28 @@
     }
 
     nav ul a {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--text-soft);
       text-decoration: none;
       letter-spacing: 0.02em;
       transition: color 0.2s;
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
     }
 
     nav ul a:hover { color: var(--walnut); }
+
+    /* Focus states for keyboard navigation */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--brass);
+      outline-offset: 2px;
+    }
+
+    nav ul a:focus-visible {
+      background: rgba(184, 148, 95, 0.1);
+    }
 
     .theme-toggle {
       background: none;
@@ -750,7 +763,7 @@
     .arsenal-table-wrap h3,
     .arsenal-competitions h3,
     .arsenal-next h3 {
-      font-size: 0.72rem;
+      font-size: 0.8125rem;
       font-family: 'Instrument Sans', sans-serif;
       font-weight: 600;
       letter-spacing: 0.1em;
@@ -767,7 +780,7 @@
 
     .pl-table thead th {
       text-align: left;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -1096,7 +1109,7 @@
       .arsenal-intro { font-size: 1.0625rem; }
       .arsenal-table-wrap h3,
       .arsenal-competitions h3,
-      .arsenal-next h3 { font-size: 0.8rem; }
+      .arsenal-next h3 { font-size: 0.875rem; }
 
       .pl-table { font-size: 0.9rem; }
       .pl-table thead th { font-size: 0.75rem; }
