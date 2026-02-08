@@ -433,7 +433,7 @@
       display: block;
     }
 
-    a.venture-card:hover { border-color: var(--brass); }
+    a.venture-card:hover, div.venture-card[data-href]:hover { border-color: var(--brass); cursor: pointer; }
 
     .venture-card {
       position: relative;
@@ -1502,14 +1502,14 @@
         </div>
         <p>Custom, one-page personal websites. Dozens delivered.</p>
       </a>
-      <a href="https://housecall.day" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-3">
+      <div class="venture-card scroll-reveal scroll-reveal-delay-3" data-href="https://housecall.day" onclick="if(!event.target.closest('.bar-rescue-link')) window.open(this.dataset.href, '_blank')">
         <span class="venture-status live">Live</span>
         <div class="venture-header">
           <h3>House Call</h3>
           <span class="venture-role">Founder</span>
         </div>
-        <p><span style="text-decoration: underline; text-decoration-color: var(--brass);" title="Bar Rescue is a TV show where Jon Taffer spends a day fixing struggling bars">Bar Rescue</span>, but for AI. I show up to your business for a day, find where you're losing time and money, and help you use AI to build the systems that fix it.</p>
-      </a>
+        <p><a href="https://en.wikipedia.org/wiki/Bar_Rescue" target="_blank" rel="noopener" class="bar-rescue-link" style="color: inherit; text-decoration: underline; text-decoration-color: var(--brass);">Bar Rescue</a>, but for AI. One day to diagnose inefficiencies and build the fix.</p>
+      </div>
       <a href="https://jnkml-site.vercel.app/" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-4">
         <span class="venture-status live">Live</span>
         <div class="venture-header">
