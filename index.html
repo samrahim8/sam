@@ -1502,7 +1502,7 @@
         </div>
         <p>Custom, one-page personal websites. Dozens delivered.</p>
       </a>
-      <div class="venture-card scroll-reveal scroll-reveal-delay-3" data-href="https://housecall.day" onclick="if(!event.target.closest('.bar-rescue-link')) window.open(this.dataset.href, '_blank')">
+      <div class="venture-card scroll-reveal scroll-reveal-delay-3" data-href="https://housecall.day" onclick="if(!event.target.closest('.bar-rescue-link')) { if(window.innerWidth <= 768) { openInAppBrowser(this.dataset.href); } else { window.open(this.dataset.href, '_blank'); } }">
         <span class="venture-status live">Live</span>
         <div class="venture-header">
           <h3>House Call</h3>
@@ -2083,6 +2083,17 @@
       card.addEventListener('click', function(e) {
         if (isMobile()) {
           e.preventDefault();
+          openInAppBrowser(this.href);
+        }
+      });
+    });
+
+    // Intercept Bar Rescue link on mobile
+    document.querySelectorAll('.bar-rescue-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        if (isMobile()) {
+          e.preventDefault();
+          e.stopPropagation(); // Prevent House Call card click
           openInAppBrowser(this.href);
         }
       });
