@@ -1868,7 +1868,7 @@
           const completed = events.filter(e => e.status?.type?.name === 'STATUS_FULL_TIME').sort((a, b) => new Date(b.date) - new Date(a.date));
           if (completed.length > 0) faRound = 'Round of 16';
         }
-      } catch (err) { faRound = '4th Round'; }
+      } catch (err) { faRound = '5th Round'; }
 
       // Get Carabao Cup round
       let carabaoRound = '';
@@ -1894,7 +1894,7 @@
       const comps = [
         { name: 'Premier League', round: matchweek || 'In Progress' },
         { name: 'Champions League', round: uclRound },
-        { name: 'FA Cup', round: faRound || '4th Round' },
+        { name: 'FA Cup', round: faRound || '5th Round' },
         { name: 'Carabao Cup', round: carabaoRound || 'Final' }
       ];
 
