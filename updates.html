@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Updates | Sam Rahim</title>
-  <meta name="description" content="Occasional updates from Sam Rahim on what I'm building at Field Work.">
+  <meta name="description" content="Occasional updates from Sam Rahim on what I'm up to.">
   <meta property="og:title" content="Updates | Sam Rahim">
-  <meta property="og:description" content="Occasional updates from Sam Rahim on what I'm building at Field Work.">
+  <meta property="og:description" content="Occasional updates from Sam Rahim on what I'm up to.">
   <meta property="og:image" content="https://samrahim.com/og-image.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -21,12 +21,8 @@
       --warm-white: #FAF7F2;
       --walnut: #3E2C23;
       --walnut-light: #5C4033;
-      --burgundy: #6B2D3E;
       --brass: #B8945F;
       --brass-dark: #9A7A4C;
-      --terracotta: #C4704B;
-      --forest: #2E4A3A;
-      --ochre: #C49A3C;
       --plaster: #E8E0D4;
       --text: #2A2118;
       --text-soft: #5C4F42;
@@ -42,11 +38,9 @@
       --plaster: #3D332B;
       --text: #F5F0E8;
       --text-soft: #B8ADA1;
-      --forest: #5A9A7A;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { overflow-x: hidden; scroll-behavior: smooth; }
 
     body {
@@ -54,9 +48,7 @@
       background: var(--cream);
       color: var(--text);
       overflow-x: hidden;
-      -webkit-text-size-adjust: 100%;
       line-height: 1.6;
-      position: relative;
       transition: background 0.3s ease, color 0.3s ease;
     }
 
@@ -68,7 +60,6 @@
       z-index: 0;
       opacity: 0.4;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%233E2C23' stroke-width='0.3' opacity='0.15'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%233E2C23' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E");
-      transition: opacity 0.3s ease;
     }
 
     [data-theme="dark"] body::before {
@@ -77,12 +68,9 @@
     }
 
     body > * { position: relative; z-index: 1; }
-
     h1, h2, h3 { font-family: 'Instrument Serif', serif; font-weight: 400; }
-
     a { color: var(--brass); }
 
-    /* NAV */
     nav {
       position: fixed;
       top: 0;
@@ -96,9 +84,7 @@
       transition: background 0.3s, border-color 0.3s;
     }
 
-    [data-theme="dark"] nav {
-      background: rgba(26, 21, 18, 0.9);
-    }
+    [data-theme="dark"] nav { background: rgba(26, 21, 18, 0.9); }
 
     .nav-inner {
       max-width: 700px;
@@ -145,14 +131,11 @@
     }
 
     .theme-toggle:hover { color: var(--walnut); }
-
     .theme-toggle .sun-icon { display: block; }
     .theme-toggle .moon-icon { display: none; }
-
     [data-theme="dark"] .theme-toggle .sun-icon { display: none; }
     [data-theme="dark"] .theme-toggle .moon-icon { display: block; }
 
-    /* MAIN CONTENT */
     main {
       max-width: 700px;
       margin: 0 auto;
@@ -160,27 +143,19 @@
     }
 
     .page-header {
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
 
     .page-header h1 {
       font-size: 2.5rem;
       color: var(--walnut);
-      margin-bottom: 0.75rem;
-    }
-
-    .page-intro {
-      color: var(--text-soft);
-      font-size: 1.1rem;
-      line-height: 1.6;
       margin-bottom: 1.5rem;
     }
 
-    /* EMAIL SIGNUP */
     .signup-form {
       display: flex;
       gap: 0.75rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .signup-form input[type="email"] {
@@ -195,14 +170,8 @@
       transition: border-color 0.2s;
     }
 
-    .signup-form input[type="email"]:focus {
-      border-color: var(--brass);
-    }
-
-    .signup-form input[type="email"]::placeholder {
-      color: var(--text-soft);
-      opacity: 0.6;
-    }
+    .signup-form input[type="email"]:focus { border-color: var(--brass); }
+    .signup-form input[type="email"]::placeholder { color: var(--text-soft); opacity: 0.6; }
 
     .signup-form button {
       padding: 0.85rem 1.5rem;
@@ -227,64 +196,46 @@
       opacity: 0.7;
     }
 
-    /* DIVIDER */
-    .divider {
-      height: 1px;
-      background: var(--plaster);
-      margin: 3rem 0;
+    .posts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
-    /* POSTS */
-    .post {
-      margin-bottom: 4rem;
+    .post-card {
+      display: block;
+      padding: 1.5rem;
+      border: 1px solid var(--plaster);
+      background: var(--warm-white);
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.3s ease;
     }
 
-    .post-date {
-      font-size: 0.8rem;
+    .post-card:hover { border-color: var(--brass); }
+
+    .post-card-date {
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--brass);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
-    .post-title {
-      font-size: 1.75rem;
+    .post-card-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.25rem;
       color: var(--walnut);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.5rem;
       line-height: 1.3;
     }
 
-    .post-content {
-      color: var(--text);
-      font-size: 1rem;
-      line-height: 1.8;
-    }
-
-    .post-content p {
-      margin-bottom: 1.25rem;
-    }
-
-    .post-content strong {
-      color: var(--walnut);
-    }
-
-    .post-content ol,
-    .post-content ul {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
-    }
-
-    .post-content li {
-      margin-bottom: 0.75rem;
-    }
-
-    .post-signature {
-      margin-top: 2rem;
+    .post-card-excerpt {
+      font-size: 0.9rem;
       color: var(--text-soft);
+      line-height: 1.5;
     }
 
-    /* FOOTER */
     footer {
       padding: 2.5rem 2rem;
       text-align: center;
@@ -303,27 +254,11 @@
       margin-top: 0.25rem;
     }
 
-    /* MOBILE */
     @media (max-width: 600px) {
-      main {
-        padding: 6rem 1.5rem 3rem;
-      }
-
-      .page-header h1 {
-        font-size: 2rem;
-      }
-
-      .signup-form {
-        flex-direction: column;
-      }
-
-      .signup-form button {
-        width: 100%;
-      }
-
-      .post-title {
-        font-size: 1.5rem;
-      }
+      main { padding: 6rem 1.5rem 3rem; }
+      .page-header h1 { font-size: 2rem; }
+      .signup-form { flex-direction: column; }
+      .signup-form button { width: 100%; }
     }
   </style>
 </head>
@@ -352,71 +287,13 @@
       <p class="signup-note">Occasional updates on what I'm up to. NOT a newsletter.</p>
     </div>
 
-    <div class="divider"></div>
-
-    <article class="post">
-      <p class="post-date">February 18, 2026</p>
-      <h2 class="post-title">So, I Told You What I'm Up To... What Are You Up To?</h2>
-      <div class="post-content">
-        <p>Hey!</p>
-
-        <p>Last week, I was doomscrolling and came across someone who said, "If you don't tell everyone what you're up to, how will they know?"</p>
-
-        <p>She was right. My family, friends + former coworkers - maybe, they knew I quit my role at a startup in November, and have been "consulting" since. AKA, they have no clue what I'm actually doing... and, I want to change that.</p>
-
-        <p>If you're receiving this - you're a friend, mentor, former coworker, maybe we connected recently... or, just someone I want to keep in touch with! I've been looking for low-pressure, simple ways to keep up with people outside of iMessage, and this is my first attempt at it.</p>
-
-        <p>Before talking about what I'm doing now, I kinda just wanna reflect on how I got here (long-ish email below, thanks for reading - I'll try to make it worth your time!).</p>
-
-        <p>Next month will make it exactly 9 years (!!!) since I got my first taste of startup life. I was a junior in college, and was interning at a travel startup called Lokal Travel (s/o Dave!). It completely rewired my brain. Some people never get the opportunity to work at a startup, and some don't even understand it's a possibility. But, for me, it was the right environment, and I'm forever grateful for what it taught me.</p>
-
-        <p><strong>After that, two really important things happened that changed my life:</strong></p>
-
-        <ol>
-          <li>I worked a temp job at a property management company - they offered me a FT role, with a great (relative to that time of my life) salary and benefits. At the same exact time, I got an internship offer from Disney for $19/hour, on a 6mo contract. Everything logically told me to accept the FT job... but, my gut said otherwise. I took the Disney internship.</li>
-          <li>On my first day, June 19th, 2019 - I was assigned my cubicle in Disney's Glendale office. I sat diagonally from a pretty brunette. Little did I know, I would marry that woman almost 5 years later to the day, on June 30, 2024.</li>
-        </ol>
-
-        <p>Post-Disney, I went on to work at Guild (a late stage edtech startup) for a short stint, Street FC for ~4 years, and then most recently, Switchyards.</p>
-
-        <p>I've gotten an opportunity to work with some incredible people + have learned more than I could have ever anticipated.</p>
-
-        <p>But, for a few reasons, I finally feel like it's my time. I've 'paid my dues', been around the block, etc etc etc. I've helped grow and operate other people's businesses. All of that has afforded me the opportunity (and time) to answer a calling I've always had - to do my own thing.</p>
-
-        <p><strong>There are three main reasons why I feel like the time is now:</strong></p>
-
-        <ol>
-          <li>Simply, the most important one - I've just decided that it is?</li>
-          <li>My wife and I are expecting a baby girl (our first child!) this July... if that isn't motivation, nothing is!</li>
-          <li>A new era of capabilities and tools are being rolled out daily, letting anyone lean into their own curiosities.</li>
-        </ol>
-
-        <p>With all that being said, you might be expecting me to announce something grand and visionary.. but, I'm not. Over the past few months, I gave myself the time to tinker + to figure out what I love doing... and, it feels like I'm on the right track.</p>
-
-        <p><strong>I've simplified it into two buckets:</strong></p>
-
-        <ol>
-          <li>Working directly with great people to grow their businesses</li>
-          <li>Building products + services from 0-1 for myself, and with others</li>
-        </ol>
-
-        <p>So, I created <strong>Field Work</strong> - my small studio of products + services. My days + weeks are varied, and require a lot of context switching... I love it, and am having more fun than ever in my career.</p>
-
-        <p>This morning, I was helping a young founder build a reporting tool to help him with client retention. This afternoon, I met with a managing partner at a PE fund to put the final touches on a lawn care product we've been building. Tomorrow, I'm hanging with a former coworker to implement his new website + a growth marketing playbook for his junk journal mail club (look this niche up... it's insane!). I've met so many people who are sitting on project ideas or have small side hustles, and it's been some of the most fulfilling work getting to help build + grow them.</p>
-
-        <p>In between helping others, I've spun up a few services: <strong>Calling Card</strong>, <strong>Pop Up</strong>, and <strong>House Call</strong>. We're living in an era where you can rapidly learn, build and test the market in a matter of days/weeks versus the previous weeks/months. So, I'm using my spare time to place multiple bets + take multiple swings... and, I think you should, too.</p>
-
-        <p>It was a lot of fun for me to write this, and if you're still here, I appreciate you reading it all! If you (or someone you know) is building something, or wants to build something, and could use an extra set of hands - I would love to connect.</p>
-
-        <p><strong>So, I told you what I'm up to...... what are you up to?</strong></p>
-
-        <div class="post-signature">
-          <p>&mdash;<br>Sam<br><a href="https://samrahim.com">samrahim.com</a></p>
-          <p style="margin-top: 1rem;">Sent from sunny Florida</p>
-        </div>
-      </div>
-    </article>
-
+    <div class="posts-list">
+      <a href="/updates/feb-19-2026" class="post-card">
+        <p class="post-card-date">February 19, 2026</p>
+        <h2 class="post-card-title">So, I Told You What I'm Up To... What Are You Up To?</h2>
+        <p class="post-card-excerpt">I quit my role at a startup in November and started Field Work - a studio of products + services. Here's how I got here.</p>
+      </a>
+    </div>
   </main>
 
   <footer>
@@ -425,7 +302,6 @@
   </footer>
 
   <script>
-    // Theme toggle
     (function() {
       var stored = localStorage.getItem('theme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
