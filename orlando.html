@@ -690,29 +690,106 @@
 
     /* Footer */
     footer {
-      padding: 2.5rem 2rem;
+      position: relative;
+      padding: 8rem 2rem 4rem;
       text-align: center;
-      border-top: 1px solid var(--plaster);
+      background: linear-gradient(
+        180deg,
+        var(--cream) 0%,
+        #F0E6D8 20%,
+        #E8D9C5 50%,
+        #DECCB0 80%,
+        #D4BFA0 100%
+      );
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] footer {
+      background: linear-gradient(
+        180deg,
+        var(--cream) 0%,
+        #1E1814 20%,
+        #252019 50%,
+        #2A241C 80%,
+        #302920 100%
+      );
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(180deg, var(--brass) 0%, transparent 100%);
+      opacity: 0.6;
+    }
+
+    .footer-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-signoff {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--text-soft);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
     .footer-name {
       font-family: 'Instrument Serif', serif;
-      font-size: 1rem;
+      font-size: clamp(3rem, 10vw, 5rem);
       color: var(--walnut);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+
+    .footer-location {
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
     }
 
     .footer-links {
-      margin-top: 0.5rem;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.8s ease 0.45s, transform 0.8s ease 0.45s;
     }
 
     .footer-links a {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--text-soft);
       text-decoration: none;
       transition: color 0.2s;
     }
 
     .footer-links a:hover { color: var(--brass); }
+
+    /* Footer reveal animation */
+    footer.revealed .footer-signoff,
+    footer.revealed .footer-name,
+    footer.revealed .footer-location,
+    footer.revealed .footer-links {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     /* Mobile */
     @media (max-width: 768px) {
@@ -926,9 +1003,13 @@
   </section>
 
   <footer>
-    <p class="footer-name">Sam Rahim</p>
-    <div class="footer-links">
-      <a href="/">samrahim.com</a>
+    <div class="footer-inner">
+      <p class="footer-signoff">See you around the neighborhood.</p>
+      <h2 class="footer-name">Sam Rahim</h2>
+      <p class="footer-location">Horizon West, FL</p>
+      <div class="footer-links">
+        <a href="/">samrahim.com</a>
+      </div>
     </div>
   </footer>
 
@@ -984,6 +1065,18 @@
     revealElements.forEach(function(el) {
       revealObserver.observe(el);
     });
+
+    // Footer Reveal
+    var footer = document.querySelector('footer');
+    var footerObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          footer.classList.add('revealed');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    footerObserver.observe(footer);
   </script>
 
   <script defer src="/_vercel/insights/script.js"></script>
