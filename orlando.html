@@ -974,33 +974,35 @@
 
   <!-- Form -->
   <section class="form-section scroll-reveal" id="audit">
-    <p class="section-label">Interested?</p>
-    <h2>Tell me about your business.</h2>
+    <div id="form-content">
+      <p class="section-label">Interested?</p>
+      <h2>Tell me about your business.</h2>
 
-    <form id="orlando-form" class="audit-form">
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Your Email</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="business">Business Name</label>
-        <input type="text" id="business" name="business" required>
-      </div>
-      <div class="form-group">
-        <label for="website">Website or Social Link</label>
-        <input type="text" id="website" name="website" placeholder="yoursite.com or @yourbusiness">
-      </div>
-      <div class="form-group">
-        <label for="challenge">What's your biggest growth challenge right now?</label>
-        <textarea id="challenge" name="challenge" placeholder="Be as specific as you want - or keep it short."></textarea>
-      </div>
-      <button type="submit" class="form-submit">Send</button>
-      <p class="form-note">I'll get back to you as soon as I can.</p>
-    </form>
+      <form id="orlando-form" class="audit-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="business">Business Name</label>
+          <input type="text" id="business" name="business" required>
+        </div>
+        <div class="form-group">
+          <label for="website">Website or Social Link</label>
+          <input type="text" id="website" name="website" placeholder="yoursite.com or @yourbusiness">
+        </div>
+        <div class="form-group">
+          <label for="challenge">What's your biggest growth challenge right now?</label>
+          <textarea id="challenge" name="challenge" placeholder="Be as specific as you want - or keep it short."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send</button>
+        <p class="form-note">I'll get back to you as soon as I can.</p>
+      </form>
+    </div>
 
     <div class="form-success-card">
       <div class="success-icon">
@@ -1108,7 +1110,7 @@
         body: JSON.stringify(data)
       })
       .then(function() {
-        form.style.display = 'none';
+        document.getElementById('form-content').style.display = 'none';
         successCard.style.display = 'block';
       })
       .catch(function() {
