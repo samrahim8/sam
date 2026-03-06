@@ -659,6 +659,56 @@
       opacity: 0.7;
     }
 
+    .form-success-card {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--warm-white);
+      border: 1px solid var(--plaster);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-success-card .success-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: var(--forest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-success-card .success-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--cream);
+    }
+
+    .form-success-card h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.75rem;
+      color: var(--walnut);
+      margin-bottom: 0.75rem;
+    }
+
+    .form-success-card p {
+      font-size: 1rem;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
     .form-alt {
       margin-top: 2rem;
       padding-top: 2rem;
@@ -950,8 +1000,17 @@
       </div>
       <button type="submit" class="form-submit">Send</button>
       <p class="form-note">I'll get back to you as soon as I can.</p>
-      <p class="form-success" style="display: none; color: var(--forest); margin-top: 1rem;">Got it. I'll be in touch soon.</p>
     </form>
+
+    <div class="form-success-card">
+      <div class="success-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3>Got it.</h3>
+      <p>I'll take a look and get back to you soon.</p>
+    </div>
   </section>
 
   <footer>
@@ -1029,8 +1088,7 @@
 
       var form = this;
       var button = form.querySelector('.form-submit');
-      var note = form.querySelector('.form-note');
-      var success = form.querySelector('.form-success');
+      var successCard = document.querySelector('.form-success-card');
 
       button.disabled = true;
       button.textContent = 'Sending...';
@@ -1050,10 +1108,8 @@
         body: JSON.stringify(data)
       })
       .then(function() {
-        form.reset();
-        button.style.display = 'none';
-        note.style.display = 'none';
-        success.style.display = 'block';
+        form.style.display = 'none';
+        successCard.style.display = 'block';
       })
       .catch(function() {
         button.disabled = false;
