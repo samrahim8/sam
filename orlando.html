@@ -927,8 +927,7 @@
     <p class="section-label">Interested?</p>
     <h2>Tell me about your business.</h2>
 
-    <form class="audit-form" action="https://formspree.io/f/xdallyeo" method="POST">
-      <input type="hidden" name="_subject" value="Orlando Inquiry">
+    <form id="orlando-form" class="audit-form">
       <div class="form-group">
         <label for="name">Your Name</label>
         <input type="text" id="name" name="name" required>
@@ -951,6 +950,7 @@
       </div>
       <button type="submit" class="form-submit">Send</button>
       <p class="form-note">I'll get back to you as soon as I can.</p>
+      <p class="form-success" style="display: none; color: var(--forest); margin-top: 1rem;">Got it. I'll be in touch soon.</p>
     </form>
   </section>
 
@@ -1022,6 +1022,45 @@
     }, { threshold: 0.2 });
 
     footerObserver.observe(footer);
+
+    // Form Submission
+    document.getElementById('orlando-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var form = this;
+      var button = form.querySelector('.form-submit');
+      var note = form.querySelector('.form-note');
+      var success = form.querySelector('.form-success');
+
+      button.disabled = true;
+      button.textContent = 'Sending...';
+
+      var data = {
+        name: form.querySelector('#name').value,
+        email: form.querySelector('#email').value,
+        business: form.querySelector('#business').value,
+        website: form.querySelector('#website').value,
+        challenge: form.querySelector('#challenge').value
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbyhxiZumhZFlVpfIE6T5TrhxKBPNK0RYf17L2O5ArJ-8HE2Mes5-VapliBKKTXIYgam/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(function() {
+        form.reset();
+        button.style.display = 'none';
+        note.style.display = 'none';
+        success.style.display = 'block';
+      })
+      .catch(function() {
+        button.disabled = false;
+        button.textContent = 'Send';
+        alert('Something went wrong. Please try again.');
+      });
+    });
   </script>
 
   <script defer src="/_vercel/insights/script.js"></script>
