@@ -715,6 +715,119 @@
       opacity: 0.85;
     }
 
+    /* ── GITHUB ── */
+    .github {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .github h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      color: var(--walnut);
+      margin-bottom: 0.75rem;
+    }
+
+    .github-graph {
+      margin-top: 2rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .contrib-months {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0.4rem;
+      padding-left: 2px;
+    }
+
+    .contrib-month {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      text-align: left;
+    }
+
+    .contrib-grid {
+      display: flex;
+      gap: 3px;
+    }
+
+    .contrib-week {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .contrib-day {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      background: var(--plaster);
+    }
+
+    .contrib-day.level-0 { background: #D4C9BC; border: 1px solid #C4B9AC; }
+    .contrib-day.level-1 { background: rgba(184, 148, 95, 0.45); }
+    .contrib-day.level-2 { background: rgba(184, 148, 95, 0.6); }
+    .contrib-day.level-3 { background: rgba(184, 148, 95, 0.8); }
+    .contrib-day.level-4 { background: var(--brass); }
+
+    .contrib-day.future,
+    .contrib-day.empty {
+      background: transparent;
+      border: 1px solid #D4C9BC;
+    }
+
+    .contrib-loading {
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      padding: 1rem 0;
+    }
+
+    .contrib-legend {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 1rem;
+    }
+
+    .contrib-legend .contrib-day {
+      width: 10px;
+      height: 10px;
+    }
+
+    .contrib-legend-label {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      margin: 0 0.3rem;
+    }
+
+    .github-link {
+      margin-top: 1.5rem;
+    }
+
+    .github-link a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--brass);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .github-link a:hover {
+      color: var(--walnut);
+    }
+
+    @media (max-width: 768px) {
+      .github { padding: 3.5rem 1.5rem; }
+      .contrib-day { width: 10px; height: 10px; }
+      .contrib-grid { gap: 2px; }
+      .contrib-week { gap: 2px; }
+    }
+
+    @media (max-width: 480px) {
+      .contrib-day { width: 8px; height: 8px; }
+    }
+
     /* ── ARSENAL ── */
     .arsenal {
       padding: 5rem 2rem;
@@ -1630,6 +1743,31 @@
 
   <div class="brass-rule"><div class="brass-rule-inner"></div></div>
 
+  <!-- GITHUB -->
+  <section class="github" id="github">
+    <p class="section-label">Building</p>
+    <h2>2026 in Code</h2>
+    <p class="arsenal-intro">My GitHub contribution graph for this year.</p>
+    <div class="github-graph">
+      <div class="contrib-months" id="contribMonths"></div>
+      <div class="contrib-grid" id="contribGrid">
+        <div class="contrib-loading">Loading contributions...</div>
+      </div>
+      <div class="contrib-legend">
+        <span class="contrib-legend-label">Less</span>
+        <span class="contrib-day level-0"></span>
+        <span class="contrib-day level-1"></span>
+        <span class="contrib-day level-2"></span>
+        <span class="contrib-day level-3"></span>
+        <span class="contrib-day level-4"></span>
+        <span class="contrib-legend-label">More</span>
+      </div>
+    </div>
+    <p class="github-link"><a href="https://github.com/samrahim8" target="_blank" rel="noopener">View on GitHub &rarr;</a></p>
+  </section>
+
+  <div class="brass-rule"><div class="brass-rule-inner"></div></div>
+
   <!-- ARSENAL -->
   <section class="arsenal" id="arsenal">
     <p class="section-label">One More Thing</p>
@@ -1922,6 +2060,128 @@
     loadPLTable().then(updateTimestamp);
     loadNextMatch();
     loadCompetitions();
+
+    // GitHub Contributions for 2026
+    async function loadGitHubContributions() {
+      const username = 'samrahim8';
+      const year = 2026;
+      const grid = document.getElementById('contribGrid');
+      const monthsEl = document.getElementById('contribMonths');
+
+      try {
+        // Fetch from GitHub contributions API proxy
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${year}`);
+        const data = await res.json();
+
+        // Create a map for quick lookup
+        const contribMap = {};
+        if (data.contributions) {
+          data.contributions.forEach(c => {
+            contribMap[c.date] = { level: c.level, count: c.count };
+          });
+        }
+
+        // Build weeks array for 2026
+        const weeks = [];
+        let currentWeek = [];
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Start from Jan 1, 2026
+        const startDate = new Date(2026, 0, 1);
+        const startDay = startDate.getDay();
+
+        // Pad first week with empty days
+        for (let i = 0; i < startDay; i++) {
+          currentWeek.push({ empty: true });
+        }
+
+        // Iterate through 2026
+        const endDate = new Date(2026, 11, 31);
+        let current = new Date(startDate);
+
+        while (current <= endDate) {
+          const y = current.getFullYear();
+          const m = String(current.getMonth() + 1).padStart(2, '0');
+          const d = String(current.getDate()).padStart(2, '0');
+          const dateStr = `${y}-${m}-${d}`;
+          const isFuture = current > today;
+          const contrib = contribMap[dateStr] || { level: 0, count: 0 };
+
+          currentWeek.push({
+            date: dateStr,
+            level: contrib.level,
+            count: contrib.count,
+            future: isFuture,
+            month: current.getMonth()
+          });
+
+          if (current.getDay() === 6) {
+            weeks.push(currentWeek);
+            currentWeek = [];
+          }
+
+          current.setDate(current.getDate() + 1);
+        }
+
+        if (currentWeek.length > 0) {
+          weeks.push(currentWeek);
+        }
+
+        // Render months header - track which week each month starts
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const monthStarts = [];
+        let lastMonth = -1;
+
+        weeks.forEach((week, weekIndex) => {
+          const realDays = week.filter(d => !d.empty);
+          if (realDays.length > 0) {
+            const firstMonth = realDays[0].month;
+            if (firstMonth !== lastMonth) {
+              monthStarts.push({ month: firstMonth, weekIndex: weekIndex });
+              lastMonth = firstMonth;
+            }
+          }
+        });
+
+        // Calculate month widths
+        let monthHtml = '';
+        monthStarts.forEach((ms, i) => {
+          const nextStart = monthStarts[i + 1] ? monthStarts[i + 1].weekIndex : weeks.length;
+          const numWeeks = nextStart - ms.weekIndex;
+          const width = numWeeks * 15; // 12px cell + 3px gap
+          monthHtml += `<span class="contrib-month" style="width:${width}px">${months[ms.month]}</span>`;
+        });
+        monthsEl.innerHTML = monthHtml;
+
+        // Render grid
+        let html = '';
+        weeks.forEach(week => {
+          html += '<div class="contrib-week">';
+          week.forEach(day => {
+            if (day.empty) {
+              html += '<div class="contrib-day empty"></div>';
+            } else if (day.future) {
+              html += `<div class="contrib-day future" title="${day.date}"></div>`;
+            } else {
+              const countText = day.count === 1 ? '1 contribution' : `${day.count} contributions`;
+              const dateObj = new Date(day.date + 'T12:00:00');
+              const dateText = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+              html += `<div class="contrib-day level-${day.level}" title="${countText} on ${dateText}"></div>`;
+            }
+          });
+          html += '</div>';
+        });
+
+        grid.innerHTML = html;
+
+      } catch (err) {
+        console.error('GitHub contributions error:', err);
+        grid.innerHTML = '<div class="contrib-loading">Unable to load contributions</div>';
+      }
+    }
+
+    loadGitHubContributions();
 
     // Arsenal audio toggle
     function toggleArsenalAudio() {
