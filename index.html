@@ -635,6 +635,65 @@
       text-decoration: underline;
     }
 
+    .provisions-work {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .provisions-work li {
+      position: relative;
+      padding-left: 1.1rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+
+    .provisions-work li::before {
+      content: "+";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--brass);
+      font-weight: 700;
+    }
+
+    .provisions-marks {
+      margin: 1.5rem 0 1rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--plaster);
+      border-bottom: 1px solid var(--plaster);
+      display: grid;
+      gap: 1.1rem;
+    }
+
+    .provisions-mark {
+      margin: 0;
+    }
+
+    .provisions-mark blockquote {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--text);
+      font-style: italic;
+    }
+
+    .provisions-mark figcaption {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .provisions-work li { font-size: 1rem; }
+      .provisions-mark blockquote { font-size: 1rem; }
+    }
+
     .streetfc-caption {
       margin-top: 0.5rem;
       font-size: 0.75rem;
@@ -1706,7 +1765,30 @@
         <h3 class="timeline-company">Provisions</h3>
         <p class="timeline-role">Proprietor</p>
         <p class="timeline-date">2025 &ndash; Present</p>
-        <p class="timeline-desc">Custom goods for clients. A few house brands of my own.</p>
+        <p class="timeline-desc">Special projects for founders + operators. Strategy, organic growth, and custom tools. A few house brands of my own.</p>
+
+        <ul class="provisions-work">
+          <li>Sales narrative + interactive demo for an AI startup</li>
+          <li>Sponsorship engine for a global youth sports org</li>
+          <li>Reddit Responder, custom infra that scores niche subreddit posts and drafts replies</li>
+          <li>Internal AI platform for a marketing agency, trained on their own data</li>
+        </ul>
+
+        <div class="provisions-marks">
+          <figure class="provisions-mark">
+            <blockquote>&ldquo;Sam is a legend.&rdquo;</blockquote>
+            <figcaption>Dennis Crowley, Co-Founder, Foursquare</figcaption>
+          </figure>
+          <figure class="provisions-mark">
+            <blockquote>&ldquo;I can&rsquo;t speak highly enough of Sam. He&rsquo;s high agency, accountable, and incredibly strategic.&rdquo;</blockquote>
+            <figcaption>Stephen Francis, COO, Proximity Ventures</figcaption>
+          </figure>
+          <figure class="provisions-mark">
+            <blockquote>&ldquo;I&rsquo;ve had the pleasure of working with hundreds of people over the decades, and Sam is without doubt amongst the very best of the best.&rdquo;</blockquote>
+            <figcaption>Tom Dunmore, VP of Marketing, The Snow League</figcaption>
+          </figure>
+        </div>
+
         <a href="https://provisions.work" target="_blank" rel="noopener" class="provisions-link">See the work &rarr;</a>
       </div>
 
