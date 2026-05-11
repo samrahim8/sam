@@ -1814,7 +1814,7 @@
         <h3>Premier League Table</h3>
         <table class="pl-table" id="plTable">
           <thead>
-            <tr><th>#</th><th>Club</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>
+            <tr><th>#</th><th>Club</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>
           </thead>
           <tbody id="plTableBody">
             <tr><td colspan="6" class="table-loading">Loading...</td></tr>
@@ -1935,6 +1935,7 @@
         allRows = entries.map((e, i) => {
           const stats = e.stats;
           const pts = stats.find(s => s.name === 'points')?.value || 0;
+          const gp = stats.find(s => s.name === 'gamesPlayed')?.value || 0;
           const w = stats.find(s => s.name === 'wins')?.value || 0;
           const d = stats.find(s => s.name === 'ties')?.value || 0;
           const l = stats.find(s => s.name === 'losses')?.value || 0;
@@ -1946,11 +1947,11 @@
           const rowClick = isTopAndArsenal ? ' onclick="openArsenalVideo()"' : '';
           const isSpurs = e.team.displayName.includes('Tottenham');
           const trash = isSpurs ? ' <span style="font-size:0.7rem" title="Lol">&#128465;</span>' : '';
-          return { html: `<tr class="${rowClass}"${rowClick}><td>${i + 1}</td><td>${name}${crown}${trash}</td><td>${w}</td><td>${d}</td><td>${l}</td><td>${pts}</td></tr>`, pos: i };
+          return { html: `<tr class="${rowClass}"${rowClick}><td>${i + 1}</td><td>${name}${crown}${trash}</td><td>${gp}</td><td>${w}</td><td>${d}</td><td>${l}</td><td>${pts}</td></tr>`, pos: i };
         });
         renderTable(false);
       } catch (err) {
-        document.getElementById('plTableBody').innerHTML = '<tr><td colspan="6" class="table-loading">Unable to load standings</td></tr>';
+        document.getElementById('plTableBody').innerHTML = '<tr><td colspan="7" class="table-loading">Unable to load standings</td></tr>';
       }
     }
 
