@@ -635,33 +635,59 @@
       text-decoration: underline;
     }
 
-    .provisions-work {
-      list-style: none;
-      padding: 0;
-      margin: 1rem 0 0;
-      display: grid;
-      gap: 0.4rem;
+    .provisions-pillars {
+      margin: 1.25rem 0 0.25rem;
+      border-top: 1px solid var(--plaster);
     }
 
-    .provisions-work li {
-      position: relative;
-      padding-left: 1.1rem;
+    .pillar {
+      display: grid;
+      grid-template-columns: minmax(7.5rem, 9rem) 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--plaster);
+    }
+
+    .pillar-head {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .pillar-num {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brass);
+    }
+
+    .pillar-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .pillar-desc {
       font-size: 0.95rem;
       line-height: 1.55;
       color: var(--text-soft);
-    }
-
-    .provisions-work li::before {
-      content: "+";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: var(--brass);
-      font-weight: 700;
+      margin: 0.2rem 0 0;
     }
 
     @media (max-width: 640px) {
-      .provisions-work li { font-size: 1rem; }
+      .pillar {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 1rem 0;
+      }
+      .pillar-name { font-size: 1.5rem; }
+      .pillar-desc { font-size: 1rem; }
     }
 
     .streetfc-caption {
@@ -1737,12 +1763,29 @@
         <p class="timeline-date">2025 &ndash; Present</p>
         <p class="timeline-desc">Special projects for founders + operators. Strategy, organic growth, and custom tools. Plus, a few house brands of my own.</p>
 
-        <ul class="provisions-work">
-          <li>Sales narrative + interactive demo for an AI startup</li>
-          <li>Sponsorship engine for a global youth sports org</li>
-          <li>Reddit Responder, custom infra that scores niche subreddit posts and drafts replies</li>
-          <li>Internal AI platform for a marketing agency, trained on their own data</li>
-        </ul>
+        <div class="provisions-pillars">
+          <div class="pillar">
+            <div class="pillar-head">
+              <span class="pillar-num">&#8470;&nbsp;01</span>
+              <h4 class="pillar-name">Operating</h4>
+            </div>
+            <p class="pillar-desc">Pitch decks, sales + marketing materials, hiring plans + role definitions, founder positioning. Like having a #2.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-head">
+              <span class="pillar-num">&#8470;&nbsp;02</span>
+              <h4 class="pillar-name">Growing</h4>
+            </div>
+            <p class="pillar-desc">UGC playbooks + content strategy, custom Reddit tooling, partnership engines + live events. Distribution that compounds.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-head">
+              <span class="pillar-num">&#8470;&nbsp;03</span>
+              <h4 class="pillar-name">Making</h4>
+            </div>
+            <p class="pillar-desc">AI agents + automations, internal tools + dashboards, custom MVPs. AI-leveraged. Made to order.</p>
+          </div>
+        </div>
 
         <a href="https://provisions.work" target="_blank" rel="noopener" class="provisions-link">See the work &rarr;</a>
       </div>
