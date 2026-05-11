@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sam Rahim</title>
-  <meta name="description" content="I run Provisions, a studio of products + services.">
+  <meta name="description" content="I run Provisions, a one-person studio of products + services.">
   <meta property="og:title" content="Sam Rahim">
-  <meta property="og:description" content="I run Provisions, a studio of products + services.">
+  <meta property="og:description" content="I run Provisions, a one-person studio of products + services.">
   <meta property="og:image" content="https://samrahim.com/og-image.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -22,8 +22,8 @@
       --walnut: #3E2C23;
       --walnut-light: #5C4033;
       --burgundy: #6B2D3E;
-      --brass: #B8945F;
-      --brass-dark: #9A7A4C;
+      --brass: #2D4A3E;
+      --brass-dark: #1F3830;
       --terracotta: #C4704B;
       --forest: #2E4A3A;
       --ochre: #C49A3C;
@@ -37,8 +37,8 @@
       --warm-white: #231E1A;
       --walnut: #F5F0E8;
       --walnut-light: #D4C9BC;
-      --brass: #C9A866;
-      --brass-dark: #B8945F;
+      --brass: #3A5A4C;
+      --brass-dark: #2D4A3E;
       --plaster: #3D332B;
       --text: #F5F0E8;
       --text-soft: #B8ADA1;
@@ -442,6 +442,10 @@
 
     .venture-header {
       margin-bottom: 0.75rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
     }
 
     .venture-card h3 {
@@ -464,9 +468,6 @@
     }
 
     .venture-status {
-      position: absolute;
-      top: 1.2rem;
-      right: 1.4rem;
       font-size: 0.6875rem;
       font-weight: 600;
       letter-spacing: 0.05em;
@@ -474,6 +475,8 @@
       display: flex;
       align-items: center;
       gap: 0.3rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .venture-status::before {
@@ -589,6 +592,55 @@
       color: var(--text-soft);
       font-size: 1rem;
       line-height: 1.65;
+    }
+
+    /* ── STREET FC SLIDESHOW ── */
+    .streetfc-slideshow {
+      margin-top: 1rem;
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 9 / 16;
+      max-width: 240px;
+    }
+
+    .streetfc-slideshow img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .streetfc-slideshow img.active {
+      opacity: 1;
+    }
+
+    .provisions-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--brass);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+
+    .provisions-link:hover {
+      text-decoration: underline;
+    }
+
+    .streetfc-caption {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      font-style: italic;
+      opacity: 0.7;
     }
 
     .timeline-hidden {
@@ -996,6 +1048,20 @@
       background: var(--forest);
     }
 
+    .comp-item.eliminated .comp-name,
+    .comp-item.eliminated .comp-status {
+      text-decoration: line-through;
+      opacity: 0.4;
+    }
+
+    .comp-item.eliminated .comp-status {
+      color: var(--text-soft);
+    }
+
+    .comp-item.eliminated .comp-status::before {
+      background: var(--text-soft);
+    }
+
     .next-match {
       padding: 1.2rem;
       background: var(--warm-white);
@@ -1213,7 +1279,7 @@
       .venture-card h3 { font-size: 1.15rem; }
       .venture-card p { font-size: 1.0625rem; line-height: 1.55; }
       .venture-role { font-size: 0.75rem; }
-      .venture-status { font-size: 0.75rem; top: 1.1rem; right: 1.2rem; }
+      .venture-status { font-size: 0.75rem; }
 
       .about-text p { font-size: 1.0625rem; line-height: 1.7; }
 
@@ -1598,51 +1664,7 @@
       <p class="hero-tagline">I quit startup life to build + operate a small studio of products + services.</p>
       <a href="#contact" class="hero-cta">What're you up to?</a>
     </div>
-    <a href="#ventures" class="hero-scroll">Scroll</a>
-  </section>
-
-  <div class="brass-rule"><div class="brass-rule-inner"></div></div>
-
-  <!-- VENTURES -->
-  <section class="ventures" id="ventures">
-    <p class="section-label">What I'm Working On</p>
-    <h2>Provisions</h2>
-    <p class="arsenal-intro">My supply of goods + services.</p>
-    <div class="ventures-grid">
-      <a href="https://readsunside.com" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-1">
-        <span class="venture-status live">Live</span>
-        <div class="venture-header">
-          <h3>Sunside</h3>
-          <span class="venture-role">Proprietor</span>
-        </div>
-        <p>A local newsletter for Horizon West, FL. Every Friday morning.</p>
-      </a>
-      <a href="/orlando" class="venture-card scroll-reveal scroll-reveal-delay-2">
-        <span class="venture-status live">Live</span>
-        <div class="venture-header">
-          <h3>Not An Agency</h3>
-          <span class="venture-role">Proprietor</span>
-        </div>
-        <p>Neighborhood growth. Like your last agency, except fast, affordable + better.</p>
-      </a>
-      <a href="https://getplacecard.com" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-3">
-        <span class="venture-status live">Live</span>
-        <div class="venture-header">
-          <h3>PlaceCard</h3>
-          <span class="venture-role">Proprietor</span>
-        </div>
-        <p>The end of wedding spreadsheets. An all-in-one wedding planning tool.</p>
-      </a>
-      <a href="https://www.mylawnhq.com" target="_blank" rel="noopener" class="venture-card scroll-reveal scroll-reveal-delay-4">
-        <span class="venture-status live">Live</span>
-        <div class="venture-header">
-          <h3>LawnHQ</h3>
-          <span class="venture-role">Partner</span>
-        </div>
-        <p>AI lawn care, personalized to your grass type + zip code.</p>
-      </a>
-    </div>
-    <p class="arsenal-intro" style="margin-top: 2rem;">Available for select client work. <a href="#contact" style="color: var(--brass); text-decoration: none;">Let's talk &darr;</a></p>
+    <a href="#about" class="hero-scroll">Scroll</a>
   </section>
 
   <div class="brass-rule"><div class="brass-rule-inner"></div></div>
@@ -1654,11 +1676,21 @@
       <img src="profile.png" alt="Sam Rahim" class="about-photo">
       <div class="about-text">
         <h2>Hi, I'm Sam Rahim.</h2>
-        <p>I'm a full-stack operator. I run Provisions - a studio of products + services.</p>
+        <p>I'm a full-stack operator. I run Provisions - a one-person studio of products + services.</p>
         <p>I'm from Southern California, and lived there for my first 25 years. When I was in college at UC Irvine, I spent a summer in the jungles of Belize doing archaeology - our team found dozens of artifacts + structures that were thousands of years old. I also got my first gig as an intern at an LA-based startup - Lokal Travel. That was the most valuable experience of my life, and the foundation for everything I was able to take on after.</p>
         <p>My experience at Lokal helped me get an internship (and eventually a full-time role) at Disney's corporate campus in Glendale - where, ultimately, I met my wife.</p>
         <p>Since then, I've worked for several high-growth startups - Guild, Street FC, Switchyards - and have lived in five different states. Now, my wife and I are based in Orlando, and I'm building + advising businesses.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- MY GOAL -->
+  <section class="about" id="mygoal">
+    <div style="max-width: 600px;">
+      <p class="section-label">My Goal</p>
+      <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.4rem); color: var(--walnut); margin-bottom: 1.5rem;">Compound Over Time</h2>
+      <p style="color: var(--text-soft); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">I'm building a one-person business - collaborating with incredible founders + operators, small teams, and creating products of my own.</p>
+      <p style="color: var(--text-soft); font-size: 1rem; line-height: 1.7;">We are in the age of the generalist, and have the ability to pursue a life that is oriented around working with great people, spending time with family, and prioritizing health.</p>
     </div>
   </section>
 
@@ -1674,7 +1706,8 @@
         <h3 class="timeline-company">Provisions</h3>
         <p class="timeline-role">Proprietor</p>
         <p class="timeline-date">2025 &ndash; Present</p>
-        <p class="timeline-desc">Custom goods + services for clients. And, I always hold a few rations for myself.</p>
+        <p class="timeline-desc">Custom goods for clients. A few house brands of my own.</p>
+        <a href="https://provisions.work" target="_blank" rel="noopener" class="provisions-link">See the work &rarr;</a>
       </div>
 
       <div class="timeline-item">
@@ -1689,6 +1722,14 @@
         <p class="timeline-role">Head of Operations</p>
         <p class="timeline-date">2021 &ndash; 2025</p>
         <p class="timeline-desc">Venture-backed startup and global football brand. Grew the business to millions in revenue and worked with global brands — Nike, Adidas, EA Sports. Fundamentally changed the way soccer looks in the United States.</p>
+        <div class="streetfc-slideshow" id="streetfcSlideshow">
+          <img src="streetfc-secreto.gif" alt="Secreto Maximus" class="active">
+          <img src="streetfc-miami.gif" alt="Area Futbol 305 Miami">
+          <img src="streetfc-rbl-drop.gif" alt="Red Bull Leipzig Kit Drop">
+          <img src="streetfc-philly.gif" alt="EA FC Philadelphia">
+          <img src="streetfc-rbl-kit.gif" alt="RBL Kit Drop">
+        </div>
+        <p class="streetfc-caption">Enjoy the montage.</p>
       </div>
 
       <div class="timeline-hidden" id="timelineMore">
@@ -1986,53 +2027,18 @@
         }
       } catch (err) {}
 
-      // Get FA Cup round
-      let faRound = '';
-      try {
-        const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/eng.fa/scoreboard?dates=20260101-20260601');
-        const data = await res.json();
-        const events = (data.events || []).filter(e => e.name && e.name.includes('Arsenal'));
-        const upcoming = events.filter(e => e.status?.type?.name !== 'STATUS_FULL_TIME').sort((a, b) => new Date(a.date) - new Date(b.date));
-        if (upcoming.length > 0) {
-          const notes = upcoming[0].competitions[0].notes || [];
-          faRound = notes[0]?.headline || '4th Round';
-        } else {
-          // All played, find the latest completed
-          const completed = events.filter(e => e.status?.type?.name === 'STATUS_FULL_TIME').sort((a, b) => new Date(b.date) - new Date(a.date));
-          if (completed.length > 0) faRound = 'Round of 16';
-        }
-      } catch (err) { faRound = '5th Round'; }
-
-      // Get Carabao Cup round
-      let carabaoRound = '';
-      try {
-        const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/eng.league_cup/scoreboard?dates=20260101-20260601');
-        const data = await res.json();
-        const events = (data.events || []).filter(e => e.name && e.name.includes('Arsenal'));
-        const latest = events.sort((a, b) => new Date(b.date) - new Date(a.date));
-        if (latest.length > 0) {
-          const notes = latest[0].competitions[0].notes || [];
-          const headline = notes[0]?.headline || '';
-          if (headline.includes('aggregate') || headline.includes('2nd Leg')) {
-            carabaoRound = 'Final';
-          } else {
-            carabaoRound = 'Semi-Final';
-          }
-        }
-      } catch (err) { carabaoRound = 'Final'; }
-
-      // UCL - Arsenal qualified for knockouts
-      let uclRound = 'Round of 16';
+      // UCL - Arsenal in the final
+      let uclRound = 'Final';
 
       const comps = [
         { name: 'Premier League', round: matchweek || 'In Progress' },
         { name: 'Champions League', round: uclRound },
-        { name: 'FA Cup', round: 'Quarter-Finals' },
-        { name: 'Carabao Cup', round: 'Final' }
+        { name: 'FA Cup', round: 'Quarter-Finals', eliminated: true },
+        { name: 'Carabao Cup', round: 'Final', eliminated: true }
       ];
 
       container.innerHTML = comps.map(c =>
-        `<div class="comp-item"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
+        `<div class="comp-item${c.eliminated ? ' eliminated' : ''}"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
       ).join('');
     }
 
@@ -2045,6 +2051,17 @@
     loadPLTable().then(updateTimestamp);
     loadNextMatch();
     loadCompetitions();
+
+    // Street FC slideshow
+    (function() {
+      const imgs = document.querySelectorAll('#streetfcSlideshow img');
+      let current = 0;
+      setInterval(function() {
+        imgs[current].classList.remove('active');
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add('active');
+      }, 4000);
+    })();
 
     // GitHub Contributions for 2026
     async function loadGitHubContributions() {
