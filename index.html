@@ -1694,49 +1694,17 @@
        May 19, 2026 — Title No. 14
        ═══════════════════════════════════════════════ */
     body.champions-mode {
-      --cream: #FFFFFF;
-      --warm-white: #FFF8F8;
-      --walnut: #0F0F12;
-      --walnut-light: #EF0107;
-      --burgundy: #B8001C;
-      --brass: #DB9B33;
-      --brass-dark: #B8801F;
-      --terracotta: #EF0107;
-      --forest: #EF0107;
-      --ochre: #DB9B33;
-      --plaster: #FFE8E8;
-      --text: #0F0F12;
-      --text-soft: #4A4A4A;
-      --arsenal-red: #EF0107;
-      --arsenal-red-deep: #B8001C;
-      --arsenal-gold: #DB9B33;
-      --arsenal-gold-bright: #F4C95D;
-      --arsenal-white: #FFFFFF;
-    }
-    html[data-theme="dark"] body.champions-mode {
-      --cream: #0B0507;
-      --warm-white: #14080A;
-      --walnut: #FFFFFF;
-      --walnut-light: #FFFFFF;
-      --brass: #F4C95D;
-      --brass-dark: #DB9B33;
-      --plaster: #2A0B0F;
-      --text: #FFFFFF;
-      --text-soft: #E8C9CD;
-      --forest: #EF4A4F;
-    }
-
-    body.champions-mode::before {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%23EF0107' stroke-width='0.3' opacity='0.18'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%23EF0107' stroke-width='0.3' opacity='0.12'/%3E%3C/svg%3E") !important;
-      opacity: 0.45 !important;
+      /* Keep Sam's cream/walnut palette; champions mode only adds wine + gold accents */
+      --arsenal-red: #7A0010;
+      --arsenal-red-deep: #4E0008;
+      --arsenal-red-bright: #B8001C;
+      --arsenal-gold: #B8945F;
+      --arsenal-gold-bright: #D4B47F;
+      --arsenal-cream: var(--cream);
     }
 
     body.champions-mode nav {
-      background: rgba(255, 255, 255, 0.92) !important;
-      border-bottom: 1px solid rgba(239, 1, 7, 0.15);
-    }
-    html[data-theme="dark"] body.champions-mode nav {
-      background: rgba(15, 5, 8, 0.92) !important;
+      border-bottom: 1px solid rgba(184, 148, 95, 0.18);
     }
 
     /* Hide all champions elements when not in mode */
@@ -1777,47 +1745,68 @@
     }
     .mode-toggle svg { width: 18px; height: 18px; }
 
-    /* Champion stripe under nav */
+    /* Champion stripe under nav — quiet, centered, no marquee */
     .champ-stripe {
       position: fixed;
       top: 64px;
       left: 0;
       right: 0;
       z-index: 99;
-      background: linear-gradient(90deg, var(--arsenal-red) 0%, var(--arsenal-red-deep) 50%, var(--arsenal-red) 100%);
-      color: #fff;
+      background: linear-gradient(180deg, #4E0008 0%, #2D0005 100%);
+      color: var(--arsenal-gold-bright);
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.42em;
       text-transform: uppercase;
-      padding: 0.5rem 1rem;
+      padding: 0.6rem 1.5rem 0.55rem;
       text-align: center;
-      box-shadow: 0 2px 0 var(--arsenal-gold), 0 8px 24px rgba(239,1,7,0.25);
-      overflow: hidden;
+      border-top: 1px solid rgba(184, 148, 95, 0.35);
+      border-bottom: 1px solid rgba(184, 148, 95, 0.35);
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .champ-stripe-track {
       display: inline-flex;
-      gap: 2.5rem;
-      animation: champMarquee 28s linear infinite;
+      align-items: center;
+      gap: 1.4rem;
       white-space: nowrap;
     }
-    .champ-stripe-track span { display: inline-flex; align-items: center; gap: 0.75rem; }
-    .champ-stripe-track .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--arsenal-gold); display: inline-block; }
-    @keyframes champMarquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    .champ-stripe-track span { display: inline-flex; align-items: center; gap: 1.4rem; }
+    .champ-stripe-track .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--arsenal-gold);
+      display: inline-block;
+      opacity: 0.7;
+    }
+    .champ-stripe-track em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      font-size: 0.85rem;
+      color: #F2E4C7;
+    }
+    @media (max-width: 720px) {
+      .champ-stripe { font-size: 0.55rem; letter-spacing: 0.32em; padding: 0.5rem 1rem; }
+      .champ-stripe-track { gap: 0.9rem; }
+      .champ-stripe-track span { gap: 0.9rem; }
+      .champ-stripe-track em { font-size: 0.72rem; }
     }
 
-    /* Push everything down for stripe */
-    body.champions-mode { padding-top: 30px; }
+    /* Push everything down for stripe (matches min-height) */
+    body.champions-mode { padding-top: 34px; }
 
-    /* SPLASH TAKEOVER */
+    /* SPLASH TAKEOVER — editorial, deep wine + cream + brass */
     .champ-splash {
       position: fixed;
       inset: 0;
       z-index: 99999;
-      background: radial-gradient(ellipse at center, #EF0107 0%, #B8001C 60%, #6B0010 100%);
+      background:
+        radial-gradient(ellipse at 50% 40%, #5E000C 0%, #3A0008 55%, #1A0004 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1829,43 +1818,48 @@
     .champ-splash.fading {
       animation: splashOut 0.9s cubic-bezier(0.7, 0, 0.3, 1) forwards;
     }
-    @keyframes splashIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    @keyframes splashIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes splashOut {
       0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(1.15); visibility: hidden; }
+      100% { opacity: 0; transform: scale(1.04); visibility: hidden; }
     }
-    .champ-splash::before, .champ-splash::after {
+    /* Subtle paper-grain overlay */
+    .champ-splash::before {
       content: '';
       position: absolute;
-      width: 200%; height: 200%;
-      top: -50%; left: -50%;
-      background: repeating-conic-gradient(from 0deg, transparent 0deg 12deg, rgba(255,255,255,0.04) 12deg 24deg);
-      animation: splashSpin 40s linear infinite;
-    }
-    .champ-splash::after {
-      animation-direction: reverse;
-      animation-duration: 60s;
-      background: repeating-conic-gradient(from 0deg, transparent 0deg 18deg, rgba(219,155,51,0.06) 18deg 36deg);
-    }
-    @keyframes splashSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='transparent'/%3E%3Cline x1='0' y1='4' x2='8' y2='4' stroke='%23B8945F' stroke-width='0.3' opacity='0.06'/%3E%3Cline x1='4' y1='0' x2='4' y2='8' stroke='%23B8945F' stroke-width='0.3' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.5;
     }
     .splash-inner {
       position: relative;
       z-index: 2;
       text-align: center;
       padding: 2rem;
+      max-width: 720px;
     }
+    .splash-frame {
+      position: relative;
+      padding: 3.5rem 2rem;
+    }
+    .splash-frame::before, .splash-frame::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--arsenal-gold), transparent);
+      opacity: 0.7;
+    }
+    .splash-frame::before { top: 0; }
+    .splash-frame::after { bottom: 0; }
     .splash-eyebrow {
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
+      font-size: 0.7rem;
+      font-weight: 600;
       letter-spacing: 0.4em;
-      color: var(--arsenal-gold-bright);
+      color: var(--arsenal-gold);
       text-transform: uppercase;
       margin-bottom: 1.5rem;
       opacity: 0;
@@ -1873,67 +1867,78 @@
     }
     .splash-title {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(3rem, 11vw, 9rem);
-      line-height: 0.95;
-      color: #fff;
+      font-size: clamp(2.6rem, 9vw, 6.5rem);
+      line-height: 1;
+      color: #F2E4C7;
       font-style: italic;
-      text-shadow: 0 4px 40px rgba(0,0,0,0.4), 0 0 80px rgba(219,155,51,0.4);
+      font-weight: 400;
+      letter-spacing: 0.005em;
       opacity: 0;
       animation: fadeUp 0.7s 0.4s ease-out forwards;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
     .splash-title-2 {
       font-family: 'Instrument Sans', sans-serif;
-      font-size: clamp(1.8rem, 6vw, 4rem);
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      color: var(--arsenal-gold-bright);
+      font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+      font-weight: 600;
+      letter-spacing: 0.45em;
+      color: var(--arsenal-gold);
       text-transform: uppercase;
-      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
       opacity: 0;
       animation: fadeUp 0.7s 0.55s ease-out forwards;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.8rem;
+      padding-top: 0.4rem;
     }
     .splash-cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      background: var(--arsenal-gold);
-      color: #1A0006;
+      gap: 0.8rem;
+      background: transparent;
+      color: #F2E4C7;
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      padding: 1.1rem 2.4rem;
-      border: none;
-      border-radius: 100px;
+      padding: 1rem 2.2rem;
+      border: 1px solid var(--arsenal-gold);
+      border-radius: 0;
       cursor: pointer;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35), inset 0 -3px 0 rgba(0,0,0,0.15);
       opacity: 0;
-      animation: fadeUp 0.6s 0.8s ease-out forwards, ctaPulse 1.8s 1.5s ease-in-out infinite;
-      transition: transform 0.15s ease;
+      animation: fadeUp 0.6s 0.8s ease-out forwards;
+      transition: background 0.25s ease, color 0.25s ease;
     }
-    .splash-cta:hover { transform: scale(1.04); }
-    .splash-cta:active { transform: scale(0.97); }
+    .splash-cta:hover { background: var(--arsenal-gold); color: #1A0006; }
+    .splash-cta .arrow {
+      display: inline-block;
+      width: 18px; height: 1px;
+      background: currentColor;
+      position: relative;
+    }
+    .splash-cta .arrow::after {
+      content: '';
+      position: absolute;
+      right: 0; top: -3px;
+      width: 7px; height: 7px;
+      border-top: 1px solid currentColor;
+      border-right: 1px solid currentColor;
+      transform: rotate(45deg);
+    }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes ctaPulse {
-      0%, 100% { box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 0 rgba(244,201,93,0.5), inset 0 -3px 0 rgba(0,0,0,0.15); }
-      50% { box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 22px rgba(244,201,93,0), inset 0 -3px 0 rgba(0,0,0,0.15); }
-    }
     .splash-date {
-      margin-top: 2rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      color: rgba(255,255,255,0.7);
-      text-transform: uppercase;
+      margin-top: 2.2rem;
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: rgba(242,228,199,0.55);
       opacity: 0;
       animation: fadeUp 0.6s 1s ease-out forwards;
     }
+    .splash-date .sep { margin: 0 0.5rem; color: var(--arsenal-gold); opacity: 0.6; }
 
     /* CONFETTI CANVAS */
     #champConfetti {
@@ -1959,135 +1964,146 @@
       .corner-cannon.tl, .corner-cannon.tr { top: 100px; }
     }
 
-    /* FLOATING MUTE BUTTON */
+    /* FLOATING AUDIO TOGGLE — refined */
     .champ-audio-fab {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 24px;
+      right: 24px;
       z-index: 9000;
-      width: 56px;
-      height: 56px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
-      background: var(--arsenal-red);
-      color: #fff;
-      border: 2px solid var(--arsenal-gold);
+      background: var(--cream);
+      color: var(--walnut);
+      border: 1px solid var(--brass);
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(239,1,7,0.4);
+      box-shadow: 0 6px 20px rgba(78,0,8,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s ease, background 0.2s ease;
+      transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }
-    .champ-audio-fab:hover { transform: scale(1.08); }
-    .champ-audio-fab.paused { background: #333; border-color: #777; }
-    .champ-audio-fab svg { width: 22px; height: 22px; }
+    .champ-audio-fab:hover { transform: scale(1.06); color: var(--brass); }
+    .champ-audio-fab.paused { color: var(--text-soft); border-color: rgba(184, 148, 95, 0.4); }
+    .champ-audio-fab svg { width: 18px; height: 18px; }
     .champ-audio-fab .ring {
       position: absolute;
-      inset: -6px;
+      inset: -4px;
       border-radius: 50%;
-      border: 2px solid var(--arsenal-gold);
+      border: 1px solid var(--brass);
       opacity: 0;
-      animation: ringPulse 2s ease-out infinite;
+      animation: ringPulse 2.4s ease-out infinite;
     }
     .champ-audio-fab.paused .ring { display: none; }
     @keyframes ringPulse {
-      0% { transform: scale(0.85); opacity: 0.7; }
-      100% { transform: scale(1.4); opacity: 0; }
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.35); opacity: 0; }
     }
 
-    /* CHAMPIONS CORNER STAMP */
+    /* CHAMPIONS CORNER STAMP — refined wax seal */
     .champ-stamp {
       position: fixed;
-      bottom: 24px;
-      left: 24px;
+      bottom: 28px;
+      left: 28px;
       z-index: 95;
-      width: 110px;
-      height: 110px;
+      width: 92px;
+      height: 92px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #FFE08A, var(--arsenal-gold) 55%, var(--arsenal-gold) 80%, #8C5E10 100%);
-      color: #1A0006;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.18), transparent 55%),
+        linear-gradient(140deg, #C7A66B 0%, #B8945F 45%, #8A6A3A 100%);
+      color: #2A1A05;
       font-family: 'Instrument Sans', sans-serif;
-      font-weight: 800;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.3), inset 0 -4px 0 rgba(0,0,0,0.15), 0 0 0 4px #fff, 0 0 0 6px var(--arsenal-red);
-      transform: rotate(-12deg);
-      animation: stampFloat 4s ease-in-out infinite;
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.4),
+        inset 0 -2px 4px rgba(0,0,0,0.18),
+        0 0 0 1px rgba(0,0,0,0.08),
+        0 8px 28px rgba(78,0,8,0.22);
+      transform: rotate(-7deg);
       pointer-events: none;
+      transition: transform 0.4s ease;
     }
-    .champ-stamp-top { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; }
-    .champ-stamp-mid { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.8rem; line-height: 1; margin: 2px 0; font-weight: 400; }
-    .champ-stamp-bot { font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; }
-    @keyframes stampFloat {
-      0%, 100% { transform: rotate(-12deg) translateY(0); }
-      50% { transform: rotate(-10deg) translateY(-6px); }
+    .champ-stamp::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px solid rgba(42,26,5,0.35);
+    }
+    .champ-stamp-top {
+      font-size: 0.46rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(42,26,5,0.7);
+    }
+    .champ-stamp-mid {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      line-height: 1;
+      margin: 4px 0 3px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .champ-stamp-bot {
+      font-size: 0.42rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(42,26,5,0.7);
     }
     @media (max-width: 768px) {
-      .champ-stamp { width: 80px; height: 80px; bottom: 88px; left: 16px; }
-      .champ-stamp-mid { font-size: 1.3rem; }
-      .champ-stamp-top, .champ-stamp-bot { font-size: 0.45rem; }
+      .champ-stamp { width: 72px; height: 72px; bottom: 92px; left: 16px; }
+      .champ-stamp-mid { font-size: 1.2rem; margin: 3px 0 2px; }
+      .champ-stamp-top { font-size: 0.4rem; letter-spacing: 0.22em; }
+      .champ-stamp-bot { font-size: 0.36rem; letter-spacing: 0.26em; }
     }
 
-    /* HERO ENHANCEMENTS */
-    body.champions-mode .hero h1 {
-      background: linear-gradient(180deg, var(--arsenal-red) 0%, var(--arsenal-red-deep) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    body.champions-mode .hero-cta {
-      background: var(--arsenal-red) !important;
-      color: #fff !important;
-      border-color: var(--arsenal-red) !important;
-    }
-    body.champions-mode .hero-cta:hover {
-      background: var(--arsenal-gold) !important;
-      color: #1A0006 !important;
-      border-color: var(--arsenal-gold) !important;
-    }
+    /* HERO ENHANCEMENTS — keep walnut headline, walnut CTA. Champions mode is decorum, not red paint. */
 
-    /* CHAMPIONS BANNER IN HERO */
+    /* CHAMPIONS BANNER IN HERO — small caps, no pill */
     .hero-champ-banner {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      background: linear-gradient(90deg, var(--arsenal-red), var(--arsenal-red-deep));
-      color: #fff;
-      padding: 0.45rem 1rem 0.45rem 0.6rem;
-      border-radius: 100px;
+      gap: 0.7rem;
+      color: var(--brass);
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      margin-bottom: 1.25rem;
-      box-shadow: 0 6px 24px rgba(239,1,7,0.3), inset 0 -2px 0 rgba(0,0,0,0.12);
-      border: 1.5px solid var(--arsenal-gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(184, 148, 95, 0.35);
     }
     .hero-champ-banner .trophy {
-      width: 22px; height: 22px; border-radius: 50%;
-      background: var(--arsenal-gold); color: #1A0006;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px; height: 14px;
+      color: var(--brass);
+    }
+    .hero-champ-banner em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      font-size: 0.95rem;
+      color: var(--walnut);
     }
 
-    /* ARSENAL ROW IN PL TABLE - GOLD GLOW */
+    /* ARSENAL ROW IN PL TABLE — subtle gold tint */
     body.champions-mode .arsenal-row {
-      background: linear-gradient(90deg, rgba(239,1,7,0.06), rgba(219,155,51,0.12), rgba(239,1,7,0.06)) !important;
-      box-shadow: inset 0 0 0 1px rgba(219,155,51,0.5);
-      position: relative;
+      background: linear-gradient(90deg, transparent, rgba(184,148,95,0.10), transparent) !important;
     }
     body.champions-mode .arsenal-crown {
-      color: var(--arsenal-gold) !important;
-      font-size: 1rem !important;
-      animation: crownGlow 2s ease-in-out infinite;
-    }
-    @keyframes crownGlow {
-      0%, 100% { text-shadow: 0 0 0 var(--arsenal-gold); }
-      50% { text-shadow: 0 0 12px var(--arsenal-gold), 0 0 24px var(--arsenal-gold-bright); }
+      color: var(--brass) !important;
     }
 
     /* SCROLL CANNON FIRE */
@@ -2123,14 +2139,16 @@
   <!-- ═══ ARSENAL CHAMPIONS SPLASH ═══ -->
   <div class="champ-splash" id="champSplash" onclick="startCelebration()">
     <div class="splash-inner">
-      <div class="splash-eyebrow">North London is Red</div>
-      <div class="splash-title">Premier League</div>
-      <div class="splash-title-2">Champions</div>
-      <button class="splash-cta" type="button">
-        Tap to Celebrate
-        <span style="font-size:1.1rem;">&#9658;</span>
-      </button>
-      <div class="splash-date">May 19, 2026 &middot; Title No. 14</div>
+      <div class="splash-frame">
+        <div class="splash-eyebrow">Arsenal Football Club</div>
+        <div class="splash-title">Premier League</div>
+        <div class="splash-title-2">Champions &middot; 2025/26</div>
+        <button class="splash-cta" type="button">
+          Enter
+          <span class="arrow"></span>
+        </button>
+      </div>
+      <div class="splash-date">May 19, 2026<span class="sep">&middot;</span>North London<span class="sep">&middot;</span>Title XIV</div>
     </div>
   </div>
 
@@ -2145,8 +2163,8 @@
   <!-- Persistent champions stamp -->
   <div class="champ-stamp" aria-hidden="true">
     <div class="champ-stamp-top">Champions</div>
-    <div class="champ-stamp-mid">N&deg;14</div>
-    <div class="champ-stamp-bot">2025/26</div>
+    <div class="champ-stamp-mid">XIV</div>
+    <div class="champ-stamp-bot">MMXXVI</div>
   </div>
 
   <!-- Floating audio FAB -->
@@ -2976,7 +2994,7 @@
   var MODE_KEY = 'site-mode'; // 'champions' | 'classic'
   var FAVICON_CHAMP = 'favicon.svg';
   var FAVICON_CLASSIC = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%233E2C23'/><text x='16' y='22' font-family='Georgia, serif' font-size='14' font-weight='500' fill='%23B8945F' text-anchor='middle'>SR</text></svg>";
-  var TITLES_CHAMP = ['Sam Rahim', 'PREMIER LEAGUE CHAMPIONS', 'ARSENAL FC — N°14'];
+  var TITLES_CHAMP = ['Sam Rahim', 'Premier League Champions · Arsenal F.C.'];
   var TITLE_CLASSIC = 'Sam Rahim';
 
   function getMode(){
@@ -3002,7 +3020,7 @@
       titleInterval = setInterval(function(){
         i = (i + 1) % TITLES_CHAMP.length;
         document.title = TITLES_CHAMP[i];
-      }, 2200);
+      }, 3600);
     } else {
       document.title = TITLE_CLASSIC;
     }
@@ -3022,7 +3040,9 @@
       if (heroContent){
         var banner = document.createElement('div');
         banner.className = 'hero-champ-banner';
-        banner.innerHTML = '<span class="trophy">&#9819;</span> Premier League Champions &middot; 25/26';
+        banner.innerHTML =
+          '<svg class="trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0V4z"/><path d="M7 6H4v2a3 3 0 003 3M17 6h3v2a3 3 0 01-3 3"/></svg>' +
+          'Champions <em>&middot; Premier League &middot;</em> 25/26';
         heroContent.insertBefore(banner, heroContent.firstChild);
       }
     } else if (!champ && existing){
@@ -3037,18 +3057,12 @@
   // Apply mode immediately (before splash logic below relies on body class)
   applyMode(getMode());
 
-  // Build marquee
+  // Build stripe (single elegant centered line)
   (function buildStripe(){
-    var phrases = ['Arsenal FC', 'Premier League Champions', 'Title No. 14', 'North London is Red', 'May 19, 2026', 'COYG'];
     var track = document.getElementById('champStripeTrack');
     if (!track) return;
-    var html = '';
-    for (var loop = 0; loop < 2; loop++) {
-      phrases.forEach(function(p){
-        html += '<span><span class="dot"></span>' + p + '</span>';
-      });
-    }
-    track.innerHTML = html;
+    track.innerHTML =
+      '<span>Arsenal F.C.<span class="dot"></span><em>Premier League Champions</em><span class="dot"></span>2025 &middot; 2026</span>';
   })();
 
   // CONFETTI ENGINE
@@ -3064,7 +3078,7 @@
   sizeCanvas();
   window.addEventListener('resize', sizeCanvas);
 
-  var CONFETTI_COLORS = ['#EF0107', '#FFFFFF', '#DB9B33', '#F4C95D', '#B8001C'];
+  var CONFETTI_COLORS = ['#7A0010', '#B8001C', '#B8945F', '#D4B47F', '#F2E4C7', '#FAF7F2'];
 
   function spawnBurst(x, y, count, opts){
     opts = opts || {};
