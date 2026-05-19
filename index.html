@@ -14,7 +14,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --cream: #F5F0E8;
@@ -1707,6 +1707,13 @@
       border-bottom: 1px solid rgba(184, 148, 95, 0.18);
     }
 
+    /* Provisions.soccer hero headline font, only in Champions mode */
+    body.champions-mode .hero h1 {
+      font-family: 'Syne', 'Instrument Serif', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
     /* Hide all champions elements when not in mode */
     body:not(.champions-mode) .champ-splash,
     body:not(.champions-mode) .champ-stripe,
@@ -1745,7 +1752,7 @@
     }
     .mode-toggle svg { width: 18px; height: 18px; }
 
-    /* Champion stripe under nav — quiet, centered, no marquee */
+    /* Champion stripe under nav — quiet, centered, no marquee, no italics */
     .champ-stripe {
       position: fixed;
       top: 64px;
@@ -1755,50 +1762,49 @@
       background: linear-gradient(180deg, #4E0008 0%, #2D0005 100%);
       color: var(--arsenal-gold-bright);
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.62rem;
+      font-size: 0.64rem;
       font-weight: 600;
-      letter-spacing: 0.42em;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      padding: 0.6rem 1.5rem 0.55rem;
+      padding: 1rem 1.5rem;
       text-align: center;
       border-top: 1px solid rgba(184, 148, 95, 0.35);
       border-bottom: 1px solid rgba(184, 148, 95, 0.35);
-      min-height: 34px;
+      min-height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
+      line-height: 1;
     }
     .champ-stripe-track {
       display: inline-flex;
       align-items: center;
-      gap: 1.4rem;
+      gap: 1.6rem;
       white-space: nowrap;
     }
-    .champ-stripe-track span { display: inline-flex; align-items: center; gap: 1.4rem; }
+    .champ-stripe-track span { display: inline-flex; align-items: center; gap: 1.6rem; }
     .champ-stripe-track .dot {
       width: 4px; height: 4px;
       border-radius: 50%;
       background: var(--arsenal-gold);
       display: inline-block;
       opacity: 0.7;
+      flex-shrink: 0;
     }
-    .champ-stripe-track em {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      text-transform: none;
-      letter-spacing: 0.02em;
-      font-size: 0.85rem;
+    .champ-stripe-track .emph {
       color: #F2E4C7;
     }
     @media (max-width: 720px) {
-      .champ-stripe { font-size: 0.55rem; letter-spacing: 0.32em; padding: 0.5rem 1rem; }
-      .champ-stripe-track { gap: 0.9rem; }
-      .champ-stripe-track span { gap: 0.9rem; }
-      .champ-stripe-track em { font-size: 0.72rem; }
+      .champ-stripe { font-size: 0.56rem; letter-spacing: 0.3em; padding: 0.8rem 1rem; min-height: 42px; }
+      .champ-stripe-track { gap: 1rem; }
+      .champ-stripe-track span { gap: 1rem; }
     }
 
     /* Push everything down for stripe (matches min-height) */
-    body.champions-mode { padding-top: 34px; }
+    body.champions-mode { padding-top: 48px; }
+    @media (max-width: 720px) {
+      body.champions-mode { padding-top: 42px; }
+    }
 
     /* SPLASH TAKEOVER — editorial, deep wine + cream + brass */
     .champ-splash {
@@ -1866,16 +1872,15 @@
       animation: fadeUp 0.6s 0.2s ease-out forwards;
     }
     .splash-title {
-      font-family: 'Instrument Serif', serif;
+      font-family: 'Syne', 'Instrument Serif', serif;
       font-size: clamp(2.6rem, 9vw, 6.5rem);
       line-height: 1;
       color: #F2E4C7;
-      font-style: italic;
-      font-weight: 400;
-      letter-spacing: 0.005em;
+      font-weight: 600;
+      letter-spacing: -0.015em;
       opacity: 0;
       animation: fadeUp 0.7s 0.4s ease-out forwards;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.5rem;
     }
     .splash-title-2 {
       font-family: 'Instrument Sans', sans-serif;
@@ -1930,10 +1935,11 @@
     }
     .splash-date {
       margin-top: 2.2rem;
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      font-size: 0.95rem;
-      letter-spacing: 0.04em;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
       color: rgba(242,228,199,0.55);
       opacity: 0;
       animation: fadeUp 0.6s 1s ease-out forwards;
@@ -2043,13 +2049,12 @@
       color: rgba(42,26,5,0.7);
     }
     .champ-stamp-mid {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      font-size: 1.6rem;
+      font-family: 'Syne', 'Instrument Serif', serif;
+      font-size: 1.5rem;
       line-height: 1;
       margin: 4px 0 3px;
-      font-weight: 400;
-      letter-spacing: 0.02em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
     }
     .champ-stamp-bot {
       font-size: 0.42rem;
@@ -2089,13 +2094,13 @@
       width: 14px; height: 14px;
       color: var(--brass);
     }
-    .hero-champ-banner em {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      text-transform: none;
-      letter-spacing: 0.02em;
-      font-size: 0.95rem;
+    .hero-champ-banner .emph {
       color: var(--walnut);
+      letter-spacing: 0.32em;
+    }
+    .hero-champ-banner .sep {
+      color: var(--brass);
+      opacity: 0.55;
     }
 
     /* ARSENAL ROW IN PL TABLE — subtle gold tint */
@@ -3042,7 +3047,7 @@
         banner.className = 'hero-champ-banner';
         banner.innerHTML =
           '<svg class="trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0V4z"/><path d="M7 6H4v2a3 3 0 003 3M17 6h3v2a3 3 0 01-3 3"/></svg>' +
-          'Champions <em>&middot; Premier League &middot;</em> 25/26';
+          '<span class="emph">Premier League Champions</span><span class="sep">&middot;</span>25/26';
         heroContent.insertBefore(banner, heroContent.firstChild);
       }
     } else if (!champ && existing){
@@ -3062,7 +3067,7 @@
     var track = document.getElementById('champStripeTrack');
     if (!track) return;
     track.innerHTML =
-      '<span>Arsenal F.C.<span class="dot"></span><em>Premier League Champions</em><span class="dot"></span>2025 &middot; 2026</span>';
+      '<span>Arsenal F.C.<span class="dot"></span><span class="emph">Premier League Champions</span><span class="dot"></span>2025 &middot; 2026</span>';
   })();
 
   // CONFETTI ENGINE
