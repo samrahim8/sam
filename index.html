@@ -1707,11 +1707,17 @@
       border-bottom: 1px solid rgba(184, 148, 95, 0.18);
     }
 
-    /* Provisions.soccer hero headline font, only in Champions mode */
+    /* Provisions.soccer hero headline font, only in Champions mode.
+       Syne runs much wider than Instrument Serif — size down to compensate. */
     body.champions-mode .hero h1 {
       font-family: 'Syne', 'Instrument Serif', serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-weight: 600;
+      font-size: clamp(2.4rem, 6.5vw, 5rem);
+      letter-spacing: -0.025em;
+      line-height: 1;
+    }
+    @media (max-width: 768px) {
+      body.champions-mode .hero h1 { font-size: clamp(2.2rem, 9vw, 3.5rem); }
     }
 
     /* Hide all champions elements when not in mode */
