@@ -257,7 +257,23 @@
       position: relative;
     }
 
-    .hero-content { max-width: 900px; }
+    /* Full-bleed monochrome 50-star flag watermark — opacity + center-fade
+       baked into the SVG. Swaps with theme. */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("hero/hero-flag-light.svg") center / cover no-repeat;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    [data-theme="dark"] .hero::before {
+      background-image: url("hero/hero-flag-dark.svg");
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+    .hero-scroll { z-index: 1; }
 
     .hero-greeting {
       font-size: 0.85rem;
