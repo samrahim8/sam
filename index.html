@@ -2126,10 +2126,10 @@
     (function() {
       var hour = new Date().getHours();
       var greeting;
-      if (hour >= 5 && hour < 12) greeting = 'Good morning.';
-      else if (hour >= 12 && hour < 17) greeting = 'Good afternoon.';
-      else if (hour >= 17 && hour < 21) greeting = 'Good evening.';
-      else greeting = 'Up late?';
+      if (hour >= 5 && hour < 12) greeting = 'Good morning. I\'m';
+      else if (hour >= 12 && hour < 17) greeting = 'Good afternoon. I\'m';
+      else if (hour >= 17 && hour < 21) greeting = 'Good evening. I\'m';
+      else greeting = 'Up late? I\'m';
       document.getElementById('greeting').textContent = greeting;
     })();
 
