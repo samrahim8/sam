@@ -108,48 +108,59 @@
     nav.scrolled { top: 10px; }
 
     nav.scrolled .nav-inner {
-      background: var(--nav-flute), rgba(245, 240, 232, 0.62);
-      box-shadow: 0 12px 38px rgba(42, 33, 24, 0.16), 0 2px 6px rgba(42, 33, 24, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      background: var(--nav-sheen), rgba(245, 240, 232, 0.55);
+      box-shadow:
+        0 16px 42px rgba(42, 33, 24, 0.2),
+        0 3px 10px rgba(42, 33, 24, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.85),
+        inset 0 -12px 26px rgba(42, 33, 24, 0.06);
     }
 
     [data-theme="dark"] nav.scrolled .nav-inner {
-      background: var(--nav-flute), rgba(26, 21, 18, 0.66);
+      background: var(--nav-sheen), rgba(26, 21, 18, 0.6);
     }
 
     .nav-inner {
-      /* Vertical flute ribs: soft highlight peaking mid-rib, thin shadow seam
-         at each edge, repeating every 12px. Shared across all nav states. */
-      --nav-flute: repeating-linear-gradient(90deg,
-        rgba(0, 0, 0, 0.05) 0px,
-        rgba(255, 255, 255, 0) 1.5px,
-        rgba(255, 255, 255, 0.16) 6px,
-        rgba(255, 255, 255, 0) 10.5px,
-        rgba(0, 0, 0, 0.05) 12px);
+      /* Liquid glass: very translucent, heavily saturated backdrop so the
+         background colour bleeds through, a soft top sheen, a bright specular
+         rim, and inner highlights/shadow that give the pane real glass depth. */
+      --nav-sheen: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.32),
+        rgba(255, 255, 255, 0.06) 46%,
+        rgba(255, 255, 255, 0) 100%);
       max-width: 1060px;
       margin: 0 auto;
-      padding: 0.7rem 1.5rem;
+      padding: 0.7rem 1.7rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--nav-flute), rgba(245, 240, 232, 0.28);
-      -webkit-backdrop-filter: blur(18px) saturate(1.4);
-      backdrop-filter: blur(18px) saturate(1.4);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      border-radius: 16px;
-      box-shadow: 0 10px 34px rgba(42, 33, 24, 0.12), 0 2px 6px rgba(42, 33, 24, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      background: var(--nav-sheen), rgba(245, 240, 232, 0.14);
+      -webkit-backdrop-filter: blur(16px) saturate(1.9) brightness(1.05);
+      backdrop-filter: blur(16px) saturate(1.9) brightness(1.05);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 30px;
+      box-shadow:
+        0 14px 38px rgba(42, 33, 24, 0.18),
+        0 3px 10px rgba(42, 33, 24, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.85),
+        inset 0 -12px 26px rgba(42, 33, 24, 0.06),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
       transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     [data-theme="dark"] .nav-inner {
-      --nav-flute: repeating-linear-gradient(90deg,
-        rgba(0, 0, 0, 0.18) 0px,
-        rgba(255, 255, 255, 0) 1.5px,
-        rgba(255, 255, 255, 0.10) 6px,
-        rgba(255, 255, 255, 0) 10.5px,
-        rgba(0, 0, 0, 0.18) 12px);
-      background: var(--nav-flute), rgba(26, 21, 18, 0.32);
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 34px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      --nav-sheen: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.16),
+        rgba(255, 255, 255, 0.03) 46%,
+        rgba(255, 255, 255, 0) 100%);
+      background: var(--nav-sheen), rgba(26, 21, 18, 0.20);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow:
+        0 14px 38px rgba(0, 0, 0, 0.5),
+        0 3px 10px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.28),
+        inset 0 -12px 26px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
     .nav-name {
@@ -1280,13 +1291,13 @@
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       .nav-inner {
-        -webkit-backdrop-filter: blur(14px) saturate(1.4);
-        backdrop-filter: blur(14px) saturate(1.4);
-        background: var(--nav-flute), rgba(245, 240, 232, 0.55);
+        -webkit-backdrop-filter: blur(14px) saturate(1.7);
+        backdrop-filter: blur(14px) saturate(1.7);
+        background: var(--nav-sheen), rgba(245, 240, 232, 0.5);
       }
 
       [data-theme="dark"] .nav-inner {
-        background: var(--nav-flute), rgba(26, 21, 18, 0.6);
+        background: var(--nav-sheen), rgba(26, 21, 18, 0.55);
       }
 
       .hamburger { display: flex; }
