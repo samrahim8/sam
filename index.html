@@ -30,6 +30,9 @@
       --plaster: #E8E0D4;
       --text: #2A2118;
       --text-soft: #5C4F42;
+      /* Flag motif: a 5-point canton star, used as divider node, status mark,
+         and timeline node so the hero's flag threads through the whole site. */
+      --star-clip: polygon(50% 0%, 61.8% 35.1%, 98.8% 35.1%, 69% 57.3%, 80.9% 91.1%, 50% 70%, 19.1% 91.1%, 31% 57.3%, 1.2% 35.1%, 38.2% 35.1%);
     }
 
     [data-theme="dark"] {
@@ -280,15 +283,15 @@
     .brass-rule-inner::after {
       content: '';
       position: absolute;
-      top: -3px;
-      width: 9px;
-      height: 9px;
+      top: -5.5px;
+      width: 14px;
+      height: 14px;
       background: var(--brass);
-      border-radius: 50%;
+      clip-path: var(--star-clip);
     }
 
-    .brass-rule-inner::before { left: 15%; }
-    .brass-rule-inner::after { right: 15%; }
+    .brass-rule-inner::before { left: 15%; transform: translateX(-50%); }
+    .brass-rule-inner::after { right: 15%; transform: translateX(50%); }
 
 
     /* ── HERO ── */
@@ -543,9 +546,9 @@
 
     .venture-status::before {
       content: '';
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      clip-path: var(--star-clip);
     }
 
     .venture-status.live {
@@ -589,7 +592,7 @@
       top: 0.5rem;
       bottom: 0;
       width: 2px;
-      background: var(--plaster);
+      background: repeating-linear-gradient(180deg, rgba(155, 68, 35, 0.38) 0 5px, transparent 5px 10px);
     }
 
     .timeline-item {
@@ -603,17 +606,20 @@
       content: '';
       position: absolute;
       left: -2.5rem;
-      top: 0.5rem;
-      width: 10px;
-      height: 10px;
+      top: 0.35rem;
+      width: 14px;
+      height: 14px;
       background: var(--brass);
-      border-radius: 50%;
-      transform: translateX(-4px);
+      clip-path: var(--star-clip);
+      transform: translateX(-6px);
     }
 
     .timeline-item.current::before {
       background: var(--walnut);
-      box-shadow: 0 0 0 4px rgba(62, 44, 35, 0.15);
+      width: 17px;
+      height: 17px;
+      top: 0.2rem;
+      transform: translateX(-7.5px);
     }
 
     .timeline-company {
@@ -1159,9 +1165,9 @@
 
     .comp-status::before {
       content: '';
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      clip-path: var(--star-clip);
       background: var(--forest);
     }
 
@@ -1750,6 +1756,86 @@
       font-weight: 600;
     }
 
+
+    /* ── FLAG MOTIF: WATERMARKS & ACCENTS ── */
+    #about { position: relative; overflow: hidden; }
+    #about::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 520px;
+      height: 300px;
+      background: url('assets/flag-ink.png') top right / auto 150% no-repeat;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: -1;
+      -webkit-mask-image: linear-gradient(225deg, #000, transparent 70%);
+      mask-image: linear-gradient(225deg, #000, transparent 70%);
+    }
+    [data-theme="dark"] #about::before {
+      background-image: url('assets/flag-cream.png');
+      opacity: 0.08;
+    }
+
+    /* Eyebrow stripe tick on every section label — flag stripes as a small
+       structural mark, threading the motif through every section header. */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .section-label::after {
+      content: '';
+      height: 11px;
+      width: 52px;
+      flex: none;
+      background: repeating-linear-gradient(180deg, var(--brass) 0 2px, transparent 2px 5px);
+      opacity: 0.5;
+    }
+
+    /* Footer closing star — bookends the hero flag */
+    footer::before {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 14px;
+      margin: 0 auto 1rem;
+      background: var(--brass);
+      clip-path: var(--star-clip);
+    }
+
+    /* Pillar № markers get a tiny star */
+    .pillar-num { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .pillar-num::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--brass);
+      clip-path: var(--star-clip);
+      flex: none;
+    }
+
+    /* Side Quest cards carry a faint canton in the top-left corner */
+    .venture-card { overflow: hidden; }
+    .venture-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 130px;
+      height: 96px;
+      background: url('assets/flag-ink.png') top left / 320px auto no-repeat;
+      opacity: 0.06;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(135deg, #000, transparent 75%);
+      mask-image: linear-gradient(135deg, #000, transparent 75%);
+    }
+    [data-theme="dark"] .venture-card::before {
+      background-image: url('assets/flag-cream.png');
+      opacity: 0.09;
+    }
+    .venture-card > * { position: relative; z-index: 1; }
 
     /* REDUCED MOTION */
     @media (prefers-reduced-motion: reduce) {
