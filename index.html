@@ -432,6 +432,15 @@
       aspect-ratio: 4/5;
       object-fit: cover;
       display: block;
+      transition: filter 0.3s ease;
+    }
+
+    /* The halftone portrait has a white field; in dark mode warm it slightly
+       and frame it with a soft shadow so it reads as a gallery print on a
+       dark wall rather than a stark bright square. */
+    [data-theme="dark"] .about-photo {
+      filter: brightness(0.94) sepia(0.14);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
     }
 
     .about-text h2 {

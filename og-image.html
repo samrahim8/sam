@@ -2,78 +2,101 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;600&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cream: #F5F0E8;
+      --walnut: #3E2C23;
+      --brass: #9B4423;
+      --text-soft: #5C4F42;
+    }
     body {
       width: 1200px;
       height: 630px;
-      font-family: 'Inter', sans-serif;
-      background: #F5F0E8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--cream);
       overflow: hidden;
       position: relative;
+      -webkit-font-smoothing: antialiased;
     }
-    body::before {
-      content: '';
+    /* Faded flag, same anchor as the hero */
+    .flag {
       position: absolute;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%233E2C23' stroke-width='0.3' opacity='0.15'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%233E2C23' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E");
+      background: url("hero/hero-flag-light.svg") center / cover no-repeat;
+      -webkit-mask-image: linear-gradient(105deg, #000 0%, #000 30%, transparent 62%);
+      mask-image: linear-gradient(105deg, #000 0%, #000 30%, transparent 62%);
+    }
+    /* paper crosshatch */
+    .grain {
+      position: absolute;
+      inset: 0;
       opacity: 0.4;
-      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%233E2C23' stroke-width='0.3' opacity='0.15'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%233E2C23' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E");
     }
     .card {
-      display: flex;
-      align-items: center;
-      gap: 64px;
       position: relative;
       z-index: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 72px;
+      padding: 0 96px;
     }
     .photo {
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
+      width: 300px;
+      height: 375px;
+      flex: none;
       object-fit: cover;
-      border: 4px solid #B8945F;
+      box-shadow: 0 18px 50px rgba(42, 33, 24, 0.22);
     }
-    .text {
-      display: flex;
-      flex-direction: column;
+    .text { display: flex; flex-direction: column; }
+    .stripe {
+      width: 86px;
+      height: 16px;
+      margin-bottom: 26px;
+      opacity: 0.6;
+      background: repeating-linear-gradient(180deg, var(--brass) 0 3px, transparent 3px 7px);
     }
     .name {
       font-family: 'Instrument Serif', serif;
-      font-size: 82px;
-      color: #3E2C23;
-      line-height: 1;
-      margin-bottom: 12px;
+      font-size: 104px;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--walnut);
+    }
+    .tagline {
+      font-size: 30px;
+      line-height: 1.45;
+      color: var(--text-soft);
+      margin-top: 28px;
+      max-width: 560px;
     }
     .url {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
-      letter-spacing: 0.08em;
-      color: #B8945F;
-    }
-    .brass-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, transparent 10%, #B8945F 30%, #B8945F 70%, transparent 90%);
-      z-index: 2;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-top: 36px;
     }
   </style>
 </head>
 <body>
+  <div class="flag"></div>
+  <div class="grain"></div>
   <div class="card">
     <img src="profile.png" class="photo" alt="Sam Rahim">
     <div class="text">
-      <h1 class="name">Sam Rahim</h1>
+      <div class="stripe"></div>
+      <h1 class="name">Sam<br>Rahim</h1>
+      <p class="tagline">I run a small studio of products + services.</p>
       <p class="url">samrahim.com</p>
     </div>
   </div>
-  <div class="brass-bar"></div>
 </body>
 </html>
