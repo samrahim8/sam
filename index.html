@@ -1862,7 +1862,7 @@
     <p class="section-label">Side Quests</p>
     <h2>What I'm Making</h2>
     <div class="ventures-grid">
-      <a class="venture-card" href="https://provisions.work/ufo" target="_blank" rel="noopener">
+      <a class="venture-card scroll-reveal scroll-reveal-delay-1" href="https://provisions.work/ufo" target="_blank" rel="noopener">
         <div class="venture-header">
           <div>
             <h3>The UAP Files</h3>
@@ -1872,7 +1872,7 @@
         </div>
         <p>4,124 pages, 28 clips, and 38 photographs of declassified US government UAP records from 1944 to 2025. Pannable cockpit interface. I wanted to read the actual files.</p>
       </a>
-      <a class="venture-card" href="https://provisions.soccer" target="_blank" rel="noopener">
+      <a class="venture-card scroll-reveal scroll-reveal-delay-2" href="https://provisions.soccer" target="_blank" rel="noopener">
         <div class="venture-header">
           <div>
             <h3>Provisions for the World Cup</h3>
@@ -1916,7 +1916,7 @@
   <section class="arsenal" id="arsenal">
     <p class="section-label">One More Thing</p>
     <h2>North London Forever</h2>
-    <p class="arsenal-intro">Arsenal since '95. Live table + competitions below.<span class="arsenal-audio-wrap">
+    <p class="arsenal-intro">Arsenal since '95. <span id="arsenalSeasonNote">Live table + competitions below.</span><span class="arsenal-audio-wrap">
         <button class="arsenal-audio-toggle" id="arsenalAudioToggle" onclick="toggleArsenalAudio()">
           <span class="audio-icon">
             <span class="audio-bar"></span>
@@ -1929,13 +1929,13 @@
     <audio id="arsenalAudio" src="arsenal-audio.mp3"></audio>
     <div class="arsenal-grid">
       <div class="arsenal-table-wrap">
-        <h3>Premier League Table</h3>
+        <h3 id="plTableHeading">Premier League Table</h3>
         <table class="pl-table" id="plTable">
           <thead>
             <tr><th>#</th><th>Club</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>
           </thead>
           <tbody id="plTableBody">
-            <tr><td colspan="6" class="table-loading">Loading...</td></tr>
+            <tr><td colspan="7" class="table-loading">Loading...</td></tr>
           </tbody>
         </table>
         <div class="table-footer">
@@ -1947,7 +1947,7 @@
         </div>
       </div>
       <div class="arsenal-competitions">
-        <h3>Active Competitions</h3>
+        <h3 id="compHeading">Active Competitions</h3>
         <div id="arsenalCompetitions" class="competitions-list">
           <p class="table-loading">Loading...</p>
         </div>
@@ -2039,12 +2039,41 @@
 
     // Arsenal live data
     let allRows = [];
+    let standingsPromise = null;
+
+    // Fetch the PL table. If the new season hasn't kicked off yet (no games
+    // played), fall back to last completed season's final table so the
+    // section celebrates rather than rendering an empty 0-0 grid.
+    function getStandings() {
+      if (standingsPromise) return standingsPromise;
+      const base = 'https://site.api.espn.com/apis/v2/sports/soccer/eng.1/standings';
+      standingsPromise = (async () => {
+        let res = await fetch(base);
+        let data = await res.json();
+        let entries = data.children[0].standings.entries;
+        const totalGP = entries.reduce((sum, e) => sum + (e.stats.find(s => s.name === 'gamesPlayed')?.value || 0), 0);
+        const curYear = (data.season && data.season.year) || new Date().getFullYear();
+        let preseason = false, seasonLabel = '';
+        if (totalGP === 0) {
+          preseason = true;
+          const prev = curYear - 1;
+          seasonLabel = prev + '–' + String(prev + 1).slice(2); // e.g. 2025–26
+          res = await fetch(base + '?season=' + prev);
+          data = await res.json();
+          entries = data.children[0].standings.entries;
+        }
+        return { entries, preseason, seasonLabel };
+      })();
+      return standingsPromise;
+    }
 
     async function loadPLTable() {
       try {
-        const res = await fetch('https://site.api.espn.com/apis/v2/sports/soccer/eng.1/standings');
-        const data = await res.json();
-        const entries = data.children[0].standings.entries;
+        const { entries, preseason, seasonLabel } = await getStandings();
+        const heading = document.getElementById('plTableHeading');
+        if (heading) heading.textContent = preseason ? ('Final Table · ' + seasonLabel) : 'Premier League Table';
+        const note = document.getElementById('arsenalSeasonNote');
+        if (note) note.textContent = preseason ? ('Premier League champions, ' + seasonLabel + '.') : 'Live table + competitions below.';
         entries.sort((a, b) => {
           const ptsA = a.stats.find(s => s.name === 'points')?.value || 0;
           const ptsB = b.stats.find(s => s.name === 'points')?.value || 0;
@@ -2124,7 +2153,10 @@
             <p class="next-match-info">${dateStr} &middot; ${timeStr}</p>
           `;
         } else {
-          document.getElementById('arsenalNextMatch').innerHTML = '<p class="next-match-info">No upcoming match found</p>';
+          const { preseason } = await getStandings();
+          document.getElementById('arsenalNextMatch').innerHTML = preseason
+            ? '<p class="next-match-teams">2026–27 Season</p><p class="next-match-info">Kicks off August 2026</p>'
+            : '<p class="next-match-info">No upcoming match found</p>';
         }
       } catch (err) {
         document.getElementById('arsenalNextMatch').innerHTML = '<p class="next-match-info">Unable to load</p>';
@@ -2133,32 +2165,45 @@
 
     async function loadCompetitions() {
       const container = document.getElementById('arsenalCompetitions');
+      const heading = document.getElementById('compHeading');
 
-      // Get PL matchweek from games played
-      let matchweek = '';
       try {
-        const res = await fetch('https://site.api.espn.com/apis/v2/sports/soccer/eng.1/standings');
-        const data = await res.json();
-        const arsenal = data.children[0].standings.entries.find(e => e.team.displayName === 'Arsenal');
+        const { entries, preseason, seasonLabel } = await getStandings();
+
+        if (preseason) {
+          // Season's in the books — Arsenal finished top of the table.
+          if (heading) heading.textContent = seasonLabel + ' Honours';
+          const sorted = [...entries].sort((a, b) =>
+            (b.stats.find(s => s.name === 'points')?.value || 0) - (a.stats.find(s => s.name === 'points')?.value || 0));
+          const champ = sorted[0];
+          const champPts = champ.stats.find(s => s.name === 'points')?.value || 0;
+          const runnerPts = sorted[1] ? (sorted[1].stats.find(s => s.name === 'points')?.value || 0) : champPts;
+          const margin = Math.round(champPts - runnerPts);
+          const comps = [
+            { name: 'Premier League', round: 'Champions' },
+            { name: 'Final Margin', round: '+' + margin + ' pts' }
+          ];
+          container.innerHTML = comps.map(c =>
+            `<div class="comp-item"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
+          ).join('');
+          return;
+        }
+
+        // In-season: show current matchweek.
+        if (heading) heading.textContent = 'Active Competitions';
+        const arsenal = entries.find(e => e.team.displayName === 'Arsenal');
+        let matchweek = 'In Progress';
         if (arsenal) {
           const gp = arsenal.stats.find(s => s.name === 'gamesPlayed')?.value || 0;
-          matchweek = `Matchweek ${Math.round(gp)}`;
+          if (gp > 0) matchweek = `Matchweek ${Math.round(gp)}`;
         }
-      } catch (err) {}
-
-      // UCL - Arsenal in the final
-      let uclRound = 'Final';
-
-      const comps = [
-        { name: 'Premier League', round: matchweek || 'In Progress' },
-        { name: 'Champions League', round: uclRound },
-        { name: 'FA Cup', round: 'Quarter-Finals', eliminated: true },
-        { name: 'Carabao Cup', round: 'Final', eliminated: true }
-      ];
-
-      container.innerHTML = comps.map(c =>
-        `<div class="comp-item${c.eliminated ? ' eliminated' : ''}"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
-      ).join('');
+        const comps = [{ name: 'Premier League', round: matchweek }];
+        container.innerHTML = comps.map(c =>
+          `<div class="comp-item"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
+        ).join('');
+      } catch (err) {
+        container.innerHTML = '<p class="table-loading">Unable to load</p>';
+      }
     }
 
     function updateTimestamp() {
@@ -2476,17 +2521,6 @@
       card.addEventListener('click', function(e) {
         if (isMobile()) {
           e.preventDefault();
-          openInAppBrowser(this.href);
-        }
-      });
-    });
-
-    // Intercept Bar Rescue link on mobile
-    document.querySelectorAll('.bar-rescue-link').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        if (isMobile()) {
-          e.preventDefault();
-          e.stopPropagation(); // Prevent House Call card click
           openInAppBrowser(this.href);
         }
       });
