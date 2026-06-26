@@ -315,6 +315,10 @@
       background: url("hero/hero-flag-light.svg") center / cover no-repeat;
       pointer-events: none;
       z-index: 0;
+      /* Dissolve the flag toward the bottom so it melts into the next section
+         instead of hard-cutting at the hero edge. */
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 88%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 88%);
     }
 
     [data-theme="dark"] .hero::before {
