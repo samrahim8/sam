@@ -783,14 +783,6 @@
       .pillar-desc { font-size: 1rem; }
     }
 
-    .streetfc-caption {
-      margin-top: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      font-style: italic;
-      opacity: 0.7;
-    }
-
     .timeline-hidden {
       max-height: 0;
       overflow: hidden;
@@ -1912,8 +1904,8 @@
       <img src="profile.png" alt="Sam Rahim" class="about-photo">
       <div class="about-text">
         <h2>Hi, I'm Sam Rahim.</h2>
-        <p>I spent the last decade working at high growth startups like <a href="https://instagram.com/streetfc" target="_blank" rel="noopener">Street FC</a>, <a href="https://instagram.com/switchyards" target="_blank" rel="noopener">Switchyards</a> and <a href="https://guild.com" target="_blank" rel="noopener">Guild</a>. Now, I advise + operate businesses across tech + soccer.</p>
-        <p>I'm from Southern California, and lived there for my first 25 years. When I was in college at UC Irvine, I spent a summer in the jungles of Belize doing archaeology - our team found dozens of artifacts + structures that were thousands of years old.</p>
+        <p>I spent the last decade working at high growth startups like <a href="https://instagram.com/streetfc" target="_blank" rel="noopener">Street FC</a>, <a href="https://instagram.com/switchyards" target="_blank" rel="noopener">Switchyards</a> and <a href="https://guild.com" target="_blank" rel="noopener">Guild</a>. Now I run my own shop, <a href="https://provisions.work" target="_blank" rel="noopener">Provisions</a>.</p>
+        <p>I'm from Southern California, and lived there for my first 25 years. When I was in college at UC Irvine, I spent a summer in the jungles of Belize doing archaeology - our team found dozens of artifacts and structures that were thousands of years old.</p>
         <p>I began my career at Disney's corporate campus in LA - where, ultimately, I met my wife. We live in Orlando and are expecting our first child imminently!</p>
       </div>
     </div>
@@ -1930,7 +1922,7 @@
         <h3 class="timeline-company">Provisions</h3>
         <p class="timeline-role">Proprietor</p>
         <p class="timeline-date">2025 &ndash; Present</p>
-        <p class="timeline-desc">I work with founders + operators across tech + soccer.</p>
+        <p class="timeline-desc">I turn the work founders repeat by hand into software.</p>
 
         <a href="https://provisions.work" target="_blank" rel="noopener" class="provisions-link">See the work &rarr;</a>
       </div>
@@ -1939,7 +1931,7 @@
         <h3 class="timeline-company">Switchyards</h3>
         <p class="timeline-role">Go To Market + Special Projects</p>
         <p class="timeline-date">2025</p>
-        <p class="timeline-desc">Managed our influencer + creator program, field marketing, and growth projects. Helped open + sell out 8 clubs.</p>
+        <p class="timeline-desc">Managed our influencer and creator program, field marketing, and growth projects. Helped open and sell out 8 clubs.</p>
       </div>
 
       <div class="timeline-item">
@@ -1954,7 +1946,6 @@
           <img src="streetfc-philly.gif" alt="EA FC Philadelphia">
           <img src="streetfc-rbl-kit.gif" alt="RBL Kit Drop">
         </div>
-        <p class="streetfc-caption">Enjoy the montage.</p>
       </div>
 
       <div class="timeline-hidden" id="timelineMore">
@@ -1976,7 +1967,7 @@
           <h3 class="timeline-company">Lokal Travel</h3>
           <p class="timeline-role">The Generalist Intern</p>
           <p class="timeline-date">2017 &ndash; 2019</p>
-          <p class="timeline-desc"><strong>The opportunity that changed my life.</strong> Lokal Travel helps travelers find locally-run tour operators, keeping tourism dollars in the destination.</p>
+          <p class="timeline-desc">Lokal Travel helps travelers find locally-run tour operators, keeping tourism dollars in the destination.</p>
         </div>
       </div>
 
@@ -2024,7 +2015,7 @@
   <!-- ARSENAL -->
   <section class="arsenal" id="arsenal">
     <p class="section-label">North London Forever</p>
-    <p class="arsenal-intro">Arsenal since '95. <span id="arsenalSeasonNote">Live table + competitions below.</span><span class="arsenal-audio-wrap">
+    <p class="arsenal-intro">Arsenal since '95. <span id="arsenalSeasonNote">Live table and competitions below.</span><span class="arsenal-audio-wrap">
         <button class="arsenal-audio-toggle" id="arsenalAudioToggle" onclick="toggleArsenalAudio()">
           <span class="audio-icon">
             <span class="audio-bar"></span>
@@ -2076,7 +2067,7 @@
     <div class="contact-inner">
       <p class="section-label">Contact</p>
       <h2>What're you up to?</h2>
-      <p>I love meeting new people and learning what they're up to.</p>
+      <p>Email is the fastest way to reach me.</p>
       <div class="contact-links">
         <a href="mailto:sam@samrahim.com" class="contact-link primary">sam@samrahim.com</a>
       </div>
@@ -2170,9 +2161,36 @@
           data = await res.json();
           entries = data.children[0].standings.entries;
         }
-        return { entries, preseason, seasonLabel };
+        return { entries, preseason, seasonLabel, curYear };
       })();
       return standingsPromise;
+    }
+
+    // Community Shield — single match, early August. Returns Arsenal's result
+    // for the current season, or null if they weren't in it / it's unplayed.
+    let shieldPromise = null;
+    function getShield() {
+      if (shieldPromise) return shieldPromise;
+      shieldPromise = (async () => {
+        try {
+          const { curYear } = await getStandings();
+          const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/eng.charity/scoreboard?dates=${curYear}0701-${curYear}0930`);
+          const data = await res.json();
+          const event = (data.events || []).find(e => e.name && e.name.includes('Arsenal'));
+          if (!event) return null;
+          const comp = event.competitions[0];
+          if (!comp.status || !comp.status.type || !comp.status.type.completed) return null;
+          const ars = comp.competitors.find(c => c.team.displayName === 'Arsenal');
+          const opp = comp.competitors.find(c => c.team.displayName !== 'Arsenal');
+          if (!ars || !opp) return null;
+          return {
+            won: ars.winner === true,
+            score: ars.score + '–' + opp.score,
+            opponent: opp.team.shortDisplayName || opp.team.displayName
+          };
+        } catch (err) { return null; }
+      })();
+      return shieldPromise;
     }
 
     async function loadPLTable() {
@@ -2181,7 +2199,7 @@
         const heading = document.getElementById('plTableHeading');
         if (heading) heading.textContent = preseason ? ('Final Table · ' + seasonLabel) : 'Premier League Table';
         const note = document.getElementById('arsenalSeasonNote');
-        if (note) note.textContent = preseason ? ('Premier League champions, ' + seasonLabel + '.') : 'Live table + competitions below.';
+        if (note) note.textContent = preseason ? ('Premier League champions, ' + seasonLabel + '.') : 'Live table and competitions below.';
         entries.sort((a, b) => {
           const ptsA = a.stats.find(s => s.name === 'points')?.value || 0;
           const ptsB = b.stats.find(s => s.name === 'points')?.value || 0;
@@ -2233,7 +2251,7 @@
         const now = new Date();
         const end = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
         const fmt = d => d.toISOString().slice(0, 10).replace(/-/g, '');
-        const leagues = ['eng.1', 'uefa.champions', 'eng.fa', 'eng.league_cup'];
+        const leagues = ['eng.1', 'uefa.champions', 'eng.fa', 'eng.league_cup', 'eng.charity'];
         let nextMatch = null;
 
         for (const league of leagues) {
@@ -2261,9 +2279,10 @@
             <p class="next-match-info">${dateStr} &middot; ${timeStr}</p>
           `;
         } else {
-          const { preseason } = await getStandings();
+          const { preseason, curYear } = await getStandings();
+          const nextSeason = curYear + '–' + String(curYear + 1).slice(2);
           document.getElementById('arsenalNextMatch').innerHTML = preseason
-            ? '<p class="next-match-teams">2026–27 Season</p><p class="next-match-info">Kicks off August 2026</p>'
+            ? `<p class="next-match-teams">${nextSeason} Season</p><p class="next-match-info">Fixtures to come</p>`
             : '<p class="next-match-info">No upcoming match found</p>';
         }
       } catch (err) {
@@ -2278,19 +2297,21 @@
       try {
         const { entries, preseason, seasonLabel } = await getStandings();
 
+        const shield = await getShield();
+
         if (preseason) {
           // Season's in the books — Arsenal finished top of the table.
-          if (heading) heading.textContent = seasonLabel + ' Honours';
+          if (heading) heading.textContent = 'Honours';
           const sorted = [...entries].sort((a, b) =>
             (b.stats.find(s => s.name === 'points')?.value || 0) - (a.stats.find(s => s.name === 'points')?.value || 0));
           const champ = sorted[0];
           const champPts = champ.stats.find(s => s.name === 'points')?.value || 0;
           const runnerPts = sorted[1] ? (sorted[1].stats.find(s => s.name === 'points')?.value || 0) : champPts;
           const margin = Math.round(champPts - runnerPts);
-          const comps = [
-            { name: 'Premier League', round: 'Champions' },
-            { name: 'Final Margin', round: '+' + margin + ' pts' }
-          ];
+          const comps = [];
+          if (shield && shield.won) comps.push({ name: 'Community Shield', round: 'Won ' + shield.score + ' v ' + shield.opponent });
+          comps.push({ name: 'Premier League', round: 'Champions &middot; ' + seasonLabel });
+          comps.push({ name: 'Final margin', round: '+' + margin + ' pts' });
           container.innerHTML = comps.map(c =>
             `<div class="comp-item"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
           ).join('');
@@ -2306,6 +2327,7 @@
           if (gp > 0) matchweek = `Matchweek ${Math.round(gp)}`;
         }
         const comps = [{ name: 'Premier League', round: matchweek }];
+        if (shield && shield.won) comps.push({ name: 'Community Shield', round: 'Winners' });
         container.innerHTML = comps.map(c =>
           `<div class="comp-item"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
         ).join('');
