@@ -14,2589 +14,1024 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      var stored = null;
+      try { stored = localStorage.getItem('theme'); } catch (e) {}
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <style>
+    /* Pitch chalk: pale chalk-green ground, deep forest ink, pitch-green marks */
     :root {
-      --cream: #F5F0E8;
-      --warm-white: #FAF7F2;
-      --walnut: #3E2C23;
-      --walnut-light: #5C4033;
-      --burgundy: #6B2D3E;
-      --brass: #9B4423;
-      --brass-dark: #7A3520;
-      --terracotta: #C4704B;
-      --forest: #9B4423;
-      --ochre: #C49A3C;
-      --plaster: #E8E0D4;
-      --text: #2A2118;
-      --text-soft: #5C4F42;
-      /* Flag motif: a 5-point canton star, used as divider node, status mark,
-         and timeline node so the hero's flag threads through the whole site. */
-      --star-clip: polygon(50% 0%, 61.8% 35.1%, 98.8% 35.1%, 69% 57.3%, 80.9% 91.1%, 50% 70%, 19.1% 91.1%, 31% 57.3%, 1.2% 35.1%, 38.2% 35.1%);
+      --ground: #E6ECE3;
+      --ink: #16261C;
+      --soft: #4C5A4A;
+      --faint: #93A08F;
+      --accent: #2E6B45;
+      --line: rgba(22, 38, 28, 0.13);
+      --wash: rgba(46, 107, 69, 0.07);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      color-scheme: light;
     }
 
     [data-theme="dark"] {
-      --cream: #1A1512;
-      --warm-white: #231E1A;
-      --walnut: #F5F0E8;
-      --walnut-light: #D4C9BC;
-      --brass: #C4704B;
-      --brass-dark: #9B4423;
-      --plaster: #3D332B;
-      --text: #F5F0E8;
-      --text-soft: #B8ADA1;
-      --forest: #D17E55;
+      --ground: #0F1A13;
+      --ink: #E4EBE1;
+      --soft: #A6B3A3;
+      --faint: #506052;
+      --accent: #7FB08E;
+      --line: rgba(228, 235, 225, 0.12);
+      --wash: rgba(127, 176, 142, 0.08);
+      color-scheme: dark;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html { overflow-x: hidden; scroll-behavior: smooth; }
+    html {
+      -webkit-text-size-adjust: 100%;
+      scrollbar-color: var(--faint) var(--ground);
+    }
 
     body {
       font-family: 'Instrument Sans', sans-serif;
-      background: var(--cream);
-      color: var(--text);
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      background: var(--ground);
+      color: var(--ink);
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
       overflow-x: hidden;
-      -webkit-text-size-adjust: 100%;
-      line-height: 1.6;
-      position: relative;
+      caret-color: var(--accent);
       transition: background 0.3s ease, color 0.3s ease;
     }
 
+    /* Same fine grid texture as the current site, re-inked for the new ground */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.4;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%233E2C23' stroke-width='0.3' opacity='0.15'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%233E2C23' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E");
-      transition: opacity 0.3s ease;
+      opacity: 0.45;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%2316261C' stroke-width='0.3' opacity='0.15'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%2316261C' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E");
     }
 
     [data-theme="dark"] body::before {
       opacity: 0.5;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%23B8945F' stroke-width='0.4' opacity='0.2'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%23B8945F' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%23E4EBE1' stroke-width='0.35' opacity='0.12'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%23E4EBE1' stroke-width='0.35' opacity='0.08'/%3E%3C/svg%3E");
     }
 
     body > * { position: relative; z-index: 1; }
 
-    h1, h2, h3 { font-family: 'Instrument Serif', serif; font-weight: 400; }
+    ::selection { background: var(--accent); color: var(--ground); }
 
-    .section-label {
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--brass);
-      margin-bottom: 1.2rem;
-    }
+    a { color: inherit; }
 
-    /* ── NAV ── */
-    /* The nav is a transparent positioning wrapper; the floating panel is
-       .nav-inner — inset from the edges, frosted, shadowed, rounded. */
-    nav {
-      position: fixed;
-      top: 16px;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 0 1.25rem;
-      background: transparent;
-      transition: top 0.35s ease;
-    }
-
-    /* Lift slightly tighter to the edge once scrolled off the hero. */
-    nav.scrolled { top: 10px; }
-
-    nav.scrolled .nav-inner {
-      background: var(--nav-sheen), rgba(245, 240, 232, 0.44);
-      box-shadow:
-        0 16px 42px rgba(42, 33, 24, 0.2),
-        0 3px 10px rgba(42, 33, 24, 0.08),
-        inset 0 1px 1px rgba(255, 255, 255, 0.85),
-        inset 0 -12px 26px rgba(42, 33, 24, 0.06);
-    }
-
-    [data-theme="dark"] nav.scrolled .nav-inner {
-      background: var(--nav-sheen), rgba(26, 21, 18, 0.5);
-    }
-
-    .nav-inner {
-      /* Liquid glass: very translucent, heavily saturated backdrop so the
-         background colour bleeds through, a soft top sheen, a bright specular
-         rim, and inner highlights/shadow that give the pane real glass depth. */
-      --nav-sheen: linear-gradient(to bottom,
-        rgba(255, 255, 255, 0.42),
-        rgba(255, 255, 255, 0.06) 46%,
-        rgba(255, 255, 255, 0) 100%);
-      max-width: 1060px;
-      margin: 0 auto;
-      padding: 0.7rem 1.7rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--nav-sheen), rgba(245, 240, 232, 0.06);
-      -webkit-backdrop-filter: blur(22px) saturate(2.2) brightness(1.06);
-      backdrop-filter: blur(22px) saturate(2.2) brightness(1.06);
-      border: 1px solid rgba(255, 255, 255, 0.62);
-      border-radius: 30px;
-      box-shadow:
-        0 14px 38px rgba(42, 33, 24, 0.16),
-        0 3px 10px rgba(42, 33, 24, 0.07),
-        inset 0 1px 1px rgba(255, 255, 255, 0.95),
-        inset 0 -12px 26px rgba(42, 33, 24, 0.05),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-      transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-
-    [data-theme="dark"] .nav-inner {
-      --nav-sheen: linear-gradient(to bottom,
-        rgba(255, 255, 255, 0.22),
-        rgba(255, 255, 255, 0.04) 46%,
-        rgba(255, 255, 255, 0) 100%);
-      background: var(--nav-sheen), rgba(26, 21, 18, 0.12);
-      border-color: rgba(255, 255, 255, 0.22);
-      box-shadow:
-        0 14px 38px rgba(0, 0, 0, 0.5),
-        0 3px 10px rgba(0, 0, 0, 0.3),
-        inset 0 1px 1px rgba(255, 255, 255, 0.28),
-        inset 0 -12px 26px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-    }
-
-    .nav-name {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.15rem;
-      color: var(--walnut);
-      text-decoration: none;
-      position: relative;
-      z-index: 200;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav ul a {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-soft);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
-      padding: 0.5rem 0.75rem;
-      border-radius: 4px;
-    }
-
-    nav ul a:hover { color: var(--walnut); }
-
-    /* Focus states for keyboard navigation */
     a:focus-visible,
-    button:focus-visible {
-      outline: 2px solid var(--brass);
-      outline-offset: 2px;
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
     }
 
-    nav ul a:focus-visible {
-      background: rgba(184, 148, 95, 0.1);
+    /* ── PAGE ── */
+    .page {
+      flex: 1;
+      width: 100%;
+      max-width: 40rem;
+      margin: 0 auto;
+      padding-inline: 1.5rem;
+      padding-block: clamp(4.5rem, 15vh, 9.5rem) 3.5rem;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .name {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
     }
 
     .theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-soft);
-      padding: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.2s ease;
-      position: relative;
-      z-index: 200;
-    }
-
-    .theme-toggle:hover { color: var(--walnut); }
-
-    .theme-toggle .sun-icon { display: block; }
-    .theme-toggle .moon-icon { display: none; }
-
-    [data-theme="dark"] .theme-toggle .sun-icon { display: none; }
-    [data-theme="dark"] .theme-toggle .moon-icon { display: block; }
-
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      position: relative;
-      z-index: 200;
-      width: 44px;
-      height: 44px;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hamburger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: var(--walnut);
-      transition: all 0.3s;
-      position: relative;
-    }
-
-    .hamburger span::before,
-    .hamburger span::after {
-      content: '';
-      position: absolute;
-      width: 22px;
-      height: 2px;
-      background: var(--walnut);
-      transition: all 0.3s;
-    }
-
-    .hamburger span::before { top: -7px; }
-    .hamburger span::after { top: 7px; }
-
-    .hamburger.open span { background: transparent; }
-    .hamburger.open span::before { top: 0; transform: rotate(45deg); }
-    .hamburger.open span::after { top: 0; transform: rotate(-45deg); }
-
-    /* ── BRASS RULE DIVIDER ── */
-    .brass-rule {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    .brass-rule-inner {
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--brass) 15%, var(--brass) 85%, transparent);
-      position: relative;
-    }
-
-    .brass-rule-inner::before,
-    .brass-rule-inner::after {
-      content: '';
-      position: absolute;
-      top: -5.5px;
-      width: 14px;
-      height: 14px;
-      background: var(--brass);
-      clip-path: var(--star-clip);
-    }
-
-    .brass-rule-inner::before { left: 15%; transform: translateX(-50%); }
-    .brass-rule-inner::after { right: 15%; transform: translateX(50%); }
-
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      min-height: 100svh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-    }
-
-    /* Full-bleed monochrome 50-star flag watermark — opacity + center-fade
-       baked into the SVG. Swaps with theme. */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("hero/hero-flag-light.svg") center / cover no-repeat;
-      pointer-events: none;
-      z-index: 0;
-      /* Dissolve the flag toward the bottom so it melts into the next section
-         instead of hard-cutting at the hero edge. */
-      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 88%);
-      mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 88%);
-    }
-
-    [data-theme="dark"] .hero::before {
-      background-image: url("hero/hero-flag-dark.svg");
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 900px; }
-    .hero-scroll { z-index: 1; }
-
-    .hero-greeting {
-      font-size: 0.85rem;
-      color: var(--brass);
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.75rem;
-    }
-
-    .hero h1 {
-      font-size: clamp(4rem, 12vw, 9rem);
-      color: var(--walnut);
-      margin-bottom: 2.5rem;
-      line-height: 0.95;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-title {
-      font-size: 1.1rem;
-      color: var(--text-soft);
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-    }
-
-    .hero-tagline {
-      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-      color: var(--text-soft);
-      margin-bottom: 2.5rem;
-      line-height: 1.5;
-    }
-
-    .hero-cta {
-      display: inline-block;
-      background: var(--walnut);
-      color: var(--cream);
-      padding: 0.9rem 2.2rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-decoration: none;
-      border: 2px solid var(--walnut);
-      transition: all 0.25s;
-      min-height: 48px;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .hero-cta:hover {
-      background: transparent;
-      color: var(--walnut);
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      color: var(--brass);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .hero-scroll::after {
-      content: '';
-      width: 1px;
-      height: 28px;
-      background: var(--brass);
-      animation: scrollPulse 2s ease infinite;
-    }
-
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-
-    /* ── ABOUT ── */
-    .about {
-      padding: 5rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .about-grid {
+      width: 34px;
+      height: 34px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-      margin-top: 2rem;
-    }
-
-    .about-photo {
-      width: 100%;
-      max-width: 320px;
-      aspect-ratio: 4/5;
-      object-fit: cover;
-      display: block;
-      transition: filter 0.3s ease;
-    }
-
-    /* The halftone portrait has a white field; in dark mode warm it slightly
-       and frame it with a soft shadow so it reads as a gallery print on a
-       dark wall rather than a stark bright square. */
-    [data-theme="dark"] .about-photo {
-      filter: brightness(0.94) sepia(0.14);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
-    }
-
-    .about-text h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-      color: var(--walnut);
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-    }
-
-    .about-text p {
-      color: var(--text-soft);
-      margin-bottom: 1.2rem;
-      font-size: 1rem;
-      line-height: 1.7;
-    }
-
-    .about-text a {
-      color: var(--brass);
-      font-weight: 500;
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 2px;
-      text-decoration-color: color-mix(in srgb, var(--brass) 45%, transparent);
-      transition: text-decoration-color 0.2s ease;
-    }
-
-    .about-text a:hover { text-decoration-color: var(--brass); }
-
-    .stat-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--plaster);
-    }
-
-    .stat-item h3 {
-      font-size: 1.6rem;
-      color: var(--walnut);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-
-    .stat-item p {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--brass);
-      margin-bottom: 0;
-    }
-
-    /* ── VENTURES ── */
-    .ventures {
-      padding: 5rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .ventures h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-      color: var(--walnut);
-      margin-bottom: 2.5rem;
-    }
-
-    .ventures-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 1fr;
-      gap: 1.5rem;
-    }
-
-    .venture-card {
-      padding: 1.8rem;
-      border: 1px solid var(--plaster);
-      background: var(--warm-white);
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.2s, background 0.3s ease;
-      display: block;
-    }
-
-    a.venture-card:hover, div.venture-card[data-href]:hover { border-color: var(--brass); cursor: pointer; }
-
-    .venture-card {
-      position: relative;
-    }
-
-    .venture-header {
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-
-    .venture-card h3 {
-      font-size: 1.1rem;
-      color: var(--walnut);
-      margin-bottom: 0.2rem;
-    }
-
-    .venture-role {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--text-soft);
-    }
-
-    .venture-card p {
-      font-size: 0.9375rem;
-      color: var(--text-soft);
-      line-height: 1.55;
-    }
-
-    .venture-status {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .venture-status::before {
-      content: '';
-      width: 10px;
-      height: 10px;
-      clip-path: var(--star-clip);
-    }
-
-    .venture-status.live {
-      color: var(--forest);
-    }
-
-    .venture-status.live::before {
-      background: var(--forest);
-    }
-
-    .venture-status.soon {
-      color: var(--text-soft);
-      opacity: 0.5;
-    }
-
-    .venture-status.soon::before {
-      background: var(--text-soft);
-    }
-
-    /* ── EXPERIENCE ── */
-    .experience {
-      padding: 5rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .experience > .section-label { margin-bottom: 0.5rem; }
-
-    .experience h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-      color: var(--walnut);
-      margin-bottom: 2.5rem;
-    }
-
-    .timeline { position: relative; padding-left: 2.5rem; }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.5rem;
-      bottom: 0;
-      width: 2px;
-      background: repeating-linear-gradient(180deg, rgba(155, 68, 35, 0.38) 0 5px, transparent 5px 10px);
-    }
-
-    .timeline-item {
-      position: relative;
-      padding-bottom: 2.5rem;
-    }
-
-    .timeline-item:last-child { padding-bottom: 0; }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -2.5rem;
-      top: 0.35rem;
-      width: 14px;
-      height: 14px;
-      background: var(--brass);
-      clip-path: var(--star-clip);
-      transform: translateX(-6px);
-    }
-
-    .timeline-item.current::before {
-      background: var(--walnut);
-      width: 17px;
-      height: 17px;
-      top: 0.2rem;
-      transform: translateX(-7.5px);
-    }
-
-    .timeline-company {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.3rem;
-      color: var(--walnut);
-      margin-bottom: 0.25rem;
-    }
-
-    .timeline-role {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-soft);
-      margin-bottom: 0.15rem;
-    }
-
-    .timeline-date {
-      font-size: 0.75rem;
-      color: var(--brass);
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.75rem;
-    }
-
-    .timeline-badge {
-      display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--brass-dark);
-      background: rgba(184, 148, 95, 0.12);
-      padding: 0.2rem 0.6rem;
-      margin-left: 0.5rem;
-    }
-
-    .timeline-desc {
-      color: var(--text-soft);
-      font-size: 1rem;
-      line-height: 1.65;
-    }
-
-    /* ── STREET FC SLIDESHOW ── */
-    .streetfc-slideshow {
-      margin-top: 1rem;
-      position: relative;
-      border-radius: 6px;
-      overflow: hidden;
-      aspect-ratio: 9 / 16;
-      max-width: 240px;
-    }
-
-    .streetfc-slideshow img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 6px;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    .streetfc-slideshow img.active {
-      opacity: 1;
-    }
-
-    .provisions-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.5rem;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--brass);
-      text-decoration: none;
-      letter-spacing: 0.03em;
-    }
-
-    .provisions-link:hover {
-      text-decoration: underline;
-    }
-
-    .provisions-pillars {
-      margin: 1.25rem 0 0.25rem;
-      border-top: 1px solid var(--plaster);
-    }
-
-    .pillar {
-      display: grid;
-      grid-template-columns: minmax(7.5rem, 9rem) 1fr;
-      gap: 1.5rem;
-      align-items: start;
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--plaster);
-    }
-
-    .pillar-head {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }
-
-    .pillar-num {
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--brass);
-    }
-
-    .pillar-name {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.6rem;
-      font-weight: 400;
-      line-height: 1;
-      color: var(--text);
-      margin: 0;
-    }
-
-    .pillar-desc {
-      font-size: 0.95rem;
-      line-height: 1.55;
-      color: var(--text-soft);
-      margin: 0.2rem 0 0;
-    }
-
-    @media (max-width: 640px) {
-      .pillar {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-        padding: 1rem 0;
-      }
-      .pillar-name { font-size: 1.5rem; }
-      .pillar-desc { font-size: 1rem; }
-    }
-
-    .timeline-hidden {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.6s ease;
-    }
-
-    .timeline-hidden.open { max-height: 800px; }
-
-    .timeline-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      place-items: center;
       background: none;
-      border: 1px solid var(--plaster);
-      color: var(--text-soft);
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      padding: 0.6rem 1.4rem;
+      border: 1px dashed var(--faint);
+      color: var(--soft);
       cursor: pointer;
-      margin-top: 1.5rem;
-      transition: all 0.2s;
-      min-height: 44px;
+      transition: color 0.2s ease, border-color 0.2s ease;
     }
 
-    .timeline-toggle:hover {
-      border-color: var(--walnut);
-      color: var(--walnut);
-    }
-
-    .timeline-toggle .arrow {
-      transition: transform 0.3s;
-      font-size: 0.7rem;
-    }
-
-    .timeline-toggle.open .arrow { transform: rotate(180deg); }
-
-    .education {
-      margin-top: 3rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--plaster);
-    }
-
-    .education-label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--brass);
-      margin-bottom: 0.75rem;
-    }
-
-    .education-school {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.15rem;
-      color: var(--walnut);
-    }
-
-    /* ── PHILOSOPHY (DARK SECTION) ── */
-    .philosophy {
-      background: var(--walnut);
-      padding: 5rem 2rem;
-      position: relative;
-    }
-
-    .philosophy::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.3;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%23B8945F' stroke-width='0.3' opacity='0.12'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%23B8945F' stroke-width='0.3' opacity='0.08'/%3E%3C/svg%3E");
-    }
-
-    .philosophy-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .philosophy .section-label { color: var(--brass); }
-
-    .philosophy h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-      color: var(--cream);
-      margin-bottom: 1rem;
-    }
-
-    .philosophy-intro {
-      color: var(--plaster);
-      font-size: 1rem;
-      line-height: 1.7;
-      max-width: 600px;
-      margin-bottom: 3rem;
-    }
-
-    .philosophy-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .philosophy-card {
-      border: 1px solid var(--walnut-light);
-      padding: 2rem 1.5rem;
-      transition: border-color 0.3s;
-    }
-
-    .philosophy-card:hover { border-color: var(--brass); }
-
-    .philosophy-card h3 {
-      font-size: 1.15rem;
-      color: var(--cream);
-      margin-bottom: 0.75rem;
-    }
-
-    .philosophy-card p {
-      font-size: 0.9375rem;
-      color: var(--plaster);
-      line-height: 1.6;
-      opacity: 0.85;
-    }
-
-    /* ── GITHUB ── */
-    .github {
-      padding: 5rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .github h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-      color: var(--walnut);
-      margin-bottom: 0.75rem;
-    }
-
-    .github-graph {
-      margin-top: 2rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .contrib-months {
-      display: flex;
-      gap: 0;
-      margin-bottom: 0.4rem;
-      padding-left: 2px;
-    }
-
-    .contrib-month {
-      font-size: 0.7rem;
-      color: var(--text-soft);
-      text-align: left;
-    }
-
-    .contrib-grid {
-      display: flex;
-      gap: 3px;
-    }
-
-    .contrib-week {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .contrib-day {
-      width: 12px;
-      height: 12px;
-      border-radius: 2px;
-      background: var(--plaster);
-    }
-
-    .contrib-day.level-0 { background: #D4C9BC; border: 1px solid #C4B9AC; }
-    .contrib-day.level-1 { background: rgba(184, 148, 95, 0.45); }
-    .contrib-day.level-2 { background: rgba(184, 148, 95, 0.6); }
-    .contrib-day.level-3 { background: rgba(184, 148, 95, 0.8); }
-    .contrib-day.level-4 { background: var(--brass); }
-
-    .contrib-day.future,
-    .contrib-day.empty {
-      background: transparent;
-      border: 1px solid #D4C9BC;
-    }
-
-    .contrib-loading {
-      color: var(--text-soft);
-      font-size: 0.85rem;
-      padding: 1rem 0;
-    }
-
-    .contrib-legend {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 1rem;
-    }
-
-    .contrib-legend .contrib-day {
-      width: 10px;
-      height: 10px;
-    }
-
-    .contrib-legend-label {
-      font-size: 0.7rem;
-      color: var(--text-soft);
-      margin: 0 0.3rem;
-    }
-
-    .github-link {
-      margin-top: 1.5rem;
-    }
-
-    .github-link a {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--brass);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .github-link a:hover {
-      color: var(--walnut);
-    }
-
-    @media (max-width: 768px) {
-      .github { padding: 3.5rem 1.5rem; }
-      .contrib-day { width: 10px; height: 10px; }
-      .contrib-grid { gap: 2px; }
-      .contrib-week { gap: 2px; }
-    }
-
-    @media (max-width: 480px) {
-      .contrib-day { width: 8px; height: 8px; }
-    }
-
-    /* ── ARSENAL ── */
-    .arsenal {
-      padding: 5rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .arsenal h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-      color: var(--walnut);
-      margin-bottom: 0.75rem;
-    }
-
-    .arsenal-intro {
-      color: var(--text-soft);
-      font-size: 1rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .table-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .table-footer .timeline-toggle {
-      margin-top: 0;
-    }
-
-    #arsenalUpdated {
-      font-size: 0.75rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--text-soft);
-      opacity: 0.5;
-    }
-
-    .arsenal-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    .arsenal-table-wrap h3,
-    .arsenal-competitions h3,
-    .arsenal-next h3 {
-      font-size: 0.8125rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--brass);
-      margin-bottom: 1rem;
-    }
-
-    .pl-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-    }
-
-    .pl-table thead th {
-      text-align: left;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-      padding: 0 0 0.6rem;
-      border-bottom: 1px solid var(--plaster);
-    }
-
-    .pl-table thead th:first-child { width: 2rem; }
-    .pl-table thead th:nth-child(2) { width: auto; }
-    .pl-table thead th:nth-child(n+3) { text-align: center; width: 2.5rem; }
-
-    .pl-table tbody td {
-      padding: 0.55rem 0;
-      border-bottom: 1px solid rgba(232, 224, 212, 0.5);
-      color: var(--text);
-    }
-
-    .pl-table tbody td:first-child {
-      color: var(--text-soft);
-      font-size: 0.75rem;
-    }
-
-    .pl-table tbody td:nth-child(n+3) { text-align: center; }
-
-    .pl-table tbody td:last-child {
-      font-weight: 600;
-      color: var(--walnut);
-    }
-
-    .pl-table tbody tr.arsenal-row {
-      background: rgba(184, 148, 95, 0.08);
-    }
-
-    .pl-table tbody tr.arsenal-row.clickable-row {
-      animation: arsenalRowPulse 3s ease-in-out infinite;
-      transition: background 0.2s ease;
-    }
-
-    .pl-table tbody tr.arsenal-row.clickable-row:hover {
-      animation: none;
-      background: rgba(184, 148, 95, 0.2);
-    }
-
-    .pl-table tbody tr.arsenal-row td {
-      font-weight: 600;
-      color: var(--walnut);
-    }
-
-    @keyframes arsenalRowPulse {
-      0%, 100% { background: rgba(184, 148, 95, 0.08); }
-      50% { background: rgba(184, 148, 95, 0.18); }
-    }
-
-    .table-loading {
-      color: var(--text-soft);
-      font-size: 0.8rem;
-      padding: 1rem 0;
-    }
-
-    .competitions-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      margin-bottom: 2rem;
-    }
-
-    .comp-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.7rem 1rem;
-      background: var(--warm-white);
-      border: 1px solid var(--plaster);
-    }
-
-    .comp-name {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--walnut);
-    }
-
-    .comp-status {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--forest);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .comp-status::before {
-      content: '';
-      width: 10px;
-      height: 10px;
-      clip-path: var(--star-clip);
-      background: var(--forest);
-    }
-
-    .comp-item.eliminated .comp-name,
-    .comp-item.eliminated .comp-status {
-      text-decoration: line-through;
-      opacity: 0.4;
-    }
-
-    .comp-item.eliminated .comp-status {
-      color: var(--text-soft);
-    }
-
-    .comp-item.eliminated .comp-status::before {
-      background: var(--text-soft);
-    }
-
-    .next-match {
-      padding: 1.2rem;
-      background: var(--warm-white);
-      border: 1px solid var(--plaster);
-      text-align: center;
-    }
-
-    .next-match-teams {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.1rem;
-      color: var(--walnut);
-      margin-bottom: 0.4rem;
-    }
-
-    .next-match-info {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-    }
-
-    /* ── CONTACT ── */
-    .contact {
-      padding: 5rem 2rem;
-      text-align: center;
-    }
-
-    .contact-inner {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .contact h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-      color: var(--walnut);
-      margin-bottom: 1rem;
-    }
-
-    .contact p {
-      color: var(--text-soft);
-      font-size: 1rem;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-    }
-
-    .contact-links {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    .theme-toggle:hover { color: var(--ink); border-color: var(--soft); }
+    .theme-toggle .moon { display: none; }
+    [data-theme="dark"] .theme-toggle .sun { display: none; }
+    [data-theme="dark"] .theme-toggle .moon { display: block; }
 
-    .contact-links-row {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 1rem;
+    .rule {
+      width: 18px;
+      height: 1px;
+      background: var(--faint);
+      margin-block: 2.4rem;
     }
 
-    .contact-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.85rem 2rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      text-decoration: none;
-      transition: all 0.25s;
-      min-height: 48px;
+    .bio {
+      color: var(--soft);
+      font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+      line-height: 1.75;
+      text-wrap: pretty;
     }
 
-    .contact-link.primary {
-      background: var(--walnut);
-      color: var(--cream);
-      border: 2px solid var(--walnut);
-    }
-
-    .contact-link.primary:hover {
-      background: transparent;
-      color: var(--walnut);
-    }
-
-    .contact-link.secondary {
-      background: transparent;
-      color: var(--walnut);
-      border: 2px solid var(--plaster);
-    }
-
-    .contact-link.secondary:hover { border-color: var(--walnut); }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 2.5rem 2rem;
-      text-align: center;
-      border-top: 1px solid var(--plaster);
-    }
-
-    .footer-name {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1rem;
-      color: var(--walnut);
-    }
-
-    .footer-title {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      margin-top: 0.25rem;
-    }
-
-    /* ── MOBILE ── */
-    @media (max-width: 768px) {
-      .nav-inner {
-        -webkit-backdrop-filter: blur(18px) saturate(2);
-        backdrop-filter: blur(18px) saturate(2);
-        background: var(--nav-sheen), rgba(245, 240, 232, 0.32);
-      }
-
-      [data-theme="dark"] .nav-inner {
-        background: var(--nav-sheen), rgba(26, 21, 18, 0.4);
-      }
-
-      .hamburger { display: flex; }
-
-      nav ul {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        background: var(--cream);
-        transition: transform 0.35s ease, background 0.3s ease;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2.5rem;
-        z-index: 150;
-        transform: translateX(100%);
-        transition: transform 0.35s ease;
-      }
-
-      nav ul.open { transform: translateX(0); }
-
-      nav ul a {
-        font-size: 1.2rem;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .about-photo {
-        max-width: 250px;
-        margin: 0 auto;
-      }
-
-      .ventures-grid { grid-template-columns: 1fr; }
-
-      .arsenal-grid { grid-template-columns: 1fr; }
-
-      body::before {
-        opacity: 0.5;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='transparent'/%3E%3Cline x1='0' y1='4' x2='8' y2='4' stroke='%233E2C23' stroke-width='0.5' opacity='0.18'/%3E%3Cline x1='4' y1='0' x2='4' y2='8' stroke='%233E2C23' stroke-width='0.5' opacity='0.12'/%3E%3C/svg%3E");
-      }
-
-      [data-theme="dark"] body::before {
-        opacity: 0.6;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='transparent'/%3E%3Cline x1='0' y1='4' x2='8' y2='4' stroke='%23B8945F' stroke-width='0.5' opacity='0.25'/%3E%3Cline x1='4' y1='0' x2='4' y2='8' stroke='%23B8945F' stroke-width='0.5' opacity='0.18'/%3E%3C/svg%3E");
-      }
-
-      .hero { padding: 5rem 1.2rem 3rem; }
-      .hero h1 { margin-bottom: 1.5rem; }
-      .hero-tagline { margin-bottom: 2rem; }
-      .about, .experience, .arsenal, .ventures { padding: 3.5rem 1.5rem; }
-      .contact { padding: 3.5rem 1.5rem; }
-
-      .brass-rule { padding: 0 1.5rem; }
-      .brass-rule-inner::before { left: 10%; }
-      .brass-rule-inner::after { right: 10%; }
-
-      .contact-links { flex-direction: column; align-items: center; }
-      .contact-links-row { flex-direction: column; align-items: center; margin-top: 0.5rem; }
-      .contact-link { width: 100%; max-width: 300px; justify-content: center; }
-
-      .pl-table { font-size: 0.88rem; }
-      .pl-table thead th { font-size: 0.72rem; }
-      .comp-item { min-height: 44px; }
-      .comp-name { font-size: 0.9rem; }
-      .comp-status { font-size: 0.65rem; }
-      .arsenal-crown { font-size: 0.9rem; }
-      .venture-card p { font-size: 1rem; }
-      .venture-role { font-size: 0.75rem; }
-      .venture-status { font-size: 0.75rem; }
-      .timeline-desc { font-size: 1.0625rem; }
-      .about-text p { font-size: 1.0625rem; }
-      .arsenal-intro { font-size: 1.0625rem; }
-      #arsenalUpdated { font-size: 0.75rem; }
-
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 { font-size: clamp(2.8rem, 14vw, 4rem); }
-      .hero-tagline { font-size: 1.1rem; line-height: 1.6; }
-      .hero-greeting { font-size: 0.95rem; }
-
-      .section-label { font-size: 1rem; letter-spacing: 0.08em; }
-
-      .ventures-grid { grid-template-columns: 1fr; gap: 1rem; }
-
-      .venture-card { padding: 1.4rem; }
-      .venture-card h3 { font-size: 1.15rem; }
-      .venture-card p { font-size: 1.0625rem; line-height: 1.55; }
-      .venture-role { font-size: 0.75rem; }
-      .venture-status { font-size: 0.75rem; }
-
-      .about-text p { font-size: 1.0625rem; line-height: 1.7; }
-
-      .timeline { padding-left: 2rem; }
-      .timeline-item::before { left: -2rem; }
-      .timeline-company { font-size: 1.25rem; }
-      .timeline-role { font-size: 0.95rem; }
-      .timeline-date { font-size: 0.85rem; }
-      .timeline-badge { font-size: 0.7rem; }
-      .timeline-desc { font-size: 1.0625rem; line-height: 1.65; }
-
-      .education-label { font-size: 0.8125rem; }
-      .education-school { font-size: 1.1rem; }
-
-      .arsenal-intro { font-size: 1.0625rem; }
-      .arsenal-table-wrap h3,
-      .arsenal-competitions h3,
-      .arsenal-next h3 { font-size: 0.875rem; }
-
-      .pl-table { font-size: 0.9rem; }
-      .pl-table thead th { font-size: 0.75rem; }
-      .pl-table tbody td { padding: 0.6rem 0; }
-
-      .next-match-teams { font-size: 1.1rem; }
-      .next-match-info { font-size: 0.85rem; }
-      .comp-name { font-size: 1rem; }
-      .comp-status { font-size: 0.75rem; }
-
-      #arsenalUpdated { font-size: 0.75rem; opacity: 0.7; }
-
-      .arsenal-crown { font-size: 1.2rem; }
-
-      .contact p { font-size: 1.0625rem; line-height: 1.65; }
-
-      .footer-name { font-size: 1.1rem; }
-      .footer-title { font-size: 0.85rem; }
-
-    }
-
-    @media (pointer: coarse) {
-      nav a, .hero-cta, .contact-link, .timeline-toggle { min-height: 44px; }
-    }
-
-    /* Arsenal Crown */
-    .arsenal-crown {
-      font-size: 0.8rem;
-      color: var(--brass);
-      display: inline-block;
-      margin-left: 0.3rem;
-    }
-
-    /* Arsenal Video Modal */
-    .video-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    .video-modal.open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .video-modal-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-      z-index: 10001;
-    }
-
-    .video-modal-close:hover { opacity: 1; }
-
-    .video-modal-content {
-      position: relative;
-      max-height: 85vh;
-      max-width: 90vw;
-    }
-
-    .video-modal-content video {
-      max-height: 85vh;
-      max-width: 90vw;
-      border-radius: 4px;
-    }
-
-    .video-unmute {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      color: #1A1512;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .video-unmute:hover { background: white; }
-
-    /* Arsenal Audio Toggle */
-    .arsenal-audio-wrap {
-      display: inline-block;
-      margin-left: 0.75rem;
-      vertical-align: middle;
-    }
-
-    .arsenal-audio-toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      background: transparent;
-      border: 1.5px solid var(--brass);
-      padding: 0.5rem 1rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--brass);
-      border-radius: 100px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      min-height: 44px;
-    }
-
-    .arsenal-audio-toggle:hover {
-      background: var(--brass);
-      color: var(--cream);
-    }
-
-    .arsenal-audio-toggle:active {
-      transform: scale(0.96);
-    }
-
-    .arsenal-audio-toggle.playing {
-      background: var(--brass);
-      color: var(--cream);
-    }
-
-    .arsenal-audio-toggle .audio-icon {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      height: 14px;
-    }
-
-    .arsenal-audio-toggle .audio-bar {
-      width: 3px;
-      height: 100%;
-      background: currentColor;
-      border-radius: 2px;
-      transform-origin: bottom;
-    }
-
-    .arsenal-audio-toggle.playing .audio-bar {
-      animation: audioBar 0.8s ease-in-out infinite;
-    }
-
-    .arsenal-audio-toggle.playing .audio-bar:nth-child(1) { animation-delay: 0s; }
-    .arsenal-audio-toggle.playing .audio-bar:nth-child(2) { animation-delay: 0.2s; }
-    .arsenal-audio-toggle.playing .audio-bar:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes audioBar {
-      0%, 100% { transform: scaleY(0.3); }
-      50% { transform: scaleY(1); }
-    }
-
-    /* Mobile: Stack below intro text */
-    @media (max-width: 600px) {
-      .arsenal-audio-wrap {
-        display: block;
-        margin: 1rem 0 0 0;
-      }
-
-      .arsenal-audio-toggle {
-        min-height: 48px;
-        padding: 0.75rem 1.5rem;
-        font-size: 0.75rem;
-        gap: 0.6rem;
-      }
-
-      .arsenal-audio-toggle .audio-icon {
-        height: 16px;
-      }
-
-      .arsenal-audio-toggle .audio-bar {
-        width: 3.5px;
-      }
-    }
-
-    /* Scroll Reveal Animations */
-    .scroll-reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .scroll-reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .scroll-reveal-delay-1 { transition-delay: 0.1s; }
-    .scroll-reveal-delay-2 { transition-delay: 0.2s; }
-    .scroll-reveal-delay-3 { transition-delay: 0.3s; }
-    .scroll-reveal-delay-4 { transition-delay: 0.4s; }
-    .scroll-reveal-delay-5 { transition-delay: 0.5s; }
-    .scroll-reveal-delay-6 { transition-delay: 0.6s; }
-
-    /* Faster animations on mobile */
-    @media (max-width: 768px) {
-      .scroll-reveal {
-        transition: opacity 0.4s ease, transform 0.4s ease;
-      }
-      .scroll-reveal-delay-1 { transition-delay: 0.05s; }
-      .scroll-reveal-delay-2 { transition-delay: 0.1s; }
-      .scroll-reveal-delay-3 { transition-delay: 0.15s; }
-      .scroll-reveal-delay-4 { transition-delay: 0.2s; }
-      .scroll-reveal-delay-5 { transition-delay: 0.25s; }
-      .scroll-reveal-delay-6 { transition-delay: 0.3s; }
-    }
-
-    /* Active Nav Link */
-    nav ul a.active {
-      color: var(--brass);
-    }
-
-    /* In-App Browser Modal */
-    .browser-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0.3s, opacity 0.3s;
-    }
-
-    .browser-modal.open {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .browser-modal-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    .browser-modal-content {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 90vh;
-      background: var(--cream);
-      border-radius: 16px 16px 0 0;
-      transform: translateY(100%);
-      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .browser-modal.open .browser-modal-content {
-      transform: translateY(0);
-    }
-
-    .browser-modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--plaster);
-      background: var(--warm-white);
-    }
-
-    .browser-modal-url {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      flex: 1;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 0 1rem;
-    }
-
-    .browser-modal-close {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--text-soft);
-      cursor: pointer;
-      padding: 0.25rem 0.5rem;
-      line-height: 1;
-    }
-
-    .browser-modal-open {
-      background: none;
-      border: none;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--brass);
-      cursor: pointer;
-      padding: 0.25rem 0.5rem;
-    }
-
-    .browser-modal iframe {
-      flex: 1;
-      width: 100%;
-      border: none;
-      background: white;
-    }
-
-    .browser-modal-error {
-      flex: 1;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .browser-modal-error p {
-      color: var(--text-soft);
-      margin-bottom: 1rem;
-    }
-
-    .browser-modal-error a {
-      color: var(--brass);
-      font-weight: 600;
-    }
-
-
-    /* ── FLAG MOTIF: WATERMARKS & ACCENTS ── */
-    #about { position: relative; overflow: hidden; }
-    #about::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 520px;
-      height: 300px;
-      background: url('assets/flag-ink.png') top right / auto 150% no-repeat;
-      opacity: 0.06;
-      pointer-events: none;
-      z-index: -1;
-      -webkit-mask-image: linear-gradient(225deg, #000, transparent 70%);
-      mask-image: linear-gradient(225deg, #000, transparent 70%);
-    }
-    [data-theme="dark"] #about::before {
-      background-image: url('assets/flag-cream.png');
-      opacity: 0.08;
-    }
-
-    /* Eyebrow stripe tick on every section label — flag stripes as a small
-       structural mark, threading the motif through every section header. */
-    .section-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-    .section-label::after {
-      content: '';
-      height: 16px;
-      width: 66px;
-      flex: none;
-      background: repeating-linear-gradient(180deg, var(--brass) 0 2px, transparent 2px 5px);
-      opacity: 0.5;
-    }
-
-    /* Footer closing star — bookends the hero flag */
-    footer::before {
-      content: '';
-      display: block;
-      width: 14px;
-      height: 14px;
-      margin: 0 auto 1rem;
-      background: var(--brass);
-      clip-path: var(--star-clip);
-    }
-
-    /* Pillar № markers get a tiny star */
-    .pillar-num { display: inline-flex; align-items: center; gap: 0.4rem; }
-    .pillar-num::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: var(--brass);
-      clip-path: var(--star-clip);
-      flex: none;
-    }
-
-    /* Side Quest cards carry a faint canton in the top-left corner */
-    .venture-card { overflow: hidden; }
-    .venture-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 130px;
-      height: 96px;
-      background: url('assets/flag-ink.png') top left / 320px auto no-repeat;
-      opacity: 0.06;
-      pointer-events: none;
-      -webkit-mask-image: linear-gradient(135deg, #000, transparent 75%);
-      mask-image: linear-gradient(135deg, #000, transparent 75%);
-    }
-    [data-theme="dark"] .venture-card::before {
-      background-image: url('assets/flag-cream.png');
-      opacity: 0.09;
-    }
-    .venture-card > * { position: relative; z-index: 1; }
-
-    /* ── WHAT'S NEXT: hero status line + faded future node on the timeline ── */
-    .hero-status {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 0.35rem 0.6rem;
-      margin-top: 1.75rem;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--text-soft);
-      text-decoration: none;
-    }
-    .hero-status::before {
-      content: '';
-      width: 11px;
-      height: 11px;
-      flex: none;
-      background: var(--forest);
-      clip-path: var(--star-clip);
-    }
-    .hero-status-more {
-      font-weight: 600;
-      color: var(--brass);
+    .bio a,
+    .panel a.inline {
+      color: var(--ink);
       text-decoration: underline;
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
-      text-decoration-color: color-mix(in srgb, var(--brass) 40%, transparent);
-      transition: text-decoration-color 0.2s ease;
+      text-decoration-color: var(--faint);
+      transition: text-decoration-color 0.2s ease, color 0.2s ease;
     }
-    .hero-status:hover .hero-status-more { text-decoration-color: var(--brass); }
 
-    .timeline-item.next::before { opacity: 0.45; }
+    .bio a:hover,
+    .panel a.inline:hover { text-decoration-color: var(--accent); color: var(--accent); }
 
-    /* REDUCED MOTION */
+    /* ── + LIST ── */
+    .list { list-style: none; }
+
+    .item h2 { font: inherit; }
+
+    .trigger {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      width: 100%;
+      padding-block: 0.4rem;
+      background: none;
+      border: 0;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 1.1875rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .trigger:hover { color: var(--accent); }
+
+    /* The + is drawn, not typed, so it can turn into a close mark */
+    .plus {
+      position: relative;
+      width: 11px;
+      height: 11px;
+      flex: none;
+      transition: transform 0.5s var(--ease);
+    }
+
+    .plus::before,
+    .plus::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 11px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+
+    .plus::after { transform: rotate(90deg); }
+    .item.open .plus { transform: rotate(135deg); }
+
+    .panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.55s var(--ease);
+    }
+
+    .item.open .panel { grid-template-rows: 1fr; }
+
+    .panel-inner {
+      min-height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: visibility 0s linear 0.55s;
+    }
+
+    .item.open .panel-inner { visibility: visible; transition-delay: 0s; }
+
+    .panel-body {
+      padding: 0.6rem 0 1.9rem 1.7rem;
+      color: var(--soft);
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.3s ease, transform 0.5s var(--ease);
+    }
+
+    .item.open .panel-body {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.45s ease 0.08s, transform 0.6s var(--ease) 0.04s;
+    }
+
+    .panel p + p { margin-top: 0.8rem; }
+
+    .more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.9rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .more svg { transition: transform 0.3s var(--ease); }
+    .more:hover svg { transform: translateX(3px); }
+
+    /* ── WORK ── */
+    .roles { display: grid; gap: 1.5rem; }
+
+    .role-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .role-co {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .role-years {
+      flex: none;
+      font-size: 0.875rem;
+      color: var(--soft);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .role-title { font-size: 0.95rem; color: var(--soft); }
+
+    .role-desc {
+      font-size: 0.95rem;
+      margin-top: 0.3rem;
+      max-width: 34rem;
+    }
+
+    .role .more { margin-top: 0.4rem; }
+
+    .montage {
+      position: relative;
+      width: 150px;
+      aspect-ratio: 9 / 16;
+      max-width: 100%;
+      margin-top: 0.9rem;
+      overflow: hidden;
+      background: var(--wash);
+    }
+
+    .montage img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+    }
+
+    .montage img.active { opacity: 1; }
+
+    .edu {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.95rem;
+    }
+
+    .edu strong { font-weight: 600; color: var(--ink); }
+
+    /* ── SIDE QUESTS ── */
+    .quests { display: grid; gap: 1.2rem; }
+
+    .quest a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .quest a:hover { color: var(--accent); }
+    .quest a svg { color: var(--accent); transition: transform 0.3s var(--ease); }
+    .quest a:hover svg { transform: translate(2px, -2px); }
+    .quest p { font-size: 0.95rem; }
+
+    /* ── ARSENAL ── */
+    .ars-intro {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 1rem;
+    }
+
+    .audio-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 36px;
+      padding: 0.35rem 0.9rem;
+      background: none;
+      border: 1px solid var(--faint);
+      border-radius: 100px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .audio-toggle:hover { border-color: var(--accent); }
+    .audio-toggle.playing { background: var(--accent); border-color: var(--accent); color: var(--ground); }
+
+    .bars { display: flex; align-items: flex-end; gap: 2px; height: 11px; }
+    .bars span { width: 2.5px; height: 100%; background: currentColor; border-radius: 1px; transform-origin: bottom; transform: scaleY(0.45); }
+    .audio-toggle.playing .bars span { animation: bar 0.8s ease-in-out infinite; }
+    .audio-toggle.playing .bars span:nth-child(2) { animation-delay: 0.2s; }
+    .audio-toggle.playing .bars span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bar {
+      0%, 100% { transform: scaleY(0.35); }
+      50% { transform: scaleY(1); }
+    }
+
+    .ars-grid {
+      display: grid;
+      grid-template-columns: 1fr 12rem;
+      gap: 2rem;
+      margin-top: 1.4rem;
+    }
+
+    .ars-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    .pl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pl th {
+      font-weight: 500;
+      font-size: 0.78rem;
+      color: var(--soft);
+      text-align: right;
+      padding: 0 0 0.35rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pl td {
+      text-align: right;
+      padding: 0.32rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pl th:nth-child(1), .pl td:nth-child(1) { text-align: left; width: 1.8rem; }
+    .pl th:nth-child(2), .pl td:nth-child(2) { text-align: left; }
+    .pl th:nth-child(n+3), .pl td:nth-child(n+3) { width: 2.4rem; }
+
+    .pl tr.arsenal td { color: var(--accent); font-weight: 600; }
+    .pl tr.clickable { cursor: pointer; }
+    .pl tr.clickable:hover td { background: var(--wash); }
+
+    .crown { width: 13px; height: 10px; margin-left: 0.3rem; fill: currentColor; vertical-align: -1px; }
+
+    .table-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+    }
+
+    .text-btn {
+      background: none;
+      border: 0;
+      padding: 0.3rem 0;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+    }
+
+    .text-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .comp { padding: 0.35rem 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+    .comp strong { display: block; font-weight: 600; color: var(--ink); }
+    .ars-side > div + div { margin-top: 1.4rem; }
+    .next-teams { font-weight: 600; color: var(--ink); font-size: 0.95rem; }
+    .next-info { font-size: 0.875rem; }
+    .loading { font-size: 0.875rem; color: var(--soft); }
+
+    .video-dialog {
+      margin: auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      max-width: min(92vw, 480px);
+    }
+
+    .video-dialog::backdrop { background: rgba(10, 18, 13, 0.88); }
+    .video-dialog video { display: block; max-width: 100%; max-height: 84vh; }
+
+    .video-close {
+      display: block;
+      margin: 0.75rem auto 0;
+      background: none;
+      border: 1px solid rgba(228, 235, 225, 0.4);
+      color: #E4EBE1;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+    }
+
+    /* ── UPDATES ── */
+    .signup {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.1rem;
+      max-width: 26rem;
+    }
+
+    .signup input {
+      flex: 1;
+      min-width: 0;
+      padding: 0.6rem 0.8rem;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--wash);
+      border: 1px solid var(--line);
+      border-radius: 0;
+      transition: border-color 0.2s ease;
+    }
+
+    .signup input::placeholder { color: var(--soft); opacity: 0.8; }
+    .signup input:focus { border-color: var(--accent); outline: none; }
+
+    .signup button {
+      padding: 0.6rem 1rem;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ground);
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .signup button:hover { background: transparent; color: var(--ink); }
+    .signup-note { font-size: 0.85rem; margin-top: 0.45rem; }
+
+    /* ── LINKS ── */
+    .links { display: flex; gap: 1.1rem; }
+
+    .links a {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      margin-left: -8px;
+      margin-right: -8px;
+      color: var(--soft);
+      transition: color 0.2s ease;
+    }
+
+    .links a:first-child { margin-left: -9px; }
+    .links a:hover { color: var(--accent); }
+
+    /* ── FOOTER LINE ART: Southern California, the Belize dig, Orlando ── */
+    .art {
+      width: 100%;
+      color: var(--faint);
+      line-height: 0;
+    }
+
+    .art svg {
+      display: block;
+      width: 100%;
+      height: clamp(120px, 12vw, 180px);
+    }
+
+    .art svg * { vector-effect: non-scaling-stroke; }
+
+    @media (max-width: 640px) {
+      body { font-size: 1.0625rem; }
+      .page { padding-inline: 1.25rem; }
+      .rule { margin-block: 2rem; }
+      .trigger { font-size: 1.125rem; padding-block: 0.5rem; }
+      .panel-body { padding-left: 1.6rem; }
+      .ars-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .ars-side { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+      .ars-side > div + div { margin-top: 0; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .arsenal-crown {
-        animation: none !important;
-      }
+      .panel, .panel-body, .plus, .montage img { transition: none !important; }
+      .audio-toggle.playing .bars span { animation: none; }
     }
-
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <a href="#" class="nav-name">SR</a>
-      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-        <span></span>
+  <main class="page">
+    <header class="top">
+      <h1 class="name">Sam Rahim</h1>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+        <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <ul id="navMenu">
-        <li><a href="#about" onclick="closeMenu()">About</a></li>
-        <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
-        <li><a href="/next" onclick="closeMenu()">What's Next</a></li>
-        <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
-      </ul>
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
-        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-    </div>
-  </nav>
+    </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <p class="hero-greeting" id="greeting"></p>
-      <h1>Sam Rahim</h1>
-      <p class="hero-tagline">I work with founders + operators across tech + soccer.</p>
-      <a href="#contact" class="hero-cta">What're you up to?</a>
-      <a href="/next" class="hero-status"><span>Open to a full-time role. Taking on independent projects in the meantime.</span> <span class="hero-status-more">What I'm looking for &rarr;</span></a>
-    </div>
-    <a href="#about" class="hero-scroll">Scroll</a>
-  </section>
+    <div class="rule" role="presentation"></div>
 
-  <div class="brass-rule"><div class="brass-rule-inner"></div></div>
+    <p class="bio">I work with founders&nbsp;+ operators across tech&nbsp;+&nbsp;soccer. Before going independent, I spent a decade at startups like <a href="https://instagram.com/streetfc" target="_blank" rel="noopener">Street FC</a>, <a href="https://instagram.com/switchyards" target="_blank" rel="noopener">Switchyards</a> and <a href="https://guild.com" target="_blank" rel="noopener">Guild</a>. I grew up in Southern California, spent a college summer on an archaeology dig in Belize, and now live in Orlando with my wife and our daughter, Sophia.</p>
 
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <p class="section-label">About</p>
-    <div class="about-grid">
-      <img src="profile.png" alt="Sam Rahim" class="about-photo">
-      <div class="about-text">
-        <h2>Hi, I'm Sam Rahim.</h2>
-        <p>I spent the last decade working at high growth startups like <a href="https://instagram.com/streetfc" target="_blank" rel="noopener">Street FC</a>, <a href="https://instagram.com/switchyards" target="_blank" rel="noopener">Switchyards</a> and <a href="https://guild.com" target="_blank" rel="noopener">Guild</a>. Now I work independently, under the name Provisions.</p>
-        <p>I'm from Southern California. In college at UC Irvine, I spent a summer in the jungles of Belize on an archaeology dig, where our team found dozens of artifacts and structures thousands of years old.</p>
-        <p>I began my career at Disney's corporate campus in LA. I met my wife there. We live in Orlando now, with our daughter, Sophia.</p>
-      </div>
-    </div>
-  </section>
+    <div class="rule" role="presentation"></div>
 
-  <div class="brass-rule"><div class="brass-rule-inner"></div></div>
-
-  <!-- EXPERIENCE -->
-  <section class="experience" id="experience">
-    <p class="section-label">Experience</p>
-    <div class="timeline">
-
-      <div class="timeline-item next">
-        <h3 class="timeline-company">What's Next</h3>
-        <p class="timeline-role">Full-time role, or embedded part-time</p>
-        <p class="timeline-date">Open now</p>
-        <a href="/next" class="provisions-link">What I'm looking for &rarr;</a>
-      </div>
-
-      <div class="timeline-item current">
-        <h3 class="timeline-company">Provisions</h3>
-        <p class="timeline-role">Independent Consultant</p>
-        <p class="timeline-date">2025 &ndash; Present</p>
-        <p class="timeline-desc">I work with founders + operators across tech + soccer.</p>
-
-        <a href="https://provisions.work" target="_blank" rel="noopener" class="provisions-link">See the work &rarr;</a>
-      </div>
-
-      <div class="timeline-item">
-        <h3 class="timeline-company">Switchyards</h3>
-        <p class="timeline-role">Go To Market + Special Projects</p>
-        <p class="timeline-date">2025</p>
-        <p class="timeline-desc">Managed our influencer and creator program, field marketing, and growth projects. Helped open and sell out 8 clubs.</p>
-      </div>
-
-      <div class="timeline-item">
-        <h3 class="timeline-company">Street FC</h3>
-        <p class="timeline-role">Head of Operations</p>
-        <p class="timeline-date">2021 &ndash; 2025</p>
-        <p class="timeline-desc">Venture-backed global football brand. Grew it to millions in revenue and worked with Nike, Adidas, and EA Sports. Fundamentally changed the way soccer looks in the United States.</p>
-        <div class="streetfc-slideshow" id="streetfcSlideshow">
-          <img src="streetfc-secreto.gif" alt="Secreto Maximus" class="active">
-          <img src="streetfc-miami.gif" alt="Area Futbol 305 Miami">
-          <img src="streetfc-rbl-drop.gif" alt="Red Bull Leipzig Kit Drop">
-          <img src="streetfc-philly.gif" alt="EA FC Philadelphia">
-          <img src="streetfc-rbl-kit.gif" alt="RBL Kit Drop">
-        </div>
-      </div>
-
-      <div class="timeline-hidden" id="timelineMore">
-        <div class="timeline-item">
-          <h3 class="timeline-company">Guild Education</h3>
-          <p class="timeline-role">Associate, Product Operations</p>
-          <p class="timeline-date">2021 &ndash; 2022</p>
-          <p class="timeline-desc">Guild helps working adults access free education. I worked on the product team, across our data exchange product and internal product operations.</p>
-        </div>
-
-        <div class="timeline-item">
-          <h3 class="timeline-company">The Walt Disney Company</h3>
-          <p class="timeline-role">Operations Manager</p>
-          <p class="timeline-date">2019 &ndash; 2021</p>
-          <p class="timeline-desc">Helped develop and run luxury group travel experiences around the world, from intern to full-time. Also where I met my wife.</p>
-        </div>
-
-        <div class="timeline-item">
-          <h3 class="timeline-company">Lokal Travel</h3>
-          <p class="timeline-role">The Generalist Intern</p>
-          <p class="timeline-date">2017 &ndash; 2019</p>
-          <p class="timeline-desc">Lokal Travel helps travelers find locally-run tour operators, keeping tourism dollars in the destination.</p>
-        </div>
-      </div>
-
-      <button class="timeline-toggle" onclick="toggleTimeline()">
-        <span class="toggle-text">Show Earlier Roles</span>
-        <span class="arrow">&#9660;</span>
-      </button>
-    </div>
-
-    <div class="education">
-      <p class="education-label">Education</p>
-      <p class="education-school">University of California, Irvine</p>
-    </div>
-  </section>
-
-  <div class="brass-rule"><div class="brass-rule-inner"></div></div>
-
-  <!-- SIDE QUESTS -->
-  <section class="ventures" id="side-quests">
-    <p class="section-label">Side Quests</p>
-    <div class="ventures-grid">
-      <a class="venture-card scroll-reveal scroll-reveal-delay-1" href="https://provisions.work/ufo" target="_blank" rel="noopener">
-        <div class="venture-header">
-          <div>
-            <h3>The UAP Files</h3>
+    <ul class="list">
+      <li class="item" id="next">
+        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-next"><span class="plus" aria-hidden="true"></span>What's Next</button></h2>
+        <div class="panel" id="p-next">
+          <div class="panel-inner">
+            <div class="panel-body">
+              <p>Open to a full&#8209;time role, or embedded part&#8209;time. Taking on independent projects in the meantime.</p>
+              <a class="more" href="/next">What I'm looking for <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
           </div>
-          <span class="venture-status live">Live</span>
         </div>
-        <p>4,124 pages of declassified US government UAP records, 1944 to 2025.</p>
+      </li>
+
+      <li class="item" id="work">
+        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-work"><span class="plus" aria-hidden="true"></span>Work</button></h2>
+        <div class="panel" id="p-work">
+          <div class="panel-inner">
+            <div class="panel-body">
+              <div class="roles">
+                <div class="role">
+                  <div class="role-head"><span class="role-co">Provisions</span><span class="role-years">2025&ndash;now</span></div>
+                  <p class="role-title">Independent Consultant</p>
+                  <p class="role-desc">I work with founders&nbsp;+ operators across tech&nbsp;+&nbsp;soccer.</p>
+                  <a class="more" href="https://provisions.work" target="_blank" rel="noopener">See the work <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                </div>
+                <div class="role">
+                  <div class="role-head"><span class="role-co">Switchyards</span><span class="role-years">2025</span></div>
+                  <p class="role-title">Go To Market + Special Projects</p>
+                  <p class="role-desc">Managed our influencer and creator program, field marketing, and growth projects. Helped open and sell out 8 clubs.</p>
+                </div>
+                <div class="role">
+                  <div class="role-head"><span class="role-co">Street FC</span><span class="role-years">2021&ndash;2025</span></div>
+                  <p class="role-title">Head of Operations</p>
+                  <p class="role-desc">Venture-backed global football brand. Grew it to millions in revenue and worked with Nike, Adidas, and EA Sports. Fundamentally changed the way soccer looks in the United States.</p>
+                  <div class="montage" id="montage">
+                    <img data-src="streetfc-secreto.gif" alt="Secreto Maximus" class="active">
+                    <img data-src="streetfc-miami.gif" alt="Area Futbol 305 Miami">
+                    <img data-src="streetfc-rbl-drop.gif" alt="Red Bull Leipzig kit drop">
+                    <img data-src="streetfc-philly.gif" alt="EA FC Philadelphia">
+                    <img data-src="streetfc-rbl-kit.gif" alt="RBL kit drop">
+                  </div>
+                </div>
+                <div class="role">
+                  <div class="role-head"><span class="role-co">Guild Education</span><span class="role-years">2021&ndash;2022</span></div>
+                  <p class="role-title">Associate, Product Operations</p>
+                  <p class="role-desc">Guild helps working adults access free education. I worked on the product team, across our data exchange product and internal product operations.</p>
+                </div>
+                <div class="role">
+                  <div class="role-head"><span class="role-co">The Walt Disney Company</span><span class="role-years">2019&ndash;2021</span></div>
+                  <p class="role-title">Operations Manager</p>
+                  <p class="role-desc">Helped develop and run luxury group travel experiences around the world, from intern to full-time. Also where I met my wife.</p>
+                </div>
+                <div class="role">
+                  <div class="role-head"><span class="role-co">Lokal Travel</span><span class="role-years">2017&ndash;2019</span></div>
+                  <p class="role-title">The Generalist Intern</p>
+                  <p class="role-desc">Lokal Travel helps travelers find locally-run tour operators, keeping tourism dollars in the destination.</p>
+                </div>
+              </div>
+              <p class="edu"><strong>Education</strong> &nbsp;University of California, Irvine</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="item" id="side-quests">
+        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-quests"><span class="plus" aria-hidden="true"></span>Side Quests</button></h2>
+        <div class="panel" id="p-quests">
+          <div class="panel-inner">
+            <div class="panel-body">
+              <div class="quests">
+                <div class="quest">
+                  <a href="https://provisions.work/ufo" target="_blank" rel="noopener">The UAP Files <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+                  <p>4,124 pages of declassified US government UAP records, 1944 to 2025.</p>
+                </div>
+                <div class="quest">
+                  <a href="https://provisions.soccer" target="_blank" rel="noopener">Summer of Soccer, &rsquo;26 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+                  <p>A free fan kit for the tournament. Make a player card with your face and browse all 48 national kits.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="item" id="arsenal">
+        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-arsenal"><span class="plus" aria-hidden="true"></span>North London Forever</button></h2>
+        <div class="panel" id="p-arsenal">
+          <div class="panel-inner">
+            <div class="panel-body">
+              <div class="ars-intro">
+                <p>Arsenal since '95. <span id="arsenalSeasonNote">Live table below.</span></p>
+                <button class="audio-toggle" id="audioToggle" type="button" onclick="toggleAudio()">
+                  <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+                  <span class="audio-text">Play</span>
+                </button>
+              </div>
+              <audio id="arsenalAudio" preload="none" src="arsenal-audio.mp3"></audio>
+
+              <div class="ars-grid">
+                <div>
+                  <p class="ars-label" id="plHeading">Premier League</p>
+                  <div class="table-wrap">
+                    <table class="pl">
+                      <thead><tr><th>#</th><th>Club</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr></thead>
+                      <tbody id="plBody"><tr><td colspan="7" class="loading">Loading the table</td></tr></tbody>
+                    </table>
+                  </div>
+                  <div class="table-foot">
+                    <button class="text-btn" id="tableToggle" type="button" onclick="toggleTable()">Full table</button>
+                    <span id="arsenalUpdated"></span>
+                  </div>
+                </div>
+                <div class="ars-side">
+                  <div>
+                    <p class="ars-label" id="compHeading">Competitions</p>
+                    <div id="arsenalCompetitions"><p class="loading">Loading</p></div>
+                  </div>
+                  <div>
+                    <p class="ars-label">Next match</p>
+                    <div id="arsenalNextMatch"><p class="loading">Loading</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="item" id="updates">
+        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-updates"><span class="plus" aria-hidden="true"></span>Updates</button></h2>
+        <div class="panel" id="p-updates">
+          <div class="panel-inner">
+            <div class="panel-body">
+              <p>Latest: <a class="inline" href="/updates/feb-19-2026">What I've Been Up To</a>, February 19, 2026.</p>
+              <form class="signup" action="https://formspree.io/f/xdallyeo" method="POST">
+                <input type="email" name="email" placeholder="Your email" aria-label="Your email" required>
+                <button type="submit">I'm in</button>
+              </form>
+              <p class="signup-note">Occasional updates on what I'm up to. NOT a newsletter.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="rule" role="presentation"></div>
+
+    <nav class="links" aria-label="Contact">
+      <a href="mailto:sam@samrahim.com" aria-label="Email sam@samrahim.com">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6l8.5 7 8.5-7"/></svg>
       </a>
-      <a class="venture-card scroll-reveal scroll-reveal-delay-2" href="https://provisions.soccer" target="_blank" rel="noopener">
-        <div class="venture-header">
-          <div>
-            <h3>Summer of Soccer, &rsquo;26</h3>
-          </div>
-          <span class="venture-status live">Live</span>
-        </div>
-        <p>A free fan kit for the tournament. Make a player card with your face and browse all 48 national kits.</p>
+      <a href="https://www.linkedin.com/in/sam-rahim/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M8 10.5V17M8 7.25v.01M12 17v-6.5M12 13.5c0-1.7 1-3 2.5-3S17 11.8 17 13.5V17"/></svg>
       </a>
-    </div>
-  </section>
+    </nav>
+  </main>
 
-  <div class="brass-rule"><div class="brass-rule-inner"></div></div>
+  <footer class="art" aria-hidden="true">
+    <svg viewBox="0 0 1440 170" preserveAspectRatio="xMidYMax slice" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 160H1440"/>
 
-  <!-- ARSENAL -->
-  <section class="arsenal" id="arsenal">
-    <p class="section-label">North London Forever</p>
-    <p class="arsenal-intro">Arsenal since '95. <span id="arsenalSeasonNote">Live table and competitions below.</span><span class="arsenal-audio-wrap">
-        <button class="arsenal-audio-toggle" id="arsenalAudioToggle" onclick="toggleArsenalAudio()">
-          <span class="audio-icon">
-            <span class="audio-bar"></span>
-            <span class="audio-bar"></span>
-            <span class="audio-bar"></span>
-          </span>
-          <span class="audio-text">Play</span>
-        </button>
-      </span></p>
-    <audio id="arsenalAudio" src="arsenal-audio.mp3"></audio>
-    <div class="arsenal-grid">
-      <div class="arsenal-table-wrap">
-        <h3 id="plTableHeading">Premier League Table</h3>
-        <table class="pl-table" id="plTable">
-          <thead>
-            <tr><th>#</th><th>Club</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>
-          </thead>
-          <tbody id="plTableBody">
-            <tr><td colspan="7" class="table-loading">Loading...</td></tr>
-          </tbody>
-        </table>
-        <div class="table-footer">
-          <button class="timeline-toggle" id="tableToggle" onclick="toggleTable()">
-            <span class="toggle-text">Full Table</span>
-            <span class="arrow">&#9660;</span>
-          </button>
-          <span id="arsenalUpdated"></span>
-        </div>
-      </div>
-      <div class="arsenal-competitions">
-        <h3 id="compHeading">Active Competitions</h3>
-        <div id="arsenalCompetitions" class="competitions-list">
-          <p class="table-loading">Loading...</p>
-        </div>
-        <div class="arsenal-next">
-          <h3>Next Match</h3>
-          <div id="arsenalNextMatch" class="next-match">
-            <p class="table-loading">Loading...</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+      <!-- Southern California: surf, lifeguard tower, palms, low stucco -->
+      <path d="M18 152q10-6 20 0t20 0t20 0t20 0M44 143q10-6 20 0t20 0t20 0"/>
+      <path d="M150 160l8-42M190 160l-8-42M153 150l34-22M187 150l-34-22M154 118h32M154 96h32v22h-32zM150 96l20-12 20 12M162 102h16v9h-16zM154 118l-26 42"/>
+      <path d="M252 160c-2-30-6-60 4-98"/>
+      <path d="M256 62c-12-8-26-6-36 4M256 62c-10-12-20-18-32-18M256 62c6-14 16-18 28-16M256 62c14-6 26-2 34 10M256 62c2-12-2-22-8-28"/>
+      <path d="M300 160c2-40 8-80 0-124"/>
+      <path d="M300 36c-12-8-26-6-36 4M300 36c-10-12-20-18-32-18M300 36c6-14 16-18 28-16M300 36c14-6 26-2 34 10M300 36c4-12 0-22-6-28"/>
+      <path d="M352 128h30v32h-30zM386 108h24v52h-24zM390 120h16M390 132h16M390 144h16M414 136h44v24h-44zM414 136l22-12 22 12M432 146h8v14"/>
+      <path d="M470 160v-18h26v18M466 142l17-9 17 9"/>
 
-  <div class="brass-rule"><div class="brass-rule-inner"></div></div>
+      <!-- Belize: ceiba tree and the stepped temple from the dig -->
+      <path d="M556 160l2-50M566 160l-2-50M520 110c10-18 70-18 84 0zM561 110l-13-10M561 110l15-12"/>
+      <path d="M620 140h200v20H620zM640 122h160v18H640zM660 104h120v18H660zM680 88h80v16h-80zM700 64h40v24h-40zM708 52h24v12h-24zM714 72h12v16h-12z"/>
+      <path d="M704 160l6-72M736 160l-6-72M705 150h30M706 140h28M706 130h27M707 120h26M708 110h24M709 100h22"/>
+      <path d="M858 160v-22M842 136c0-18 32-18 32 0 0 10-32 10-32 0z"/>
+      <path d="M892 160v-14M882 146c0-12 20-12 20 0 0 7-20 7-20 0z"/>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="contact-inner">
-      <p class="section-label">Contact</p>
-      <h2>What're you up to?</h2>
-      <p>Know a founder or team I should talk to? I'd love an intro, even if there isn't a formal role open. Email is the fastest way to reach me.</p>
-      <div class="contact-links">
-        <a href="mailto:sam@samrahim.com" class="contact-link primary">sam@samrahim.com</a>
-      </div>
-      <div class="contact-links-row">
-        <a href="https://www.linkedin.com/in/sam-rahim/" target="_blank" rel="noopener" class="contact-link secondary">LinkedIn</a>
-        <a href="/next" class="contact-link secondary">What's Next</a>
-        <a href="/updates" class="contact-link secondary">Updates</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p class="footer-name">Sam Rahim</p>
+      <!-- Orlando: low blocks, the Lake Eola fountain, downtown, a goal -->
+      <path d="M952 134h36v26h-36zM992 120h30v40h-30zM997 132h20M997 144h20"/>
+      <path d="M1052 160c4-6 72-6 76 0"/>
+      <path d="M1066 150h48l-8-12h-32zM1076 138h28l-6-14h-16zM1084 124h12l-4-14h-4zM1090 110V92M1080 150v-12M1090 150v-12M1100 150v-12"/>
+      <path d="M1090 92c-10 4-18 16-22 32M1090 92c10 4 18 16 22 32"/>
+      <path d="M1160 96h30v64h-30zM1164 110h22M1164 124h22M1164 138h22"/>
+      <path d="M1196 70h34v90h-34zM1204 58h18v12h-18zM1213 58V40M1200 82h26M1200 94h26M1200 106h26M1200 118h26M1200 130h26M1200 142h26"/>
+      <path d="M1236 108h40v52h-40zM1240 120h32M1240 134h32M1280 124h28v36h-28z"/>
+      <path d="M1352 160v-38h76v38M1352 122l10 8h56l10-8M1362 130l4 30M1418 130l-4 30M1378 130v30M1390 130v30M1402 130v30M1364 142h52M1365 152h50"/>
+      <circle cx="1334" cy="155" r="5"/>
+    </svg>
   </footer>
 
+  <dialog class="video-dialog" id="arsVideo">
+    <video id="arsVideoEl" playsinline controls preload="none" data-src="ArsenalVideo_SamRahim.mp4"></video>
+    <button class="video-close" type="button" onclick="closeVideo()">Close</button>
+  </dialog>
+
   <script>
-    // Theme toggle
-    (function() {
-      var stored = localStorage.getItem('theme');
-      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (stored === 'dark' || (!stored && prefersDark)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
-    })();
-
     function toggleTheme() {
-      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
+      var root = document.documentElement;
+      var dark = root.getAttribute('data-theme') === 'dark';
+      if (dark) root.removeAttribute('data-theme'); else root.setAttribute('data-theme', 'dark');
+      try { localStorage.setItem('theme', dark ? 'light' : 'dark'); } catch (e) {}
+    }
+
+    // ── + list ──
+    var openers = {};
+    function setOpen(item, open, updateHash) {
+      item.classList.toggle('open', open);
+      item.querySelector('.trigger').setAttribute('aria-expanded', String(open));
+      if (open && openers[item.id]) { openers[item.id](); openers[item.id] = null; }
+      if (item.id === 'work') runMontage(open);
+      if (item.id === 'arsenal' && !open) stopAudio();
+      if (updateHash) {
+        if (open) history.replaceState(null, '', '#' + item.id);
+        else if (location.hash === '#' + item.id) history.replaceState(null, '', location.pathname);
       }
     }
 
-    // Time-based greeting
-    (function() {
-      var hour = new Date().getHours();
-      var greeting;
-      if (hour >= 5 && hour < 12) greeting = 'Good morning.';
-      else if (hour >= 12 && hour < 17) greeting = 'Good afternoon.';
-      else if (hour >= 17 && hour < 21) greeting = 'Good evening.';
-      else greeting = 'Up late?';
-      document.getElementById('greeting').textContent = greeting;
-    })();
+    document.querySelectorAll('.item').forEach(function(item) {
+      item.querySelector('.trigger').addEventListener('click', function() {
+        setOpen(item, !item.classList.contains('open'), true);
+      });
+    });
 
-    function toggleMenu() {
-      document.getElementById('navMenu').classList.toggle('open');
-      document.querySelector('.hamburger').classList.toggle('open');
-      document.body.style.overflow = document.getElementById('navMenu').classList.contains('open') ? 'hidden' : '';
+    // ── Street FC montage: gifs load only when Work opens ──
+    var montageTimer = null;
+    openers.work = function() {
+      document.querySelectorAll('#montage img').forEach(function(img) { img.src = img.dataset.src; });
+    };
+    function runMontage(on) {
+      clearInterval(montageTimer);
+      if (!on) return;
+      var imgs = document.querySelectorAll('#montage img');
+      var i = 0;
+      montageTimer = setInterval(function() {
+        imgs[i].classList.remove('active');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('active');
+      }, 4000);
     }
 
-    function closeMenu() {
-      document.getElementById('navMenu').classList.remove('open');
-      document.querySelector('.hamburger').classList.remove('open');
-      document.body.style.overflow = '';
+    // ── Arsenal: live ESPN data, fetched the first time the section opens ──
+    var CROWN = '<svg class="crown" viewBox="0 0 16 12" aria-label="Top of the table"><path d="M1 11L2 3l3.5 3L8 1l2.5 5L14 3l1 8z"/></svg>';
+    var allRows = [];
+    var standingsPromise = null;
+
+    function stat(entry, name) {
+      var s = entry.stats.find(function(x) { return x.name === name; });
+      return s ? s.value : 0;
     }
 
-    function toggleTimeline() {
-      const el = document.getElementById('timelineMore');
-      const btn = document.querySelector('.timeline-toggle');
-      const text = btn.querySelector('.toggle-text');
-      el.classList.toggle('open');
-      btn.classList.toggle('open');
-      text.textContent = el.classList.contains('open') ? 'Show Less' : 'Show Earlier Roles';
-    }
-
-    // Arsenal live data
-    let allRows = [];
-    let standingsPromise = null;
-
-    // Fetch the PL table. If the new season hasn't kicked off yet (no games
-    // played), fall back to last completed season's final table so the
-    // section celebrates rather than rendering an empty 0-0 grid.
+    // If the new season hasn't kicked off (no games played), fall back to
+    // last season's final table.
     function getStandings() {
       if (standingsPromise) return standingsPromise;
-      const base = 'https://site.api.espn.com/apis/v2/sports/soccer/eng.1/standings';
-      standingsPromise = (async () => {
-        let res = await fetch(base);
-        let data = await res.json();
-        let entries = data.children[0].standings.entries;
-        const totalGP = entries.reduce((sum, e) => sum + (e.stats.find(s => s.name === 'gamesPlayed')?.value || 0), 0);
-        const curYear = (data.season && data.season.year) || new Date().getFullYear();
-        let preseason = false, seasonLabel = '';
+      var base = 'https://site.api.espn.com/apis/v2/sports/soccer/eng.1/standings';
+      standingsPromise = (async function() {
+        var data = await (await fetch(base)).json();
+        var entries = data.children[0].standings.entries;
+        var totalGP = entries.reduce(function(sum, e) { return sum + stat(e, 'gamesPlayed'); }, 0);
+        var curYear = (data.season && data.season.year) || new Date().getFullYear();
+        var preseason = false, seasonLabel = '';
         if (totalGP === 0) {
           preseason = true;
-          const prev = curYear - 1;
-          seasonLabel = prev + '–' + String(prev + 1).slice(2); // e.g. 2025–26
-          res = await fetch(base + '?season=' + prev);
-          data = await res.json();
+          var prev = curYear - 1;
+          seasonLabel = prev + '–' + String(prev + 1).slice(2);
+          data = await (await fetch(base + '?season=' + prev)).json();
           entries = data.children[0].standings.entries;
         }
-        return { entries, preseason, seasonLabel, curYear };
+        entries.sort(function(a, b) { return stat(b, 'points') - stat(a, 'points'); });
+        return { entries: entries, preseason: preseason, seasonLabel: seasonLabel, curYear: curYear };
       })();
       return standingsPromise;
     }
 
-    // Community Shield — single match, early August. Returns Arsenal's result
-    // for the current season, or null if they weren't in it / it's unplayed.
-    let shieldPromise = null;
+    var shieldPromise = null;
     function getShield() {
       if (shieldPromise) return shieldPromise;
-      shieldPromise = (async () => {
+      shieldPromise = (async function() {
         try {
-          const { curYear } = await getStandings();
-          const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/eng.charity/scoreboard?dates=${curYear}0701-${curYear}0930`);
-          const data = await res.json();
-          const event = (data.events || []).find(e => e.name && e.name.includes('Arsenal'));
+          var st = await getStandings();
+          var res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/eng.charity/scoreboard?dates=' + st.curYear + '0701-' + st.curYear + '0930');
+          var data = await res.json();
+          var event = (data.events || []).find(function(e) { return e.name && e.name.includes('Arsenal'); });
           if (!event) return null;
-          const comp = event.competitions[0];
+          var comp = event.competitions[0];
           if (!comp.status || !comp.status.type || !comp.status.type.completed) return null;
-          const ars = comp.competitors.find(c => c.team.displayName === 'Arsenal');
-          const opp = comp.competitors.find(c => c.team.displayName !== 'Arsenal');
+          var ars = comp.competitors.find(function(c) { return c.team.displayName === 'Arsenal'; });
+          var opp = comp.competitors.find(function(c) { return c.team.displayName !== 'Arsenal'; });
           if (!ars || !opp) return null;
-          return {
-            won: ars.winner === true,
-            score: ars.score + '–' + opp.score,
-            opponent: opp.team.shortDisplayName || opp.team.displayName
-          };
+          return { won: ars.winner === true, score: ars.score + '–' + opp.score, opponent: opp.team.shortDisplayName || opp.team.displayName };
         } catch (err) { return null; }
       })();
       return shieldPromise;
     }
 
-    async function loadPLTable() {
+    async function loadTable() {
       try {
-        const { entries, preseason, seasonLabel } = await getStandings();
-        const heading = document.getElementById('plTableHeading');
-        if (heading) heading.textContent = preseason ? ('Final Table · ' + seasonLabel) : 'Premier League Table';
-        const note = document.getElementById('arsenalSeasonNote');
-        if (note) note.textContent = preseason ? ('Premier League champions, ' + seasonLabel + '.') : 'Live table and competitions below.';
-        entries.sort((a, b) => {
-          const ptsA = a.stats.find(s => s.name === 'points')?.value || 0;
-          const ptsB = b.stats.find(s => s.name === 'points')?.value || 0;
-          return ptsB - ptsA;
-        });
-        allRows = entries.map((e, i) => {
-          const stats = e.stats;
-          const pts = stats.find(s => s.name === 'points')?.value || 0;
-          const gp = stats.find(s => s.name === 'gamesPlayed')?.value || 0;
-          const w = stats.find(s => s.name === 'wins')?.value || 0;
-          const d = stats.find(s => s.name === 'ties')?.value || 0;
-          const l = stats.find(s => s.name === 'losses')?.value || 0;
-          const name = e.team.shortDisplayName || e.team.displayName;
-          const isArsenal = e.team.displayName === 'Arsenal';
-          const isTopAndArsenal = isArsenal && i === 0;
-          const crown = isTopAndArsenal ? ' <span class="arsenal-crown">&#9819;</span>' : '';
-          const rowClass = isArsenal ? (isTopAndArsenal ? 'arsenal-row clickable-row' : 'arsenal-row') : '';
-          const rowClick = isTopAndArsenal ? ' onclick="openArsenalVideo()"' : '';
-          const isSpurs = e.team.displayName.includes('Tottenham');
-          const trash = isSpurs ? ' <span style="font-size:0.7rem" title="Lol">&#128465;</span>' : '';
-          return { html: `<tr class="${rowClass}"${rowClick}><td>${i + 1}</td><td>${name}${crown}${trash}</td><td>${gp}</td><td>${w}</td><td>${d}</td><td>${l}</td><td>${pts}</td></tr>`, pos: i };
+        var st = await getStandings();
+        document.getElementById('plHeading').textContent = st.preseason ? ('Final table, ' + st.seasonLabel) : 'Premier League';
+        document.getElementById('arsenalSeasonNote').textContent = st.preseason ? ('Premier League champions, ' + st.seasonLabel + '.') : 'Live table below.';
+        allRows = st.entries.map(function(e, i) {
+          var name = e.team.shortDisplayName || e.team.displayName;
+          var isArsenal = e.team.displayName === 'Arsenal';
+          var top = isArsenal && i === 0;
+          var spurs = e.team.displayName.includes('Tottenham') ? ' <span title="Lol">&#128465;</span>' : '';
+          var cls = isArsenal ? (top ? 'arsenal clickable' : 'arsenal') : '';
+          var click = top ? ' onclick="openVideo()" title="Play"' : '';
+          return '<tr class="' + cls + '"' + click + '><td>' + (i + 1) + '</td><td>' + name + (top ? CROWN : '') + spurs + '</td><td>' + stat(e, 'gamesPlayed') + '</td><td>' + stat(e, 'wins') + '</td><td>' + stat(e, 'ties') + '</td><td>' + stat(e, 'losses') + '</td><td>' + stat(e, 'points') + '</td></tr>';
         });
         renderTable(false);
+        var now = new Date();
+        document.getElementById('arsenalUpdated').textContent = 'Updated ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
       } catch (err) {
-        document.getElementById('plTableBody').innerHTML = '<tr><td colspan="7" class="table-loading">Unable to load standings</td></tr>';
+        document.getElementById('plBody').innerHTML = '<tr><td colspan="7" class="loading">Couldn\'t load the table. Try again later.</td></tr>';
       }
     }
 
-    function renderTable(showAll) {
-      const tbody = document.getElementById('plTableBody');
-      const rows = showAll ? allRows : allRows.slice(0, 10);
-      tbody.innerHTML = rows.map(r => r.html).join('');
-      const btn = document.getElementById('tableToggle');
-      if (btn) btn.querySelector('.toggle-text').textContent = showAll ? 'Show Less' : 'Full Table';
+    function renderTable(all) {
+      document.getElementById('plBody').innerHTML = (all ? allRows : allRows.slice(0, 10)).join('');
+      document.getElementById('tableToggle').textContent = all ? 'Top 10' : 'Full table';
     }
 
     function toggleTable() {
-      const btn = document.getElementById('tableToggle');
-      const expanded = btn.classList.toggle('open');
-      renderTable(expanded);
-      if (!expanded) {
-        document.getElementById('arsenal').scrollIntoView({ behavior: 'smooth' });
+      var btn = document.getElementById('tableToggle');
+      renderTable(btn.textContent === 'Full table');
+    }
+
+    async function loadCompetitions() {
+      var box = document.getElementById('arsenalCompetitions');
+      try {
+        var st = await getStandings();
+        var shield = await getShield();
+        var comps = [];
+        if (st.preseason) {
+          document.getElementById('compHeading').textContent = 'Honours';
+          var margin = Math.round(stat(st.entries[0], 'points') - (st.entries[1] ? stat(st.entries[1], 'points') : 0));
+          if (shield && shield.won) comps.push(['Community Shield', 'Won ' + shield.score + ' v ' + shield.opponent]);
+          comps.push(['Premier League', 'Champions, ' + st.seasonLabel]);
+          comps.push(['Final margin', margin + ' pts']);
+        } else {
+          var ars = st.entries.find(function(e) { return e.team.displayName === 'Arsenal'; });
+          var gp = ars ? stat(ars, 'gamesPlayed') : 0;
+          comps.push(['Premier League', gp > 0 ? 'Matchweek ' + Math.round(gp) : 'In progress']);
+          if (shield && shield.won) comps.push(['Community Shield', 'Winners']);
+        }
+        box.innerHTML = comps.map(function(c) { return '<div class="comp"><strong>' + c[0] + '</strong>' + c[1] + '</div>'; }).join('');
+      } catch (err) {
+        box.innerHTML = '<p class="loading">Couldn\'t load</p>';
       }
     }
 
     async function loadNextMatch() {
+      var box = document.getElementById('arsenalNextMatch');
       try {
-        // Search next 60 days for Arsenal PL matches
-        const now = new Date();
-        const end = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
-        const fmt = d => d.toISOString().slice(0, 10).replace(/-/g, '');
-        const leagues = ['eng.1', 'uefa.champions', 'eng.fa', 'eng.league_cup', 'eng.charity'];
-        let nextMatch = null;
-
-        for (const league of leagues) {
-          try {
-            const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard?dates=${fmt(now)}-${fmt(end)}`);
-            const data = await res.json();
-            const events = data.events || [];
-            const arsenal = events.filter(e => e.name && e.name.includes('Arsenal'));
-            const upcoming = arsenal.filter(e => new Date(e.date) > now).sort((a, b) => new Date(a.date) - new Date(b.date));
-            if (upcoming.length > 0 && (!nextMatch || new Date(upcoming[0].date) < new Date(nextMatch.date))) {
-              nextMatch = upcoming[0];
-            }
-          } catch (err) { /* skip league */ }
-        }
-
-        if (nextMatch) {
-          const comp = nextMatch.competitions[0];
-          const home = comp.competitors.find(c => c.homeAway === 'home');
-          const away = comp.competitors.find(c => c.homeAway === 'away');
-          const matchDate = new Date(nextMatch.date);
-          const dateStr = matchDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-          const timeStr = matchDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-          document.getElementById('arsenalNextMatch').innerHTML = `
-            <p class="next-match-teams">${home.team.shortDisplayName} vs ${away.team.shortDisplayName}</p>
-            <p class="next-match-info">${dateStr} &middot; ${timeStr}</p>
-          `;
+        var now = new Date();
+        var end = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
+        var fmt = function(d) { return d.toISOString().slice(0, 10).replace(/-/g, ''); };
+        var leagues = ['eng.1', 'uefa.champions', 'eng.fa', 'eng.league_cup', 'eng.charity'];
+        var results = await Promise.all(leagues.map(function(league) {
+          return fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/' + league + '/scoreboard?dates=' + fmt(now) + '-' + fmt(end))
+            .then(function(r) { return r.json(); })
+            .catch(function() { return {}; });
+        }));
+        var next = null;
+        results.forEach(function(data) {
+          (data.events || []).forEach(function(e) {
+            if (e.name && e.name.includes('Arsenal') && new Date(e.date) > now && (!next || new Date(e.date) < new Date(next.date))) next = e;
+          });
+        });
+        if (next) {
+          var comp = next.competitions[0];
+          var home = comp.competitors.find(function(c) { return c.homeAway === 'home'; });
+          var away = comp.competitors.find(function(c) { return c.homeAway === 'away'; });
+          var d = new Date(next.date);
+          box.innerHTML = '<p class="next-teams">' + home.team.shortDisplayName + ' v ' + away.team.shortDisplayName + '</p><p class="next-info">' +
+            d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ', ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</p>';
         } else {
-          const { preseason, curYear } = await getStandings();
-          const nextSeason = curYear + '–' + String(curYear + 1).slice(2);
-          document.getElementById('arsenalNextMatch').innerHTML = preseason
-            ? `<p class="next-match-teams">${nextSeason} Season</p><p class="next-match-info">Fixtures to come</p>`
-            : '<p class="next-match-info">No upcoming match found</p>';
+          box.innerHTML = '<p class="next-info">No match in the next 60 days</p>';
         }
       } catch (err) {
-        document.getElementById('arsenalNextMatch').innerHTML = '<p class="next-match-info">Unable to load</p>';
+        box.innerHTML = '<p class="loading">Couldn\'t load</p>';
       }
     }
 
-    async function loadCompetitions() {
-      const container = document.getElementById('arsenalCompetitions');
-      const heading = document.getElementById('compHeading');
+    openers.arsenal = function() { loadTable(); loadCompetitions(); loadNextMatch(); };
 
-      try {
-        const { entries, preseason, seasonLabel } = await getStandings();
-
-        const shield = await getShield();
-
-        if (preseason) {
-          // Season's in the books — Arsenal finished top of the table.
-          if (heading) heading.textContent = 'Honours';
-          const sorted = [...entries].sort((a, b) =>
-            (b.stats.find(s => s.name === 'points')?.value || 0) - (a.stats.find(s => s.name === 'points')?.value || 0));
-          const champ = sorted[0];
-          const champPts = champ.stats.find(s => s.name === 'points')?.value || 0;
-          const runnerPts = sorted[1] ? (sorted[1].stats.find(s => s.name === 'points')?.value || 0) : champPts;
-          const margin = Math.round(champPts - runnerPts);
-          const comps = [];
-          if (shield && shield.won) comps.push({ name: 'Community Shield', round: 'Won ' + shield.score + ' v ' + shield.opponent });
-          comps.push({ name: 'Premier League', round: 'Champions &middot; ' + seasonLabel });
-          comps.push({ name: 'Final margin', round: '+' + margin + ' pts' });
-          container.innerHTML = comps.map(c =>
-            `<div class="comp-item"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
-          ).join('');
-          return;
-        }
-
-        // In-season: show current matchweek.
-        if (heading) heading.textContent = 'Active Competitions';
-        const arsenal = entries.find(e => e.team.displayName === 'Arsenal');
-        let matchweek = 'In Progress';
-        if (arsenal) {
-          const gp = arsenal.stats.find(s => s.name === 'gamesPlayed')?.value || 0;
-          if (gp > 0) matchweek = `Matchweek ${Math.round(gp)}`;
-        }
-        const comps = [{ name: 'Premier League', round: matchweek }];
-        if (shield && shield.won) comps.push({ name: 'Community Shield', round: 'Winners' });
-        container.innerHTML = comps.map(c =>
-          `<div class="comp-item"><span class="comp-name">${c.name}</span><span class="comp-status">${c.round}</span></div>`
-        ).join('');
-      } catch (err) {
-        container.innerHTML = '<p class="table-loading">Unable to load</p>';
-      }
-    }
-
-    function updateTimestamp() {
-      var now = new Date();
-      var time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-      document.getElementById('arsenalUpdated').textContent = 'Updated ' + time;
-    }
-
-    loadPLTable().then(updateTimestamp);
-    loadNextMatch();
-    loadCompetitions();
-
-    // Street FC slideshow
-    (function() {
-      const imgs = document.querySelectorAll('#streetfcSlideshow img');
-      let current = 0;
-      setInterval(function() {
-        imgs[current].classList.remove('active');
-        current = (current + 1) % imgs.length;
-        imgs[current].classList.add('active');
-      }, 4000);
-    })();
-
-
-    // Arsenal audio toggle
-    function toggleArsenalAudio() {
+    function toggleAudio() {
       var audio = document.getElementById('arsenalAudio');
-      var btn = document.getElementById('arsenalAudioToggle');
-      var textSpan = btn.querySelector('.audio-text');
-
+      var btn = document.getElementById('audioToggle');
       if (audio.paused) {
         audio.play();
         btn.classList.add('playing');
-        textSpan.textContent = 'Pause';
+        btn.querySelector('.audio-text').textContent = 'Pause';
       } else {
-        audio.pause();
-        btn.classList.remove('playing');
-        textSpan.textContent = 'Play';
+        stopAudio(true);
       }
     }
 
-    function stopArsenalAudio() {
+    function stopAudio(keepPosition) {
       var audio = document.getElementById('arsenalAudio');
-      var btn = document.getElementById('arsenalAudioToggle');
-      var textSpan = btn.querySelector('.audio-text');
-
+      var btn = document.getElementById('audioToggle');
       audio.pause();
-      audio.currentTime = 0;
-      btn.classList.remove('playing');
-      textSpan.textContent = 'Play';
-    }
-
-    // Reset button when audio ends
-    document.getElementById('arsenalAudio').addEventListener('ended', function() {
-      var btn = document.getElementById('arsenalAudioToggle');
+      if (!keepPosition) audio.currentTime = 0;
       btn.classList.remove('playing');
       btn.querySelector('.audio-text').textContent = 'Play';
+    }
+
+    document.getElementById('arsenalAudio').addEventListener('ended', function() { stopAudio(); });
+
+    function openVideo() {
+      var dlg = document.getElementById('arsVideo');
+      var v = document.getElementById('arsVideoEl');
+      if (!v.src) v.src = v.dataset.src;
+      stopAudio();
+      dlg.showModal();
+      v.play().catch(function() {});
+    }
+
+    function closeVideo() {
+      var v = document.getElementById('arsVideoEl');
+      v.pause();
+      document.getElementById('arsVideo').close();
+    }
+
+    document.getElementById('arsVideo').addEventListener('click', function(e) {
+      if (e.target === this) closeVideo();
+    });
+    document.getElementById('arsVideo').addEventListener('close', function() {
+      document.getElementById('arsVideoEl').pause();
     });
 
-    // Arsenal video modal
-    function openArsenalVideo() {
-      stopArsenalAudio();
-      document.getElementById('arsenalVideoModal').classList.add('open');
-      document.body.style.overflow = 'hidden';
-      var video = document.getElementById('arsenalVideo');
-      video.currentTime = 0;
-      video.play();
+    // Open a section straight from the URL, e.g. samrahim.com/#arsenal
+    if (location.hash) {
+      var target = document.getElementById(location.hash.slice(1));
+      if (target && target.classList.contains('item')) setOpen(target, true, false);
     }
-
-    function closeArsenalVideo() {
-      document.getElementById('arsenalVideoModal').classList.remove('open');
-      document.body.style.overflow = '';
-      var video = document.getElementById('arsenalVideo');
-      video.pause();
-      video.currentTime = 0;
-    }
-
   </script>
 
-  <!-- Arsenal Video Modal -->
-  <div id="arsenalVideoModal" class="video-modal">
-    <button class="video-modal-close" onclick="closeArsenalVideo()" aria-label="Close">&times;</button>
-    <div class="video-modal-content">
-      <video id="arsenalVideo" src="ArsenalVideo_SamRahim.mp4" playsinline muted></video>
-      <button class="video-unmute" onclick="document.getElementById('arsenalVideo').muted = false; this.style.display = 'none';">Tap for sound</button>
-    </div>
-  </div>
-
-  <script>
-    document.getElementById('arsenalVideoModal').addEventListener('click', function(e) {
-      var clickedVideo = e.target.closest('video');
-      var clickedUnmute = e.target.closest('.video-unmute');
-      if (!clickedVideo && !clickedUnmute) {
-        closeArsenalVideo();
-      }
-    });
-
-    // Scroll Reveal Animation
-    var revealElements = document.querySelectorAll('.scroll-reveal');
-    var revealObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    revealElements.forEach(function(el) {
-      revealObserver.observe(el);
-    });
-
-    // Active Nav Highlight
-    var sections = document.querySelectorAll('section[id]');
-    var navLinks = document.querySelectorAll('nav ul a[href^="#"]');
-
-    var navEl = document.querySelector('nav');
-
-    function updateActiveNav() {
-      if (navEl) navEl.classList.toggle('scrolled', window.scrollY > 24);
-      var scrollPos = window.scrollY + 150;
-      var current = '';
-
-      // Check if at bottom of page
-      var atBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50;
-      if (atBottom) {
-        current = 'contact';
-      } else {
-        sections.forEach(function(section) {
-          var top = section.offsetTop;
-          var height = section.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            current = section.getAttribute('id');
-          }
-        });
-      }
-
-      navLinks.forEach(function(link) {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + current) {
-          link.classList.add('active');
-        }
-      });
-    }
-
-    window.addEventListener('scroll', updateActiveNav);
-    updateActiveNav();
-
-    // In-App Browser for Mobile
-    var browserModal = null;
-    var browserIframe = null;
-    var browserUrl = null;
-    var currentBrowserUrl = '';
-
-    function initBrowserModal() {
-      browserModal = document.getElementById('browserModal');
-      browserIframe = document.getElementById('browserIframe');
-      browserUrl = document.getElementById('browserUrl');
-    }
-
-    function openInAppBrowser(url) {
-      if (!browserModal) initBrowserModal();
-      currentBrowserUrl = url;
-
-      // Extract domain for display
-      try {
-        var domain = new URL(url).hostname.replace('www.', '');
-        browserUrl.textContent = domain;
-      } catch(e) {
-        browserUrl.textContent = url;
-      }
-
-      browserIframe.src = url;
-      browserModal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeInAppBrowser() {
-      if (!browserModal) return;
-      browserModal.classList.remove('open');
-      document.body.style.overflow = '';
-      setTimeout(function() {
-        browserIframe.src = 'about:blank';
-      }, 350);
-    }
-
-    function openInNewTab() {
-      window.open(currentBrowserUrl, '_blank');
-      closeInAppBrowser();
-    }
-
-    // Intercept venture card clicks on mobile
-    function isMobile() {
-      return window.innerWidth <= 768;
-    }
-
-    document.querySelectorAll('a.venture-card').forEach(function(card) {
-      card.addEventListener('click', function(e) {
-        if (isMobile()) {
-          e.preventDefault();
-          openInAppBrowser(this.href);
-        }
-      });
-    });
-  </script>
-
-  <!-- In-App Browser Modal -->
-  <div id="browserModal" class="browser-modal">
-    <div class="browser-modal-backdrop" onclick="closeInAppBrowser()"></div>
-    <div class="browser-modal-content">
-      <div class="browser-modal-header">
-        <button class="browser-modal-close" onclick="closeInAppBrowser()">&times;</button>
-        <span class="browser-modal-url" id="browserUrl"></span>
-        <button class="browser-modal-open" onclick="openInNewTab()">Open</button>
-      </div>
-      <iframe id="browserIframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
-    </div>
-  </div>
-<script defer src="/_vercel/insights/script.js"></script>
-
-
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
