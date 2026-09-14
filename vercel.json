@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "redirects": [
-    { "source": "/v2", "destination": "/", "permanent": false }
+    { "source": "/v2", "destination": "/", "permanent": false },
+    { "source": "/orlando", "destination": "/", "permanent": false }
   ]
 }

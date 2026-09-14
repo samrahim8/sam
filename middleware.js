@@ -1,7 +1,7 @@
-// Password-protects the archived homepage at /archive with HTTP Basic Auth.
+// Password-protects everything archived under /archive with HTTP Basic Auth.
 // Any username works; the password is checked below.
 export const config = {
-  matcher: ['/archive', '/archive.html'],
+  matcher: ['/archive', '/archive.html', '/archive/:path*'],
 };
 
 const PASSWORD = 'sam';
