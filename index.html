@@ -1854,6 +1854,40 @@
     }
     .venture-card > * { position: relative; z-index: 1; }
 
+    /* ── WHAT'S NEXT: hero status line + faded future node on the timeline ── */
+    .hero-status {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.35rem 0.6rem;
+      margin-top: 1.75rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-soft);
+      text-decoration: none;
+    }
+    .hero-status::before {
+      content: '';
+      width: 11px;
+      height: 11px;
+      flex: none;
+      background: var(--forest);
+      clip-path: var(--star-clip);
+    }
+    .hero-status-more {
+      font-weight: 600;
+      color: var(--brass);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      text-decoration-color: color-mix(in srgb, var(--brass) 40%, transparent);
+      transition: text-decoration-color 0.2s ease;
+    }
+    .hero-status:hover .hero-status-more { text-decoration-color: var(--brass); }
+
+    .timeline-item.next::before { opacity: 0.45; }
+
     /* REDUCED MOTION */
     @media (prefers-reduced-motion: reduce) {
       .arsenal-crown {
@@ -1875,6 +1909,7 @@
       <ul id="navMenu">
         <li><a href="#about" onclick="closeMenu()">About</a></li>
         <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+        <li><a href="/next" onclick="closeMenu()">What's Next</a></li>
         <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
       </ul>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
@@ -1891,6 +1926,7 @@
       <h1>Sam Rahim</h1>
       <p class="hero-tagline">I work with founders + operators across tech + soccer.</p>
       <a href="#contact" class="hero-cta">What're you up to?</a>
+      <a href="/next" class="hero-status"><span>Open to a full-time role. Taking on independent projects in the meantime.</span> <span class="hero-status-more">What I'm looking for &rarr;</span></a>
     </div>
     <a href="#about" class="hero-scroll">Scroll</a>
   </section>
@@ -1904,7 +1940,7 @@
       <img src="profile.png" alt="Sam Rahim" class="about-photo">
       <div class="about-text">
         <h2>Hi, I'm Sam Rahim.</h2>
-        <p>I spent the last decade working at high growth startups like <a href="https://instagram.com/streetfc" target="_blank" rel="noopener">Street FC</a>, <a href="https://instagram.com/switchyards" target="_blank" rel="noopener">Switchyards</a> and <a href="https://guild.com" target="_blank" rel="noopener">Guild</a>. Now I run my own shop, Provisions.</p>
+        <p>I spent the last decade working at high growth startups like <a href="https://instagram.com/streetfc" target="_blank" rel="noopener">Street FC</a>, <a href="https://instagram.com/switchyards" target="_blank" rel="noopener">Switchyards</a> and <a href="https://guild.com" target="_blank" rel="noopener">Guild</a>. Now I work independently, under the name Provisions.</p>
         <p>I'm from Southern California. In college at UC Irvine, I spent a summer in the jungles of Belize on an archaeology dig, where our team found dozens of artifacts and structures thousands of years old.</p>
         <p>I began my career at Disney's corporate campus in LA. I met my wife there. We live in Orlando now, with our daughter, Sophia.</p>
       </div>
@@ -1918,9 +1954,16 @@
     <p class="section-label">Experience</p>
     <div class="timeline">
 
+      <div class="timeline-item next">
+        <h3 class="timeline-company">What's Next</h3>
+        <p class="timeline-role">Full-time role, or ~20 hrs/week consulting</p>
+        <p class="timeline-date">Open now</p>
+        <a href="/next" class="provisions-link">What I'm looking for &rarr;</a>
+      </div>
+
       <div class="timeline-item current">
         <h3 class="timeline-company">Provisions</h3>
-        <p class="timeline-role">Proprietor</p>
+        <p class="timeline-role">Independent Consultant</p>
         <p class="timeline-date">2025 &ndash; Present</p>
         <p class="timeline-desc">I work with founders + operators across tech + soccer.</p>
 
@@ -2067,12 +2110,13 @@
     <div class="contact-inner">
       <p class="section-label">Contact</p>
       <h2>What're you up to?</h2>
-      <p>Email is the fastest way to reach me.</p>
+      <p>Know a founder or team I should talk to? I'd love an intro, even if there isn't a formal role open. Email is the fastest way to reach me.</p>
       <div class="contact-links">
         <a href="mailto:sam@samrahim.com" class="contact-link primary">sam@samrahim.com</a>
       </div>
       <div class="contact-links-row">
         <a href="https://www.linkedin.com/in/sam-rahim/" target="_blank" rel="noopener" class="contact-link secondary">LinkedIn</a>
+        <a href="/next" class="contact-link secondary">What's Next</a>
         <a href="/updates" class="contact-link secondary">Updates</a>
       </div>
     </div>
