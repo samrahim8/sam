@@ -8,10 +8,10 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --cream: #F5F0E8;
-      --walnut: #3E2C23;
-      --brass: #9B4423;
-      --text-soft: #5C4F42;
+      --cream: #E6ECE3;
+      --walnut: #16261C;
+      --brass: #2E6B45;
+      --text-soft: #4C5A4A;
     }
     body {
       width: 1200px;
@@ -22,20 +22,12 @@
       position: relative;
       -webkit-font-smoothing: antialiased;
     }
-    /* Faded flag, same anchor as the hero */
-    .flag {
-      position: absolute;
-      inset: 0;
-      background: url("hero/hero-flag-light.svg") center / cover no-repeat;
-      -webkit-mask-image: linear-gradient(105deg, #000 0%, #000 30%, transparent 62%);
-      mask-image: linear-gradient(105deg, #000 0%, #000 30%, transparent 62%);
-    }
-    /* paper crosshatch */
+    /* Fine grid texture */
     .grain {
       position: absolute;
       inset: 0;
       opacity: 0.4;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%233E2C23' stroke-width='0.3' opacity='0.15'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%233E2C23' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='transparent'/%3E%3Cline x1='0' y1='3' x2='6' y2='3' stroke='%2316261C' stroke-width='0.3' opacity='0.15'/%3E%3Cline x1='3' y1='0' x2='3' y2='6' stroke='%2316261C' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E");
     }
     .card {
       position: relative;
@@ -46,27 +38,22 @@
       gap: 72px;
       padding: 0 96px;
     }
-    .photo {
-      width: 300px;
-      height: 375px;
-      flex: none;
-      object-fit: cover;
-      box-shadow: 0 18px 50px rgba(42, 33, 24, 0.22);
-    }
+
     .text { display: flex; flex-direction: column; }
     .stripe {
-      width: 86px;
-      height: 16px;
+      width: 28px;
+      height: 1px;
       margin-bottom: 26px;
       opacity: 0.6;
-      background: repeating-linear-gradient(180deg, var(--brass) 0 3px, transparent 3px 7px);
+      background: var(--brass);
     }
     .name {
       font-family: 'Instrument Serif', serif;
       font-size: 104px;
+      font-weight: 400;
       line-height: 0.92;
       letter-spacing: -0.01em;
-      text-transform: uppercase;
+      text-transform: none;
       color: var(--walnut);
     }
     .tagline {
@@ -80,20 +67,20 @@
       font-size: 18px;
       font-weight: 600;
       letter-spacing: 0.1em;
-      text-transform: uppercase;
+      text-transform: none;
       color: var(--brass);
       margin-top: 36px;
     }
   </style>
 </head>
 <body>
-  <div class="flag"></div>
+
   <div class="grain"></div>
   <div class="card">
-    <img src="profile.png" class="photo" alt="Sam Rahim">
+
     <div class="text">
       <div class="stripe"></div>
-      <h1 class="name">Sam<br>Rahim</h1>
+      <h1 class="name">Sam Rahim</h1>
       <p class="tagline">I work with founders + operators across tech + soccer.</p>
       <p class="url">samrahim.com</p>
     </div>
