@@ -489,43 +489,6 @@
     }
 
     /* ── UPDATES ── */
-    .signup {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 1.1rem;
-      max-width: 26rem;
-    }
-
-    .signup input {
-      flex: 1;
-      min-width: 0;
-      padding: 0.6rem 0.8rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.95rem;
-      color: var(--ink);
-      background: var(--wash);
-      border: 1px solid var(--line);
-      border-radius: 0;
-      transition: border-color 0.2s ease;
-    }
-
-    .signup input::placeholder { color: var(--soft); opacity: 0.8; }
-    .signup input:focus { border-color: var(--accent); outline: none; }
-
-    .signup button {
-      padding: 0.6rem 1rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--ground);
-      background: var(--ink);
-      border: 1px solid var(--ink);
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
-
-    .signup button:hover { background: transparent; color: var(--ink); }
-    .signup-note { font-size: 0.85rem; margin-top: 0.45rem; }
 
     /* ── LINKS ── */
     .links { display: flex; gap: 1.1rem; }
@@ -721,21 +684,6 @@
         </div>
       </li>
 
-      <li class="item" id="updates">
-        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-updates"><span class="plus" aria-hidden="true"></span>Updates</button></h2>
-        <div class="panel" id="p-updates">
-          <div class="panel-inner">
-            <div class="panel-body">
-              <p>Latest: <a class="inline" href="/updates/feb-19-2026">What I've Been Up To</a>, February 19, 2026.</p>
-              <form class="signup" action="https://formspree.io/f/xdallyeo" method="POST">
-                <input type="email" name="email" placeholder="Your email" aria-label="Your email" required>
-                <button type="submit">I'm in</button>
-              </form>
-              <p class="signup-note">Occasional updates on what I'm up to. NOT a newsletter.</p>
-            </div>
-          </div>
-        </div>
-      </li>
     </ul>
 
     <div class="rule" role="presentation"></div>
