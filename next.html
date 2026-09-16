@@ -595,48 +595,49 @@
   </main>
 
   <footer class="printing-press" aria-label="Animated printing press">
-    <svg class="press-drawing" viewBox="0 0 720 330" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="press-title">
-      <title id="press-title">Continuous printed paper descends through a roller and feeds to the right</title>
+    <svg class="press-drawing" viewBox="0 0 440 440" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="press-title">
+      <title id="press-title">A newspaper made entirely of Sam Rahim's name feeds vertically through two rollers</title>
       <defs>
-        <pattern id="printed-pages" width="90" height="112" patternUnits="userSpaceOnUse">
-          <rect width="90" height="112" fill="var(--ground)" stroke="none"/>
-          <g fill="var(--ink)" stroke="none" font-family="Instrument Sans,sans-serif" font-size="18" font-weight="600" text-anchor="middle">
-            <text x="45" y="23" textLength="82" lengthAdjust="spacingAndGlyphs">SAM RAHIM</text>
-            <text x="45" y="51" textLength="82" lengthAdjust="spacingAndGlyphs">SAM RAHIM</text>
-            <text x="45" y="79" textLength="82" lengthAdjust="spacingAndGlyphs">SAM RAHIM</text>
-            <text x="45" y="107" textLength="82" lengthAdjust="spacingAndGlyphs">SAM RAHIM</text>
+        <pattern id="printed-pages" width="280" height="340" patternUnits="userSpaceOnUse">
+          <rect width="280" height="340" fill="var(--ground)" stroke="none"/>
+          <g fill="var(--ink)" stroke="none" font-family="Instrument Serif,serif">
+            <text x="140" y="44" text-anchor="middle" font-size="38" textLength="252" lengthAdjust="spacing">SAM RAHIM</text>
+            <text x="14" y="67" font-family="Instrument Sans,sans-serif" font-size="7" letter-spacing="1.3">SAM RAHIM</text>
+            <text x="266" y="67" text-anchor="end" font-family="Instrument Sans,sans-serif" font-size="7" letter-spacing="1.3">SAM RAHIM</text>
+            <text x="14" y="109" font-size="32">Sam Rahim</text>
+            <text x="14" y="137" font-size="32">Sam Rahim</text>
+            <text x="198" y="105" font-size="19">SAM</text>
+            <text x="198" y="128" font-size="19">RAHIM</text>
+            <text x="14" y="179" font-size="23">Sam Rahim</text>
+            <text x="153" y="179" font-size="23">Sam Rahim</text>
+            <g font-family="Instrument Sans,sans-serif" font-size="6.5"><text x="14" y="200">Sam Rahim Sam Rahim</text><text x="14" y="210">Sam Rahim Sam Rahim</text><text x="14" y="220">Sam Rahim Sam Rahim</text><text x="14" y="230">Sam Rahim Sam Rahim</text><text x="14" y="240">Sam Rahim Sam Rahim</text><text x="14" y="250">Sam Rahim Sam Rahim</text><text x="100" y="200">Sam Rahim Sam Rahim</text><text x="100" y="210">Sam Rahim Sam Rahim</text><text x="100" y="220">Sam Rahim Sam Rahim</text><text x="100" y="230">Sam Rahim Sam Rahim</text><text x="100" y="240">Sam Rahim Sam Rahim</text><text x="100" y="250">Sam Rahim Sam Rahim</text><text x="186" y="200">Sam Rahim Sam Rahim</text><text x="186" y="210">Sam Rahim Sam Rahim</text><text x="186" y="220">Sam Rahim Sam Rahim</text><text x="186" y="230">Sam Rahim Sam Rahim</text><text x="186" y="240">Sam Rahim Sam Rahim</text><text x="186" y="250">Sam Rahim Sam Rahim</text></g>
+            <text x="14" y="287" font-size="21">SAM RAHIM</text>
+            <text x="14" y="309" font-size="21">SAM RAHIM</text>
+            <text x="171" y="280" font-family="Instrument Sans,sans-serif" font-size="9">Sam Rahim</text>
+            <text x="171" y="294" font-family="Instrument Sans,sans-serif" font-size="12">Sam Rahim</text>
+            <text x="171" y="310" font-family="Instrument Sans,sans-serif" font-size="15">Sam Rahim</text>
           </g>
+          <g stroke="var(--ink)" stroke-width=".7"><path d="M14 15H266M14 51H266M14 54H266M14 75H266M14 148H266M14 188H266M14 261H266M14 322H266M14 325H266M185 84V141M140 158V181M93 198V251M179 198V251M155 271V312"/></g>
         </pattern>
-        <clipPath id="press-in"><rect width="90" height="254"/></clipPath>
-        <clipPath id="press-out"><rect width="90" height="280"/></clipPath>
+        <clipPath id="press-paper-window"><rect x="80" y="20" width="280" height="390"/></clipPath>
+        <clipPath id="press-roller-window"><path d="M67 49H373V63H67ZM67 365H373V379H67Z"/></clipPath>
       </defs>
-      <!-- Frame behind the paper, open to keep the feed path legible. -->
-      <g stroke="var(--faint)">
-        <path d="M225 160L610 96L654 115L267 182Z" fill="var(--wash)"/>
-        <path d="M233 162V280L245 285V166M610 98V251L623 256V101M268 181V304L281 309V179"/>
-        <path d="M245 260L610 201M281 287L623 231M245 282L281 304M613 253L641 265"/>
-        <path d="M190 311H665" opacity=".5"/>
+      <!-- A quiet, face-on frame. Paper carries the visual detail. -->
+      <g stroke="var(--faint)"><rect x="48" y="36" width="344" height="361" rx="5"/>
+        <path d="M54 68V359M386 68V359M48 397V417H70M392 397V417H370"/>
       </g>
-      <!-- Both planes share the same paper coordinate system at the bend. -->
-      <g transform="matrix(1 .388 1 -.2 275.1 218.12)">
-        <g clip-path="url(#press-out)"><rect width="90" height="280" fill="var(--ground)" stroke="none"/><g class="press-ribbon-out"><rect y="-336" width="90" height="896" fill="url(#printed-pages)" stroke="none"/></g></g>
-        <path d="M0 0V280M90 0V280" stroke-width=".8"/>
+      <g clip-path="url(#press-paper-window)">
+        <g transform="translate(80 20)"><g class="press-newspaper"><rect y="-680" width="280" height="1700" fill="url(#printed-pages)" stroke="none"/></g></g>
       </g>
-      <!-- Rear web travels downward into the turning roller. -->
-      <g transform="matrix(1 .388 .65 .78 110 20)">
-        <g clip-path="url(#press-in)"><rect width="90" height="254" fill="var(--ground)" stroke="none"/><g class="press-ribbon-in"><rect y="-336" width="90" height="896" fill="url(#printed-pages)" stroke="none"/></g></g>
-        <path d="M0 0V254M90 0V254" stroke-width=".8"/>
+      <path d="M80 20V410M360 20V410" stroke="var(--faint)" stroke-width=".7"/>
+      <!-- Cylinders sit in front of the passing web. -->
+      <g fill="var(--accent)"><rect x="60" y="44" width="320" height="24" rx="12"/><rect x="60" y="360" width="320" height="24" rx="12"/></g>
+      <g clip-path="url(#press-roller-window)" stroke="var(--ground)" opacity=".35">
+        <g class="press-roller-lines"><path d="M70 45H370M70 57H370M70 69H370M70 361H370M70 373H370M70 385H370"/></g>
       </g>
-      <!-- Dark cylinders occlude the paper at each change in direction. -->
-      <path d="M257 223L366 265Q374 266 377 259Q379 252 372 249L263 207Q255 205 253 212Q250 220 257 223Z" fill="var(--accent)"/>
-      <path d="M258 210L369 253" stroke="var(--ground)" opacity=".45"/>
-      <ellipse cx="372" cy="258" rx="6" ry="8" fill="var(--ground)"/>
-      <g class="press-wheel"><path d="M369 256L375 260M370 261L374 255" stroke-width="1"/></g>
-      <path d="M375 259L392 266M251 214L236 208" stroke-width="3"/>
-      <path d="M546 166L650 207Q657 209 660 202Q662 195 655 192L551 151Q544 149 542 156Q540 163 546 166Z" fill="var(--accent)"/>
-      <path d="M548 154L652 195" stroke="var(--ground)" opacity=".45"/>
-      <ellipse cx="655" cy="200" rx="5" ry="7" fill="var(--ground)"/>
-      <path d="M659 202L672 207M392 266V303M672 207V259M383 304H405M663 260H685"/>
+      <g fill="var(--ground)"><rect x="43" y="47" width="19" height="18" rx="3"/><rect x="378" y="47" width="19" height="18" rx="3"/>
+        <rect x="43" y="363" width="19" height="18" rx="3"/><rect x="378" y="363" width="19" height="18" rx="3"/></g>
+      <g fill="currentColor" stroke="none"><circle cx="52" cy="56" r="2"/><circle cx="388" cy="56" r="2"/><circle cx="52" cy="372" r="2"/><circle cx="388" cy="372" r="2"/></g>
     </svg>
     <button class="press-toggle" type="button" aria-label="Pause printing press" aria-pressed="false" hidden><span class="press-control-icon" aria-hidden="true"></span><span class="press-control-label">Pause press</span></button>
   </footer>
