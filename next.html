@@ -379,6 +379,8 @@
       .page { padding-block: 0; }
     }
   </style>
+  <link rel="stylesheet" href="/assets/printing-press.css">
+  <script defer src="/assets/printing-press.js"></script>
 </head>
 <body>
 
@@ -592,32 +594,38 @@
     </nav>
   </main>
 
-  <footer class="art" aria-hidden="true">
-    <svg viewBox="0 0 1440 170" preserveAspectRatio="xMidYMax slice" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M0 160H1440"/>
-      <path d="M18 152q10-6 20 0t20 0t20 0t20 0M44 143q10-6 20 0t20 0t20 0"/>
-      <path d="M150 160l8-42M190 160l-8-42M153 150l34-22M187 150l-34-22M154 118h32M154 96h32v22h-32zM150 96l20-12 20 12M162 102h16v9h-16zM154 118l-26 42"/>
-      <path d="M252 160c-2-30-6-60 4-98"/>
-      <path d="M256 62c-12-8-26-6-36 4M256 62c-10-12-20-18-32-18M256 62c6-14 16-18 28-16M256 62c14-6 26-2 34 10M256 62c2-12-2-22-8-28"/>
-      <path d="M300 160c2-40 8-80 0-124"/>
-      <path d="M300 36c-12-8-26-6-36 4M300 36c-10-12-20-18-32-18M300 36c6-14 16-18 28-16M300 36c14-6 26-2 34 10M300 36c4-12 0-22-6-28"/>
-      <path d="M352 128h30v32h-30zM386 108h24v52h-24zM390 120h16M390 132h16M390 144h16M414 136h44v24h-44zM414 136l22-12 22 12M432 146h8v14"/>
-      <path d="M470 160v-18h26v18M466 142l17-9 17 9"/>
-      <path d="M556 160l2-50M566 160l-2-50M520 110c10-18 70-18 84 0zM561 110l-13-10M561 110l15-12"/>
-      <path d="M620 140h200v20H620zM640 122h160v18H640zM660 104h120v18H660zM680 88h80v16h-80zM700 64h40v24h-40zM708 52h24v12h-24zM714 72h12v16h-12z"/>
-      <path d="M704 160l6-72M736 160l-6-72M705 150h30M706 140h28M706 130h27M707 120h26M708 110h24M709 100h22"/>
-      <path d="M858 160v-22M842 136c0-18 32-18 32 0 0 10-32 10-32 0z"/>
-      <path d="M892 160v-14M882 146c0-12 20-12 20 0 0 7-20 7-20 0z"/>
-      <path d="M952 134h36v26h-36zM992 120h30v40h-30zM997 132h20M997 144h20"/>
-      <path d="M1052 160c4-6 72-6 76 0"/>
-      <path d="M1066 150h48l-8-12h-32zM1076 138h28l-6-14h-16zM1084 124h12l-4-14h-4zM1090 110V92M1080 150v-12M1090 150v-12M1100 150v-12"/>
-      <path d="M1090 92c-10 4-18 16-22 32M1090 92c10 4 18 16 22 32"/>
-      <path d="M1160 96h30v64h-30zM1164 110h22M1164 124h22M1164 138h22"/>
-      <path d="M1196 70h34v90h-34zM1204 58h18v12h-18zM1213 58V40M1200 82h26M1200 94h26M1200 106h26M1200 118h26M1200 130h26M1200 142h26"/>
-      <path d="M1236 108h40v52h-40zM1240 120h32M1240 134h32M1280 124h28v36h-28z"/>
-      <path d="M1352 160v-38h76v38M1352 122l10 8h56l10-8M1362 130l4 30M1418 130l-4 30M1378 130v30M1390 130v30M1402 130v30M1364 142h52M1365 152h50"/>
-      <circle cx="1334" cy="155" r="5"/>
+  <footer class="printing-press" aria-label="Animated printing press">
+    <svg class="press-drawing" viewBox="0 0 640 250" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="press-title">
+      <title id="press-title">A roller press printing Sam Rahim's initials on paper</title>
+      <defs><clipPath id="press-output"><path d="M354 0H640V250H354Z"/></clipPath></defs>
+      <!-- Long bed and tapered cast-iron feet -->
+      <path d="M98 171H547L533 182H111Z" fill="var(--ground)"/>
+      <path d="M160 182L145 222H170L185 182M458 182L475 222H500L482 182" fill="var(--ground)"/>
+      <path d="M136 223H178M467 223H508M111 230H535" stroke="var(--faint)"/>
+      <path d="M186 196H458M186 200H458" stroke="var(--faint)"/>
+      <!-- Blank stock on the feed tray -->
+      <path d="M115 160H211L225 166H128Z" fill="var(--ground)"/>
+      <path d="M115 156H211L225 162H128Z" fill="var(--ground)"/>
+      <g class="press-sheet"><path d="M124 141H226L244 164H142Z" fill="var(--ground)"/></g>
+      <g clip-path="url(#press-output)"><g class="press-imprint"><text x="180" y="157" text-anchor="middle" fill="currentColor" stroke="none" font-family="Instrument Serif,serif" font-size="17">SR</text></g></g>
+      <!-- Cylinder, ink rollers, and the front bearing support -->
+      <path d="M281 127V91Q281 72 300 72H340Q359 72 359 91V127" fill="var(--ground)"/>
+      <path d="M289 94H351M290 82H350" stroke="var(--faint)"/>
+      <rect x="284" y="102" width="72" height="38" rx="18" fill="var(--ground)"/>
+      <path d="M297 105V137M343 105V137" stroke="var(--faint)"/>
+      <path d="M276 145V110Q276 98 286 98H293V145M349 145V98H356Q366 98 366 110V145" fill="var(--ground)"/>
+      <path d="M273 168V145H369V168Z" fill="var(--ground)"/>
+      <path d="M288 157H354M302 163H340" stroke="var(--faint)"/>
+      <circle cx="321" cy="120" r="32" fill="var(--ground)"/>
+      <circle cx="321" cy="120" r="26"/>
+      <g class="press-wheel"><path d="M321 96V112M342 132L328 124M300 132L314 124"/><circle cx="321" cy="97" r="3" fill="var(--accent)" stroke="none"/></g>
+      <circle cx="321" cy="120" r="7" fill="var(--ground)"/>
+      <circle cx="321" cy="120" r="2" fill="currentColor" stroke="none"/>
+      <path d="M304 72V62H338V72M309 61V57H333V61" fill="var(--ground)"/>
+      <!-- Finished sheets at the delivery end -->
+      <path d="M456 168H549M461 171H544" stroke="var(--faint)"/>
     </svg>
+    <button class="press-toggle" type="button" aria-label="Pause printing press" aria-pressed="false" hidden><span class="press-control-icon" aria-hidden="true"></span><span class="press-control-label">Pause press</span></button>
   </footer>
 
   <script>
