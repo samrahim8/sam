@@ -4,15 +4,15 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const button = footer.querySelector('.press-toggle');
   let visible = false, paused = false;
-  const paper = [
-    {transform:'translateX(0)',opacity:0,offset:0},
-    {transform:'translateX(0)',opacity:1,offset:.08},
-    {transform:'translateX(280px)',opacity:1,offset:.7},
-    {transform:'translateX(280px)',opacity:1,offset:.9},
-    {transform:'translateX(280px)',opacity:0,offset:1}
-  ];
-  const animations = ['.press-sheet','.press-imprint'].map(selector => footer.querySelector(selector).animate(paper,{duration:8000,iterations:Infinity,easing:'linear'}));
-  animations.push(footer.querySelector('.press-wheel').animate([{transform:'rotate(0deg)'},{transform:'rotate(360deg)'}],{duration:8000,iterations:Infinity}));
+  // A repeat advances exactly one printed page: no fade or reset flash.
+  // At the bend, outgoing coordinate 0 follows incoming coordinate 254.
+  const animations = [['.press-ribbon-in',0],['.press-ribbon-out',-254]].map(([selector,phase]) =>
+    footer.querySelector(selector).animate([
+      {transform:`translateY(${phase}px)`},
+      {transform:`translateY(${phase+112}px)`}
+    ],{duration:4200,iterations:Infinity,easing:'linear'})
+  );
+  animations.push(footer.querySelector('.press-wheel').animate([{transform:'rotate(0deg)'},{transform:'rotate(360deg)'}],{duration:4200,iterations:Infinity,easing:'linear'}));
   function sync() {
     button.hidden = reduced.matches;
     animations.forEach(animation => {

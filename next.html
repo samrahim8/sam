@@ -595,35 +595,47 @@
   </main>
 
   <footer class="printing-press" aria-label="Animated printing press">
-    <svg class="press-drawing" viewBox="0 0 640 250" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="press-title">
-      <title id="press-title">A roller press printing Sam Rahim's initials on paper</title>
-      <defs><clipPath id="press-output"><path d="M354 0H640V250H354Z"/></clipPath></defs>
-      <!-- Long bed and tapered cast-iron feet -->
-      <path d="M98 171H547L533 182H111Z" fill="var(--ground)"/>
-      <path d="M160 182L145 222H170L185 182M458 182L475 222H500L482 182" fill="var(--ground)"/>
-      <path d="M136 223H178M467 223H508M111 230H535" stroke="var(--faint)"/>
-      <path d="M186 196H458M186 200H458" stroke="var(--faint)"/>
-      <!-- Blank stock on the feed tray -->
-      <path d="M115 160H211L225 166H128Z" fill="var(--ground)"/>
-      <path d="M115 156H211L225 162H128Z" fill="var(--ground)"/>
-      <g class="press-sheet"><path d="M124 141H226L244 164H142Z" fill="var(--ground)"/></g>
-      <g clip-path="url(#press-output)"><g class="press-imprint"><text x="180" y="157" text-anchor="middle" fill="currentColor" stroke="none" font-family="Instrument Serif,serif" font-size="17">SR</text></g></g>
-      <!-- Cylinder, ink rollers, and the front bearing support -->
-      <path d="M281 127V91Q281 72 300 72H340Q359 72 359 91V127" fill="var(--ground)"/>
-      <path d="M289 94H351M290 82H350" stroke="var(--faint)"/>
-      <rect x="284" y="102" width="72" height="38" rx="18" fill="var(--ground)"/>
-      <path d="M297 105V137M343 105V137" stroke="var(--faint)"/>
-      <path d="M276 145V110Q276 98 286 98H293V145M349 145V98H356Q366 98 366 110V145" fill="var(--ground)"/>
-      <path d="M273 168V145H369V168Z" fill="var(--ground)"/>
-      <path d="M288 157H354M302 163H340" stroke="var(--faint)"/>
-      <circle cx="321" cy="120" r="32" fill="var(--ground)"/>
-      <circle cx="321" cy="120" r="26"/>
-      <g class="press-wheel"><path d="M321 96V112M342 132L328 124M300 132L314 124"/><circle cx="321" cy="97" r="3" fill="var(--accent)" stroke="none"/></g>
-      <circle cx="321" cy="120" r="7" fill="var(--ground)"/>
-      <circle cx="321" cy="120" r="2" fill="currentColor" stroke="none"/>
-      <path d="M304 72V62H338V72M309 61V57H333V61" fill="var(--ground)"/>
-      <!-- Finished sheets at the delivery end -->
-      <path d="M456 168H549M461 171H544" stroke="var(--faint)"/>
+    <svg class="press-drawing" viewBox="0 0 720 330" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="press-title">
+      <title id="press-title">Continuous printed paper descends through a roller and feeds to the right</title>
+      <defs>
+        <pattern id="printed-pages" width="90" height="112" patternUnits="userSpaceOnUse">
+          <rect width="90" height="112" fill="var(--ground)" stroke="none"/>
+          <path d="M5 7H85M5 105H85" stroke="var(--faint)" stroke-width=".5"/>
+          <text x="8" y="24" fill="currentColor" stroke="none" font-family="Instrument Serif,serif" font-size="16">Sam Rahim</text>
+          <rect x="8" y="33" width="42" height="42" fill="var(--accent)" fill-opacity=".12" stroke="none"/>
+          <path d="M12 65L22 46L32 57L42 40M12 70H46" stroke-width="1"/>
+          <path d="M57 35H81M57 40H79M57 45H81M57 50H75M57 60H81M57 65H79M57 70H81M8 83H48M8 88H46M8 93H48M57 83H81M57 88H78M57 93H81" stroke-width=".7"/>
+        </pattern>
+        <clipPath id="press-in"><rect width="90" height="254"/></clipPath>
+        <clipPath id="press-out"><rect width="90" height="280"/></clipPath>
+      </defs>
+      <!-- Frame behind the paper, open to keep the feed path legible. -->
+      <g stroke="var(--faint)">
+        <path d="M225 160L610 96L654 115L267 182Z" fill="var(--wash)"/>
+        <path d="M233 162V280L245 285V166M610 98V251L623 256V101M268 181V304L281 309V179"/>
+        <path d="M245 260L610 201M281 287L623 231M245 282L281 304M613 253L641 265"/>
+        <path d="M190 311H665" opacity=".5"/>
+      </g>
+      <!-- Both planes share the same paper coordinate system at the bend. -->
+      <g transform="matrix(1 .388 1 -.2 275.1 218.12)">
+        <g clip-path="url(#press-out)"><rect width="90" height="280" fill="var(--ground)" stroke="none"/><g class="press-ribbon-out"><rect y="-336" width="90" height="896" fill="url(#printed-pages)" stroke="none"/></g></g>
+        <path d="M0 0V280M90 0V280" stroke-width=".8"/>
+      </g>
+      <!-- Rear web travels downward into the turning roller. -->
+      <g transform="matrix(1 .388 .65 .78 110 20)">
+        <g clip-path="url(#press-in)"><rect width="90" height="254" fill="var(--ground)" stroke="none"/><g class="press-ribbon-in"><rect y="-336" width="90" height="896" fill="url(#printed-pages)" stroke="none"/></g></g>
+        <path d="M0 0V254M90 0V254" stroke-width=".8"/>
+      </g>
+      <!-- Dark cylinders occlude the paper at each change in direction. -->
+      <path d="M257 223L366 265Q374 266 377 259Q379 252 372 249L263 207Q255 205 253 212Q250 220 257 223Z" fill="var(--accent)"/>
+      <path d="M258 210L369 253" stroke="var(--ground)" opacity=".45"/>
+      <ellipse cx="372" cy="258" rx="6" ry="8" fill="var(--ground)"/>
+      <g class="press-wheel"><path d="M369 256L375 260M370 261L374 255" stroke-width="1"/></g>
+      <path d="M375 259L392 266M251 214L236 208" stroke-width="3"/>
+      <path d="M546 166L650 207Q657 209 660 202Q662 195 655 192L551 151Q544 149 542 156Q540 163 546 166Z" fill="var(--accent)"/>
+      <path d="M548 154L652 195" stroke="var(--ground)" opacity=".45"/>
+      <ellipse cx="655" cy="200" rx="5" ry="7" fill="var(--ground)"/>
+      <path d="M659 202L672 207M392 266V303M672 207V259M383 304H405M663 260H685"/>
     </svg>
     <button class="press-toggle" type="button" aria-label="Pause printing press" aria-pressed="false" hidden><span class="press-control-icon" aria-hidden="true"></span><span class="press-control-label">Pause press</span></button>
   </footer>
