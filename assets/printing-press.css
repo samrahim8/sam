@@ -1,4 +1,4 @@
-.printing-press {width:min(100%,500px);margin:0 auto;padding:0 16px 24px;color:var(--accent);text-align:center;}
+.printing-press {width:min(100%,760px);margin:0 auto;padding:0 16px 24px;color:var(--accent);text-align:center;}
 .press-drawing {display:block;width:100%;height:auto;overflow:visible;}
 .press-toggle {display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 12px;background:none;border:0;font:400 12px 'Instrument Sans',sans-serif;color:var(--soft);cursor:pointer;}
 .press-toggle[hidden] {display:none;}
@@ -9,3 +9,6 @@
 @media(max-width:480px){.printing-press{padding-inline:0;padding-bottom:12px;}}
 @media(prefers-reduced-motion:reduce){.press-toggle{display:none;}}
 @media print{.printing-press{display:none;}}
+
+.press-ribbon-out {transform:translateY(-260px);}
+.press-wheel {transform-origin:287px 9px;}

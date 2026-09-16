@@ -4,15 +4,16 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const button = footer.querySelector('.press-toggle');
   let visible = false, paused = false;
-  // Move by one whole newspaper tile for an uninterrupted repeat.
-  const animations = [
-    footer.querySelector('.press-newspaper').animate([
-      {transform:'translateY(0)'},{transform:'translateY(340px)'}
-    ],{duration:18000,iterations:Infinity,easing:'linear'}),
-    footer.querySelector('.press-roller-lines').animate([
-      {transform:'translateY(0)'},{transform:'translateY(12px)'}
-    ],{duration:635,iterations:Infinity,easing:'linear'})
-  ];
+  // The output begins at incoming paper coordinate 260, keeping print continuous.
+  const animations = [['.press-ribbon-in',0],['.press-ribbon-out',-260]].map(([selector,phase]) =>
+    footer.querySelector(selector).animate([
+      {transform:`translateY(${phase}px)`},
+      {transform:`translateY(${phase+340}px)`}
+    ],{duration:18000,iterations:Infinity,easing:'linear'})
+  );
+  animations.push(footer.querySelector('.press-wheel').animate([
+    {transform:'rotate(0deg)'},{transform:'rotate(360deg)'}
+  ],{duration:4200,iterations:Infinity,easing:'linear'}));
   function sync() {
     button.hidden = reduced.matches;
     animations.forEach(animation => {

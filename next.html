@@ -595,10 +595,9 @@
   </main>
 
   <footer class="printing-press" aria-label="Animated printing press">
-    <svg class="press-drawing" viewBox="0 0 440 440" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="press-title">
-      <title id="press-title">A newspaper made entirely of Sam Rahim's name feeds vertically through two rollers</title>
-      <defs>
-        <pattern id="printed-pages" width="280" height="340" patternUnits="userSpaceOnUse">
+    <svg class="press-drawing" viewBox="0 0 700 430" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="press-title">
+      <title id="press-title">A wide newspaper ribbon feeds down through an industrial press and out over the delivery bed</title>
+      <defs><pattern id="printed-pages" width="280" height="340" patternUnits="userSpaceOnUse">
           <rect width="280" height="340" fill="var(--ground)" stroke="none"/>
           <g fill="var(--ink)" stroke="none" font-family="Instrument Serif,serif">
             <text x="140" y="44" text-anchor="middle" font-size="38" textLength="252" lengthAdjust="spacing">SAM RAHIM</text>
@@ -619,25 +618,41 @@
           </g>
           <g stroke="var(--ink)" stroke-width=".7"><path d="M14 15H266M14 51H266M14 54H266M14 75H266M14 148H266M14 188H266M14 261H266M14 322H266M14 325H266M185 84V141M140 158V181M93 198V251M179 198V251M155 271V312"/></g>
         </pattern>
-        <clipPath id="press-paper-window"><rect x="80" y="20" width="280" height="390"/></clipPath>
-        <clipPath id="press-roller-window"><path d="M67 49H373V63H67ZM67 365H373V379H67Z"/></clipPath>
+        <clipPath id="press-in"><rect width="280" height="260"/></clipPath>
+        <clipPath id="press-out"><rect width="280" height="300"/></clipPath>
       </defs>
-      <!-- A quiet, face-on frame. Paper carries the visual detail. -->
-      <g stroke="var(--faint)"><rect x="48" y="36" width="344" height="361" rx="5"/>
-        <path d="M54 68V359M386 68V359M48 397V417H70M392 397V417H370"/>
+      <!-- Broad industrial bed with open supports beneath the web. -->
+      <g stroke="var(--faint)" fill="var(--ground)">
+        <path d="M131 229L342 356L621 383L410 257Z"/>
+        <path d="M131 229V370L143 377V237M410 257V399L422 405V262M342 356V409L355 414V361M621 383V414H635V385"/>
+        <path d="M143 344L410 371M157 365L341 394M422 376L608 399" fill="none"/>
+        <path d="M105 420H655" opacity=".45"/>
       </g>
-      <g clip-path="url(#press-paper-window)">
-        <g transform="translate(80 20)"><g class="press-newspaper"><rect y="-680" width="280" height="1700" fill="url(#printed-pages)" stroke="none"/></g></g>
+      <!-- Shallower delivery plane: type stays wide and close to level. -->
+      <g transform="matrix(.9 .09 .65 .4 153.8 214.8)">
+        <g clip-path="url(#press-out)"><g class="press-ribbon-out"><rect y="-680" width="280" height="1700" fill="url(#printed-pages)" stroke="none"/></g></g>
+        <path d="M0 0V300M280 0V300" stroke="var(--faint)" stroke-width=".8"/>
       </g>
-      <path d="M80 20V410M360 20V410" stroke="var(--faint)" stroke-width=".7"/>
-      <!-- Cylinders sit in front of the passing web. -->
-      <g fill="var(--accent)"><rect x="60" y="44" width="320" height="24" rx="12"/><rect x="60" y="360" width="320" height="24" rx="12"/></g>
-      <g clip-path="url(#press-roller-window)" stroke="var(--ground)" opacity=".35">
-        <g class="press-roller-lines"><path d="M70 45H370M70 57H370M70 69H370M70 361H370M70 373H370M70 385H370"/></g>
+      <!-- Taller incoming web connects precisely to the delivery plane. -->
+      <g transform="matrix(.9 .09 .38 .78 55 12)">
+        <g clip-path="url(#press-in)"><g class="press-ribbon-in"><rect y="-680" width="280" height="1700" fill="url(#printed-pages)" stroke="none"/></g></g>
+        <path d="M0 0V260M280 0V260" stroke="var(--faint)" stroke-width=".8"/>
       </g>
-      <g fill="var(--ground)"><rect x="43" y="47" width="19" height="18" rx="3"/><rect x="378" y="47" width="19" height="18" rx="3"/>
-        <rect x="43" y="363" width="19" height="18" rx="3"/><rect x="378" y="363" width="19" height="18" rx="3"/></g>
-      <g fill="currentColor" stroke="none"><circle cx="52" cy="56" r="2"/><circle cx="388" cy="56" r="2"/><circle cx="52" cy="372" r="2"/><circle cx="388" cy="372" r="2"/></g>
+      <!-- Heavy transverse cylinders cover the paper at the bend and exit. -->
+      <g transform="translate(136 211) rotate(5.71)">
+        <rect width="290" height="18" rx="9" fill="var(--accent)"/>
+        <path d="M10 4H280" stroke="var(--ground)" opacity=".4"/>
+        <ellipse cx="287" cy="9" rx="5" ry="8" fill="var(--ground)"/>
+        <g class="press-wheel"><path d="M284 6L290 12M284 12L290 6" stroke-width="1"/></g>
+        <path d="M0 9H-12M292 9H304" stroke-width="3"/>
+      </g>
+      <g transform="translate(334 331) rotate(5.71)">
+        <rect width="285" height="18" rx="9" fill="var(--accent)"/>
+        <path d="M10 4H275" stroke="var(--ground)" opacity=".4"/>
+        <ellipse cx="282" cy="9" rx="5" ry="8" fill="var(--ground)"/>
+        <path d="M0 9H-12M287 9H302" stroke-width="3"/>
+      </g>
+      <path d="M125 221V371M439 250V400M323 340V410M635 370V414M116 372H136M430 401H450M314 411H334M626 415H646"/>
     </svg>
     <button class="press-toggle" type="button" aria-label="Pause printing press" aria-pressed="false" hidden><span class="press-control-icon" aria-hidden="true"></span><span class="press-control-label">Pause press</span></button>
   </footer>
