@@ -890,35 +890,68 @@
 
     async function loadNextMatch() {
       var box = document.getElementById('arsenalNextMatch');
-      try {
-        var now = new Date();
-        var end = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
-        var fmt = function(d) { return d.toISOString().slice(0, 10).replace(/-/g, ''); };
-        var leagues = ['eng.1', 'uefa.champions', 'eng.fa', 'eng.league_cup', 'eng.charity'];
-        var results = await Promise.all(leagues.map(function(league) {
-          return fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/' + league + '/scoreboard?dates=' + fmt(now) + '-' + fmt(end))
-            .then(function(r) { return r.json(); })
-            .catch(function() { return {}; });
-        }));
-        var next = null;
-        results.forEach(function(data) {
-          (data.events || []).forEach(function(e) {
-            if (e.name && e.name.includes('Arsenal') && new Date(e.date) > now && (!next || new Date(e.date) < new Date(next.date))) next = e;
-          });
-        });
-        if (next) {
-          var comp = next.competitions[0];
-          var home = comp.competitors.find(function(c) { return c.homeAway === 'home'; });
-          var away = comp.competitors.find(function(c) { return c.homeAway === 'away'; });
-          var d = new Date(next.date);
-          box.innerHTML = '<p class="next-teams">' + home.team.shortDisplayName + ' v ' + away.team.shortDisplayName + '</p><p class="next-info">' +
-            d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ', ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</p>';
-        } else {
-          box.innerHTML = '<p class="next-info">No match in the next 60 days</p>';
+      box.textContent = 'Loading the next match';
+      var leagues = ['eng.1', 'uefa.champions', 'eng.fa', 'eng.league_cup', 'eng.charity'];
+      var results = await Promise.all(leagues.map(async function(league) {
+        var controller = new AbortController();
+        var timeout = setTimeout(function() { controller.abort(); }, 8000);
+        try {
+          var response = await fetch('/api/arsenal-fixtures?league=' + encodeURIComponent(league), { signal: controller.signal });
+          if (!response.ok) throw new Error('Fixture request failed');
+          var data = await response.json();
+          if (!Array.isArray(data.events)) throw new Error('Invalid fixture response');
+          return data.events;
+        } catch (err) {
+          return null;
+        } finally {
+          clearTimeout(timeout);
         }
-      } catch (err) {
-        box.innerHTML = '<p class="loading">Couldn\'t load</p>';
+      }));
+      var incomplete = results.some(function(events) { return events === null; });
+      var now = Date.now();
+      var fixtures = results.flatMap(function(events) { return events || []; }).filter(function(event) {
+        var comp = event.competitions && event.competitions[0];
+        var teams = comp && comp.competitors;
+        return new Date(event.date).getTime() > now && comp && !(comp.status && comp.status.type && comp.status.type.completed) &&
+          teams && teams.some(function(c) { return c.team && String(c.team.id) === '359'; }) &&
+          teams.some(function(c) { return c.homeAway === 'home' && c.team; }) &&
+          teams.some(function(c) { return c.homeAway === 'away' && c.team; });
+      }).sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+      box.replaceChildren();
+      function line(text, className) {
+        var p = document.createElement('p');
+        p.className = className;
+        p.textContent = text;
+        box.appendChild(p);
       }
+      if (fixtures.length) {
+        var next = fixtures[0];
+        var comp = next.competitions[0];
+        var home = comp.competitors.find(function(c) { return c.homeAway === 'home'; }).team;
+        var away = comp.competitors.find(function(c) { return c.homeAway === 'away'; }).team;
+        var date = new Date(next.date);
+        line((home.shortDisplayName || home.displayName) + ' v ' + (away.shortDisplayName || away.displayName), 'next-teams');
+        var time = next.timeValid === false || comp.timeValid === false ? 'Kickoff time TBC' : date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+        line(date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ', ' + time, 'next-info');
+        if (incomplete) line('Next listed match. Some competitions could not be checked.', 'next-info');
+      } else {
+        line(incomplete ? 'Fixtures are temporarily unavailable.' : 'No upcoming fixtures listed in the feed.', 'next-info');
+      }
+      if (incomplete) {
+        var retry = document.createElement('button');
+        retry.type = 'button';
+        retry.className = 'text-btn';
+        retry.textContent = 'Retry';
+        retry.addEventListener('click', loadNextMatch);
+        box.appendChild(retry);
+      }
+      var link = document.createElement('a');
+      link.href = 'https://www.arsenal.com/fixtures';
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.className = 'more';
+      link.textContent = 'All Arsenal fixtures';
+      box.appendChild(link);
     }
 
     openers.arsenal = function() { loadTable(); loadCompetitions(); loadNextMatch(); };
