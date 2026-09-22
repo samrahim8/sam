@@ -861,27 +861,6 @@
       return standingsPromise;
     }
 
-    var shieldPromise = null;
-    function getShield() {
-      if (shieldPromise) return shieldPromise;
-      shieldPromise = (async function() {
-        try {
-          var st = await getStandings();
-          var res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/eng.charity/scoreboard?dates=' + st.curYear + '0701-' + st.curYear + '0930');
-          var data = await res.json();
-          var event = (data.events || []).find(function(e) { return e.name && e.name.includes('Arsenal'); });
-          if (!event) return null;
-          var comp = event.competitions[0];
-          if (!comp.status || !comp.status.type || !comp.status.type.completed) return null;
-          var ars = comp.competitors.find(function(c) { return c.team.displayName === 'Arsenal'; });
-          var opp = comp.competitors.find(function(c) { return c.team.displayName !== 'Arsenal'; });
-          if (!ars || !opp) return null;
-          return { won: ars.winner === true, score: ars.score + '–' + opp.score, opponent: opp.team.shortDisplayName || opp.team.displayName };
-        } catch (err) { return null; }
-      })();
-      return shieldPromise;
-    }
-
     async function loadTable() {
       try {
         var st = await getStandings();
@@ -914,35 +893,17 @@
       renderTable(btn.textContent === 'Full table');
     }
 
-    async function loadCompetitions() {
-      var box = document.getElementById('arsenalCompetitions');
-      try {
-        var st = await getStandings();
-        var shield = await getShield();
-        var comps = [];
-        if (st.preseason) {
-          document.getElementById('compHeading').textContent = 'Honours';
-          var margin = Math.round(stat(st.entries[0], 'points') - (st.entries[1] ? stat(st.entries[1], 'points') : 0));
-          if (shield && shield.won) comps.push(['Community Shield', 'Won ' + shield.score + ' v ' + shield.opponent]);
-          comps.push(['Premier League', 'Champions, ' + st.seasonLabel]);
-          comps.push(['Final margin', margin + ' pts']);
-        } else {
-          var ars = st.entries.find(function(e) { return e.team.displayName === 'Arsenal'; });
-          var gp = ars ? stat(ars, 'gamesPlayed') : 0;
-          comps.push(['Premier League', gp > 0 ? 'Matchweek ' + Math.round(gp) : 'In progress']);
-          if (shield && shield.won) comps.push(['Community Shield', 'Winners']);
-        }
-        box.innerHTML = comps.map(function(c) { return '<div class="comp"><strong>' + c[0] + '</strong>' + c[1] + '</div>'; }).join('');
-      } catch (err) {
-        box.innerHTML = '<p class="loading">Couldn\'t load</p>';
-      }
-    }
-
-    async function loadNextMatch() {
-      var box = document.getElementById('arsenalNextMatch');
-      box.textContent = 'Loading the next match';
-      var leagues = ['eng.1', 'uefa.champions', 'eng.fa', 'eng.league_cup', 'eng.charity'];
-      var results = await Promise.all(leagues.map(async function(league) {
+    var arsenalLeagues = [
+      ['eng.1', 'Premier League'],
+      ['uefa.champions', 'Champions League'],
+      ['eng.fa', 'FA Cup'],
+      ['eng.league_cup', 'Carabao Cup'],
+      ['eng.charity', 'Community Shield']
+    ];
+    var fixtureRequests = {};
+    function getFixtures(league) {
+      if (fixtureRequests[league]) return fixtureRequests[league];
+      fixtureRequests[league] = (async function() {
         var controller = new AbortController();
         var timeout = setTimeout(function() { controller.abort(); }, 8000);
         try {
@@ -952,21 +913,71 @@
           if (!Array.isArray(data.events)) throw new Error('Invalid fixture response');
           return data.events;
         } catch (err) {
+          delete fixtureRequests[league];
           return null;
         } finally {
           clearTimeout(timeout);
         }
-      }));
-      var incomplete = results.some(function(events) { return events === null; });
-      var now = Date.now();
-      var fixtures = results.flatMap(function(events) { return events || []; }).filter(function(event) {
-        var comp = event.competitions && event.competitions[0];
+      })();
+      return fixtureRequests[league];
+    }
+
+    function upcomingFixtures(events) {
+      return (events || []).filter(function(event) {
+        var comp = event && event.competitions && event.competitions[0];
         var teams = comp && comp.competitors;
-        return new Date(event.date).getTime() > now && comp && !(comp.status && comp.status.type && comp.status.type.completed) &&
-          teams && teams.some(function(c) { return c.team && String(c.team.id) === '359'; }) &&
+        return new Date(event && event.date).getTime() > Date.now() && comp && !(comp.status && comp.status.type && comp.status.type.completed) &&
+          Array.isArray(teams) && teams.some(function(c) { return c.team && String(c.team.id) === '359'; }) &&
           teams.some(function(c) { return c.homeAway === 'home' && c.team; }) &&
           teams.some(function(c) { return c.homeAway === 'away' && c.team; });
       }).sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+    }
+
+    async function loadCompetitions() {
+      var box = document.getElementById('arsenalCompetitions');
+      var results = await Promise.all(arsenalLeagues.map(function(league) { return getFixtures(league[0]); }));
+      box.replaceChildren();
+      document.getElementById('compHeading').textContent = 'Competitions';
+      arsenalLeagues.forEach(function(league, i) {
+        var events = results[i];
+        var next = upcomingFixtures(events)[0];
+        // The Shield is only relevant here when Arsenal have an upcoming fixture.
+        if (league[0] === 'eng.charity' && !next) return;
+        var row = document.createElement('div');
+        row.className = 'comp';
+        var title = document.createElement('strong');
+        title.textContent = league[1];
+        row.appendChild(title);
+        var detail = events === null ? 'Temporarily unavailable' : 'No upcoming fixture listed';
+        if (next) {
+          var teams = next.competitions[0].competitors;
+          var arsenal = teams.find(function(c) { return String(c.team.id) === '359'; });
+          var opponent = teams.find(function(c) { return String(c.team.id) !== '359'; }).team;
+          var parts = [];
+          if (league[0] !== 'eng.1' && next.seasonType && next.seasonType.name) parts.push(next.seasonType.name);
+          parts.push((opponent.shortDisplayName || opponent.displayName) + (arsenal.homeAway === 'home' ? ' (H)' : ' (A)'));
+          parts.push(new Date(next.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+          detail = parts.join(' · ');
+        }
+        row.appendChild(document.createTextNode(detail));
+        box.appendChild(row);
+      });
+      if (results.some(function(events, i) { return events === null && arsenalLeagues[i][0] !== 'eng.charity'; })) {
+        var retry = document.createElement('button');
+        retry.type = 'button';
+        retry.className = 'text-btn';
+        retry.textContent = 'Retry competitions';
+        retry.addEventListener('click', loadCompetitions);
+        box.appendChild(retry);
+      }
+    }
+
+    async function loadNextMatch() {
+      var box = document.getElementById('arsenalNextMatch');
+      box.textContent = 'Loading the next match';
+      var results = await Promise.all(arsenalLeagues.map(function(league) { return getFixtures(league[0]); }));
+      var incomplete = results.some(function(events) { return events === null; });
+      var fixtures = upcomingFixtures(results.flatMap(function(events) { return events || []; }));
       box.replaceChildren();
       function line(text, className) {
         var p = document.createElement('p');
