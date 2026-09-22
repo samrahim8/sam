@@ -537,6 +537,32 @@
       .panel, .panel-body, .plus, .montage img { transition: none !important; }
       .audio-toggle.playing .bars span { animation: none; }
     }
+
+    /* Personal Effects collection */
+    #arsenal .panel-body {padding-left:0;padding-top:1.5rem;}
+    .collection-row {display:grid;grid-template-columns:8rem minmax(0,1fr);gap:1.5rem;padding-block:2rem;border-bottom:1px solid var(--line);}
+    .collection-row:last-child {border-bottom:0;padding-bottom:0;}
+    .collection-row h3 {font:500 .85rem/1.55 'Instrument Sans',sans-serif;color:var(--accent);padding-top:.25rem;}
+    .collection-row h4 {font:400 1.65rem/1.2 'Instrument Serif',serif;color:var(--ink);margin-bottom:.55rem;}
+    .entry-meta {display:block;font-size:.75rem;color:var(--soft);line-height:1.6;}
+    .football-collection .ars-intro {margin-top:.75rem;gap:1rem;}
+    .football-collection .ars-intro p {font-size:.95rem;}
+    .fixture-preview {padding-block:1.2rem;margin-top:.75rem;border-top:1px solid var(--line);}
+    .fixture-preview .entry-meta {margin-bottom:.35rem;}
+    .football-details {border-top:1px solid var(--line);}
+    .football-details summary {min-height:44px;padding-block:.7rem;font-size:.85rem;color:var(--accent);cursor:pointer;}
+    .football-details summary:focus-visible {outline:2px solid var(--accent);outline-offset:3px;}
+    .football-detail-body {padding-block:.75rem;}
+    .football-detail-body .table-wrap {margin-top:1rem;}
+    .collection-competitions {margin-top:1.5rem;}
+    .football-collection .table-foot {flex-wrap:wrap;}
+    @media(max-width:520px){.collection-row{grid-template-columns:1fr;gap:1rem;padding-block:1.65rem;}.collection-row h3 br{display:none}.collection-row h4{font-size:1.55rem}.football-collection .pl{font-size:.8rem;}}
+      .creator-list {list-style:none;margin:0;padding:0;}
+    .creator-list a {display:flex;align-items:center;min-height:44px;padding-block:.35rem;font:400 1.5rem/1.3 'Instrument Serif',serif;color:var(--ink);text-decoration:none;}
+    .creator-list a:hover {color:var(--accent);text-decoration:underline;text-underline-offset:4px;}
+      .collection-intro {font-size:.95rem;line-height:1.65;color:var(--soft);margin-bottom:.5rem;}
+      .current-list {list-style:none;margin:0;padding:0;font-size:.95rem;line-height:1.65;color:var(--ink);}
+    .current-list li + li {margin-top:.8rem;}
   </style>
   <link rel="stylesheet" href="/assets/printing-press.css">
   <script defer src="/assets/printing-press.js"></script>
@@ -627,41 +653,65 @@
         <div class="panel" id="p-arsenal">
           <div class="panel-inner">
             <div class="panel-body">
-              <h3 class="ars-label">North London Forever</h3>
+              <p class="collection-intro">What I’m up to and a few things I like.</p>
+              <section class="collection-row" aria-labelledby="currently-heading">
+                <h3 id="currently-heading">Currently</h3>
+                <ul class="current-list">
+                  <li>Finding a rhythm with a newborn.</li>
+                  <li>Perfecting a thin, chewy homemade tortilla for breakfast burritos.</li>
+                  <li>Developing my first newspaper product.</li>
+                </ul>
+              </section>
+              <section class="collection-row" aria-labelledby="businesses-heading">
+                <h3 id="businesses-heading">Businesses &amp; Products</h3>
+                <ul class="creator-list">
+                  <li><a href="https://www.newspaperclub.com/" target="_blank" rel="noopener">Newspaper Club</a></li>
+                  <li><a href="https://ugmonk.com/products/discbound-analog" target="_blank" rel="noopener">Ugmonk Discbound Analog</a></li>
+                  <li><a href="https://us.mustardmade.com/collections/mustard-made-lockers" target="_blank" rel="noopener">Mustard Made</a></li>
+                </ul>
+              </section>
+              <section class="collection-row" aria-labelledby="reading-heading">
+                <h3 id="reading-heading">Watching</h3>
+                <ul class="creator-list">
+                    <li><a href="https://www.youtube.com/@JoshuaWeissman" target="_blank" rel="noopener">Joshua Weissman</a></li>
+                    <li><a href="https://www.youtube.com/@marcusmilione1" target="_blank" rel="noopener">Marcus Milione</a></li>
+                    <li><a href="https://www.youtube.com/@orenmeetsworld" target="_blank" rel="noopener">Orenmeetsworld</a></li>
+                </ul>
+              </section>
+              <section class="collection-row" aria-labelledby="football-heading">
+                <h3 id="football-heading">Arsenal</h3>
+                <div class="collection-entries football-collection">
+                  <h4>North London Forever</h4>
               <div class="ars-intro">
-                <p>Arsenal since '95. <span id="arsenalSeasonNote">Live table below.</span></p>
+                <p>Arsenal since '95. </p>
                 <button class="audio-toggle" id="audioToggle" type="button" onclick="toggleAudio()">
                   <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
                   <span class="audio-text">Play</span>
                 </button>
               </div>
               <audio id="arsenalAudio" preload="none" src="arsenal-audio.mp3"></audio>
-
-              <div class="ars-grid">
-                <div>
-                  <p class="ars-label" id="plHeading">Premier League</p>
-                  <div class="table-wrap">
-                    <table class="pl">
+                  <div class="fixture-preview">
+                    <p class="entry-meta">Next match</p>
+                    <div id="arsenalNextMatch"><p class="loading">Loading the next match</p></div>
+                  </div>
+                  <details class="football-details">
+                    <summary>Table &amp; competitions</summary>
+                    <div class="football-detail-body">
+                      <p class="ars-label" id="plHeading">Premier League</p>
+                      <p id="arsenalSeasonNote" class="entry-meta">Live table below.</p>
+                      <div class="table-wrap">                    <table class="pl">
                       <thead><tr><th>#</th><th>Club</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr></thead>
                       <tbody id="plBody"><tr><td colspan="7" class="loading">Loading the table</td></tr></tbody>
-                    </table>
-                  </div>
+                    </table></div>
                   <div class="table-foot">
                     <button class="text-btn" id="tableToggle" type="button" onclick="toggleTable()">Full table</button>
                     <span id="arsenalUpdated"></span>
                   </div>
+                      <div class="collection-competitions"><p class="ars-label" id="compHeading">Competitions</p><div id="arsenalCompetitions"><p class="loading">Loading</p></div></div>
+                    </div>
+                  </details>
                 </div>
-                <div class="ars-side">
-                  <div>
-                    <p class="ars-label" id="compHeading">Competitions</p>
-                    <div id="arsenalCompetitions"><p class="loading">Loading</p></div>
-                  </div>
-                  <div>
-                    <p class="ars-label">Next match</p>
-                    <div id="arsenalNextMatch"><p class="loading">Loading</p></div>
-                  </div>
-                </div>
-              </div>
+              </section>
             </div>
           </div>
         </div>
