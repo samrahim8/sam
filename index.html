@@ -299,6 +299,17 @@
 
     .role .more { margin-top: 0.4rem; }
 
+    .project-link {
+      color: var(--ink);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--faint);
+    }
+
+    .project-link:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
     .montage {
       position: relative;
       width: 150px;
@@ -585,13 +596,21 @@
     <div class="rule" role="presentation"></div>
 
     <ul class="list">
-      <li class="item" id="next">
-        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-next"><span class="plus" aria-hidden="true"></span>What's Next</button></h2>
-        <div class="panel" id="p-next">
+      <li class="item open" id="projects">
+        <h2><button class="trigger" type="button" aria-expanded="true" aria-controls="p-projects"><span class="plus" aria-hidden="true"></span>Current Projects</button></h2>
+        <div class="panel" id="p-projects">
           <div class="panel-inner">
             <div class="panel-body">
-              <p>Open to a full&#8209;time role, or embedded part&#8209;time. Taking on independent projects in the meantime.</p>
-              <a class="more" href="/next">What I'm looking for <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <div class="roles">
+                <div class="role">
+                  <a class="project-link" href="https://playperformancereview.com" target="_blank" rel="noopener">The Performance Review</a>
+                  <p class="role-desc">A monthly newspaper of business games and puzzles.</p>
+                </div>
+                <div class="role">
+                  <a class="project-link" href="https://playextratimes.com" target="_blank" rel="noopener">The Extra Times</a>
+                  <p class="role-desc">A newspaper of football games, puzzles and challenges.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
