@@ -550,7 +550,7 @@
     }
 
     /* Personal Effects collection */
-    #arsenal .panel-body {padding-left:0;padding-top:1.5rem;}
+    #personal-effects .panel-body {padding-left:0;padding-top:1.5rem;}
     .collection-row {display:grid;grid-template-columns:8rem minmax(0,1fr);gap:1.5rem;padding-block:2rem;border-bottom:1px solid var(--line);}
     .collection-row:last-child {border-bottom:0;padding-bottom:0;}
     .collection-row h3 {font:500 .85rem/1.55 'Instrument Sans',sans-serif;color:var(--accent);padding-top:.25rem;}
@@ -681,9 +681,9 @@
         </div>
       </li>
 
-      <li class="item" id="arsenal">
-        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-arsenal"><span class="plus" aria-hidden="true"></span>Personal Effects</button></h2>
-        <div class="panel" id="p-arsenal">
+      <li class="item" id="personal-effects">
+        <h2><button class="trigger" type="button" aria-expanded="false" aria-controls="p-personal-effects"><span class="plus" aria-hidden="true"></span>Personal Effects</button></h2>
+        <div class="panel" id="p-personal-effects">
           <div class="panel-inner">
             <div class="panel-body">
               <p class="collection-intro">What I’m up to and a few things I like.</p>
@@ -836,7 +836,7 @@
       item.querySelector('.trigger').setAttribute('aria-expanded', String(open));
       if (open && openers[item.id]) { openers[item.id](); openers[item.id] = null; }
       if (item.id === 'work') runMontage(open);
-      if (item.id === 'arsenal' && !open) stopAudio();
+      if (item.id === 'personal-effects' && !open) stopAudio();
       if (updateHash) {
         if (open) history.replaceState(null, '', '#' + item.id);
         else if (location.hash === '#' + item.id) history.replaceState(null, '', location.pathname);
@@ -1054,7 +1054,7 @@
       box.appendChild(link);
     }
 
-    openers.arsenal = function() { loadTable(); loadCompetitions(); loadNextMatch(); };
+    openers['personal-effects'] = function() { loadTable(); loadCompetitions(); loadNextMatch(); };
 
     function toggleAudio() {
       var audio = document.getElementById('arsenalAudio');
@@ -1101,7 +1101,9 @@
       document.getElementById('arsVideoEl').pause();
     });
 
-    // Open a section straight from the URL, e.g. samrahim.com/#arsenal
+    // Open a section straight from the URL, e.g. samrahim.com/#personal-effects
+    // (old #arsenal links still land on it)
+    if (location.hash === '#arsenal') history.replaceState(null, '', '#personal-effects');
     if (location.hash) {
       var target = document.getElementById(location.hash.slice(1));
       if (target && target.classList.contains('item')) setOpen(target, true, false);
