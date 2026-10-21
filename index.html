@@ -574,6 +574,10 @@
       .collection-intro {font-size:.95rem;line-height:1.65;color:var(--soft);margin-bottom:.5rem;}
       .current-list {list-style:none;margin:0;padding:0;font-size:.95rem;line-height:1.65;color:var(--ink);}
     .current-list li + li {margin-top:.8rem;}
+    .current-list.numbered li {display:grid;grid-template-columns:1.5rem minmax(0,1fr);}
+    .current-list .n {color:var(--accent);font-variant-numeric:tabular-nums;}
+    .list-note {grid-column:2;margin-top:1rem;font-size:.85rem;line-height:1.6;color:var(--soft);}
+    @media(max-width:520px){.list-note{grid-column:1;}}
   </style>
   <link rel="stylesheet" href="/assets/printing-press.css">
   <script defer src="/assets/printing-press.js"></script>
@@ -685,10 +689,17 @@
               <p class="collection-intro">What I’m up to and a few things I like.</p>
               <section class="collection-row" aria-labelledby="currently-heading">
                 <h3 id="currently-heading">Currently</h3>
-                <ul class="current-list">
-                  <li>Finding a rhythm with a newborn.</li>
-                  <li>Trying to make money and take care of my family. That&rsquo;s about it.</li>
-                </ul>
+                <ol class="current-list numbered">
+                  <li><span class="n" aria-hidden="true">1</span>Finding a rhythm with a newborn.</li>
+                </ol>
+              </section>
+              <section class="collection-row" aria-labelledby="next-heading">
+                <h3 id="next-heading">Next on the list</h3>
+                <ol class="current-list numbered" start="2">
+                  <li><span class="n" aria-hidden="true">2</span>Getting furniture and making the patio a great outdoor space.</li>
+                  <li><span class="n" aria-hidden="true">3</span>Making the perfect thin, chewy homemade tortilla.</li>
+                </ol>
+                <p class="list-note">#1 decides if I get to either.</p>
               </section>
               <section class="collection-row" aria-labelledby="businesses-heading">
                 <h3 id="businesses-heading">Businesses &amp; Products</h3>
