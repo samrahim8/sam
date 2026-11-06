@@ -47,14 +47,14 @@ The build enforces the starred ones; the rest are on you.
 - When Sam gives you wording, use it word for word. Fix only what he names.
 - Don't rewrite copy Sam didn't ask you to change, even on a "polish it" request.
 - Don't add links, projects or sections he didn't ask for. He curates this site tightly; a project existing is not a reason to list it here.
-- `+` is a mark, not a word. It only appears where it already is (the Provisions line and the Switchyards title). Use "and" in new copy.
+- `+` is a mark, not a word. It only appears where it already is (the Consulting line and the Switchyards title). Use "and" in new copy.
 - Plain, short, spoken sentences. No buzzwords, no narrator voice, no "Not X. Not Y. But Z." patterns.
 
 ## Settled decisions (don't re-propose)
 
 - Every section starts closed.
 - Current Projects is only The Extra Times, then Newspaper Department (The Performance Review was removed 2026-11-06).
-- The Provisions line "I work with founders + operators across tech + soccer." is settled copy.
+- The consulting entry (was "Provisions") reads "I work with founders + operators across industries, from GTM to standing up operations." Sam's wording, 2026-11-06.
 - Personal Effects items are real, honest things Sam is doing. Don't pad the lists or invent items. Ask him.
 - Favicon is "SR" in Bungee, chalk on ink. Rejected: a newspaper glyph, a cream +, his portrait, Instrument Serif initials.
 
