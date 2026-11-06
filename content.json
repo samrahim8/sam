@@ -4,12 +4,6 @@
     "description": "I help businesses grow and build things you can hold, visit, or experience."
   },
   "bio": "I help businesses grow and build things you can hold, visit, or experience. I spent the last decade working for high-growth startups like [Street FC](https://instagram.com/streetfc), [Switchyards](https://instagram.com/switchyards) and [Guild](https://guild.com).",
-  "featureImage": {
-    "src": "/images/extra-times-spread.webp",
-    "alt": "Two people playing The Extra Times at a wooden table, one pointing at Career Trail while the other writes in pencil next to a pint.",
-    "width": 1400,
-    "height": 789
-  },
   "currentProjects": [
     {
       "name": "The Extra Times",
