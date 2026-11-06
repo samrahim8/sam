@@ -6,11 +6,6 @@
   "bio": "I help businesses grow and build things you can hold, visit, or experience. I spent the last decade working for high-growth startups like [Street FC](https://instagram.com/streetfc), [Switchyards](https://instagram.com/switchyards) and [Guild](https://guild.com).",
   "currentProjects": [
     {
-      "name": "The Performance Review",
-      "url": "https://playperformancereview.com",
-      "description": "A monthly newspaper of business games and puzzles."
-    },
-    {
       "name": "The Extra Times",
       "url": "https://playextratimes.com",
       "description": "A newspaper of football games, puzzles and challenges."
@@ -27,14 +22,20 @@
       "years": "2026–now",
       "title": "Founder",
       "description": "I publish game newspapers and make them for brands.",
-      "link": { "label": "See the papers", "url": "https://newspaperdepartment.com" }
+      "link": {
+        "label": "See the papers",
+        "url": "https://newspaperdepartment.com"
+      }
     },
     {
       "company": "Provisions",
       "years": "2025–now",
       "title": "Independent Consultant",
       "description": "I work with founders + operators across tech + soccer.",
-      "link": { "label": "See the work", "url": "https://provisions.work" }
+      "link": {
+        "label": "See the work",
+        "url": "https://provisions.work"
+      }
     },
     {
       "company": "Switchyards",
@@ -48,11 +49,26 @@
       "title": "Head of Operations",
       "description": "Venture-backed global football brand. Grew it to millions in revenue and worked with Nike, Adidas, and EA Sports. Fundamentally changed the way soccer looks in the United States.",
       "gallery": [
-        { "src": "streetfc-secreto.gif", "alt": "Secreto Maximus" },
-        { "src": "streetfc-miami.gif", "alt": "Area Futbol 305 Miami" },
-        { "src": "streetfc-rbl-drop.gif", "alt": "Red Bull Leipzig kit drop" },
-        { "src": "streetfc-philly.gif", "alt": "EA FC Philadelphia" },
-        { "src": "streetfc-rbl-kit.gif", "alt": "RBL kit drop" }
+        {
+          "src": "streetfc-secreto.gif",
+          "alt": "Secreto Maximus"
+        },
+        {
+          "src": "streetfc-miami.gif",
+          "alt": "Area Futbol 305 Miami"
+        },
+        {
+          "src": "streetfc-rbl-drop.gif",
+          "alt": "Red Bull Leipzig kit drop"
+        },
+        {
+          "src": "streetfc-philly.gif",
+          "alt": "EA FC Philadelphia"
+        },
+        {
+          "src": "streetfc-rbl-kit.gif",
+          "alt": "RBL kit drop"
+        }
       ]
     },
     {
@@ -86,14 +102,32 @@
     ],
     "nextNote": "#1 decides if I get to either.",
     "businessesAndProducts": [
-      { "name": "Newspaper Club", "url": "https://www.newspaperclub.com/" },
-      { "name": "Ugmonk Discbound Analog", "url": "https://ugmonk.com/products/discbound-analog" },
-      { "name": "Mustard Made", "url": "https://us.mustardmade.com/collections/mustard-made-lockers" }
+      {
+        "name": "Newspaper Club",
+        "url": "https://www.newspaperclub.com/"
+      },
+      {
+        "name": "Ugmonk Discbound Analog",
+        "url": "https://ugmonk.com/products/discbound-analog"
+      },
+      {
+        "name": "Mustard Made",
+        "url": "https://us.mustardmade.com/collections/mustard-made-lockers"
+      }
     ],
     "watching": [
-      { "name": "Joshua Weissman", "url": "https://www.youtube.com/@JoshuaWeissman" },
-      { "name": "Marcus Milione", "url": "https://www.youtube.com/@marcusmilione1" },
-      { "name": "Orenmeetsworld", "url": "https://www.youtube.com/@orenmeetsworld" }
+      {
+        "name": "Joshua Weissman",
+        "url": "https://www.youtube.com/@JoshuaWeissman"
+      },
+      {
+        "name": "Marcus Milione",
+        "url": "https://www.youtube.com/@marcusmilione1"
+      },
+      {
+        "name": "Orenmeetsworld",
+        "url": "https://www.youtube.com/@orenmeetsworld"
+      }
     ]
   },
   "contact": {

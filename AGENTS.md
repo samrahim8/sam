@@ -53,7 +53,7 @@ The build enforces the starred ones; the rest are on you.
 ## Settled decisions (don't re-propose)
 
 - Every section starts closed.
-- Current Projects order: The Performance Review, The Extra Times, Newspaper Department (last).
+- Current Projects is only The Extra Times, then Newspaper Department (The Performance Review was removed 2026-11-06).
 - The Provisions line "I work with founders + operators across tech + soccer." is settled copy.
 - Personal Effects items are real, honest things Sam is doing. Don't pad the lists or invent items. Ask him.
 - Favicon is "SR" in Bungee, chalk on ink. Rejected: a newspaper glyph, a cream +, his portrait, Instrument Serif initials.
