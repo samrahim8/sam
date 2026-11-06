@@ -54,7 +54,7 @@ The build enforces the starred ones; the rest are on you.
 
 - Every section starts closed.
 - Current Projects is only The Extra Times, then Newspaper Department (The Performance Review was removed 2026-11-06).
-- The consulting entry (was "Provisions") reads "I work with founders + operators across industries, from GTM to standing up operations." Sam's wording, 2026-11-06.
+- The consulting entry (was "Provisions") reads "I work with founders + operators on whatever is standing between them and more revenue." Sam picked it 2026-11-06; settled.
 - Personal Effects items are real, honest things Sam is doing. Don't pad the lists or invent items. Ask him.
 - Favicon is "SR" in Bungee, chalk on ink. Rejected: a newspaper glyph, a cream +, his portrait, Instrument Serif initials.
 
