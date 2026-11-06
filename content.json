@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "Sam Rahim",
+    "description": "I help businesses grow and build things you can hold, visit, or experience."
+  },
+  "bio": "I help businesses grow and build things you can hold, visit, or experience. I spent the last decade working for high-growth startups like [Guild](https://guild.com), [Switchyards](https://instagram.com/switchyards) and [Street FC](https://instagram.com/streetfc).",
+  "currentProjects": [
+    {
+      "name": "The Performance Review",
+      "url": "https://playperformancereview.com",
+      "description": "A monthly newspaper of business games and puzzles."
+    },
+    {
+      "name": "The Extra Times",
+      "url": "https://playextratimes.com",
+      "description": "A newspaper of football games, puzzles and challenges."
+    },
+    {
+      "name": "Newspaper Department",
+      "url": "https://newspaperdepartment.com",
+      "description": "Newspapers people play, made for brands."
+    }
+  ],
+  "work": [
+    {
+      "company": "Newspaper Department",
+      "years": "2026–now",
+      "title": "Founder",
+      "description": "I publish game newspapers and make them for brands.",
+      "link": { "label": "See the papers", "url": "https://newspaperdepartment.com" }
+    },
+    {
+      "company": "Provisions",
+      "years": "2025–now",
+      "title": "Independent Consultant",
+      "description": "I work with founders + operators across tech + soccer.",
+      "link": { "label": "See the work", "url": "https://provisions.work" }
+    },
+    {
+      "company": "Switchyards",
+      "years": "2025",
+      "title": "Go To Market + Special Projects",
+      "description": "Managed our influencer and creator program, field marketing, and growth projects. Helped open and sell out 8 clubs."
+    },
+    {
+      "company": "Street FC",
+      "years": "2021–2025",
+      "title": "Head of Operations",
+      "description": "Venture-backed global football brand. Grew it to millions in revenue and worked with Nike, Adidas, and EA Sports. Fundamentally changed the way soccer looks in the United States.",
+      "gallery": [
+        { "src": "streetfc-secreto.gif", "alt": "Secreto Maximus" },
+        { "src": "streetfc-miami.gif", "alt": "Area Futbol 305 Miami" },
+        { "src": "streetfc-rbl-drop.gif", "alt": "Red Bull Leipzig kit drop" },
+        { "src": "streetfc-philly.gif", "alt": "EA FC Philadelphia" },
+        { "src": "streetfc-rbl-kit.gif", "alt": "RBL kit drop" }
+      ]
+    },
+    {
+      "company": "Guild Education",
+      "years": "2021–2022",
+      "title": "Associate, Product Operations",
+      "description": "Guild helps working adults access free education. I worked on the product team, across our data exchange product and internal product operations."
+    },
+    {
+      "company": "The Walt Disney Company",
+      "years": "2019–2021",
+      "title": "Operations Manager",
+      "description": "Helped develop and run luxury group travel experiences around the world, from intern to full-time. Also where I met my wife."
+    },
+    {
+      "company": "Lokal Travel",
+      "years": "2017–2019",
+      "title": "The Generalist Intern",
+      "description": "Lokal Travel helps travelers find locally-run tour operators, keeping tourism dollars in the destination."
+    }
+  ],
+  "education": "University of California, Irvine",
+  "personalEffects": {
+    "intro": "What I’m up to and a few things I like.",
+    "currently": [
+      "Finding a rhythm with a newborn."
+    ],
+    "next": [
+      "Making the patio a great outdoor space.",
+      "Perfecting a thin, chewy homemade tortilla for breakfast burritos."
+    ],
+    "nextNote": "#1 decides if I get to either.",
+    "businessesAndProducts": [
+      { "name": "Newspaper Club", "url": "https://www.newspaperclub.com/" },
+      { "name": "Ugmonk Discbound Analog", "url": "https://ugmonk.com/products/discbound-analog" },
+      { "name": "Mustard Made", "url": "https://us.mustardmade.com/collections/mustard-made-lockers" }
+    ],
+    "watching": [
+      { "name": "Joshua Weissman", "url": "https://www.youtube.com/@JoshuaWeissman" },
+      { "name": "Marcus Milione", "url": "https://www.youtube.com/@marcusmilione1" },
+      { "name": "Orenmeetsworld", "url": "https://www.youtube.com/@orenmeetsworld" }
+    ]
+  },
+  "contact": {
+    "email": "sam@samrahim.com",
+    "linkedin": "https://www.linkedin.com/in/sam-rahim/"
+  }
+}

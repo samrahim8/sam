@@ -1,4 +1,7 @@
 {
+  "buildCommand": "node build.mjs",
+  "installCommand": "",
+  "outputDirectory": ".",
   "cleanUrls": true,
   "redirects": [
     { "source": "/v2", "destination": "/", "permanent": false },
