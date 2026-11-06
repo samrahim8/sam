@@ -62,7 +62,7 @@ The build enforces the starred ones; the rest are on you.
 
 Layout, CSS and JS live in `index.html`. Everything between `<!-- build:NAME -->` and `<!-- /build:NAME -->` markers is generated from `content.json` and gets overwritten on every build. Edit outside the markers, or change the matching renderer in `build.mjs`.
 
-- Palette "Pitch chalk": ground `#E6ECE3`, ink `#16261C`, soft `#4C5A4A`, accent `#2E6B45`; dark mode `#0F1A13` / `#E4EBE1` / `#7FB08E`.
+- Palette "Olive" (since 2026-11-06, replaced "Pitch chalk"): ground `#D3D0A9`, ink `#1E2114`, soft `#45482F`, faint `#8C8A68`, accent `#3F4C1C`; dark mode ground `#15160E`, ink `#E7E6D6`, soft `#AEAD95`, accent `#AEB86E`. Tokens are the CSS variables at the top of `index.html`.
 - Fonts: Instrument Serif (headings) and Instrument Sans (body), from Google Fonts.
 - Phone first. Check 390px wide before shipping a layout change.
 - Section ids are deep-link targets: `#projects`, `#work`, `#personal-effects` (old `#arsenal` links are rewritten to `#personal-effects`).
