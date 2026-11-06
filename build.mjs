@@ -7,7 +7,7 @@
 // Vercel runs `node build.mjs` on every deploy (vercel.json), so a copy rule
 // failure stops the deploy and the live site stays on the last good version.
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -50,6 +50,12 @@ let galleries = 0;
   if (w.gallery) { galleries++; w.gallery.forEach((g, j) => { lint(g.src, `work[${i}].gallery[${j}].src`); lint(g.alt, `work[${i}].gallery[${j}].alt`); }); }
 });
 if (galleries > 1) problems.push('work: only one entry can have a gallery (the page has one montage slot).');
+if (c.featureImage) {
+  const f = c.featureImage;
+  lint(f.src, 'featureImage.src'); lint(f.alt, 'featureImage.alt');
+  if (!(f.width > 0 && f.height > 0)) problems.push('featureImage: needs width and height in pixels');
+  else if (!existsSync(join(root, f.src.replace(/^\//, '')))) problems.push(`featureImage.src: ${f.src} not found in the repo`);
+}
 lint(c.education, 'education');
 const pe = c.personalEffects || {};
 lint(pe.intro, 'personalEffects.intro');
@@ -87,6 +93,12 @@ const regions = {
   ].join('\n' + pad(2)),
 
   bio: () => `<p class="bio">${inline(c.bio)}</p>`,
+
+  feature: () => {
+    const f = c.featureImage;
+    if (!f) return '';
+    return `<figure class="feature"><img src="${esc(f.src)}" alt="${esc(f.alt)}" width="${f.width}" height="${f.height}" decoding="async" fetchpriority="high"></figure>`;
+  },
 
   projects: () => {
     const rows = c.currentProjects.map((p) => [

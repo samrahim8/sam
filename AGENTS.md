@@ -23,6 +23,7 @@ All homepage copy lives in **`content.json`**. Edit that file, never the copy in
 |---|---|
 | `meta.title`, `meta.description` | Browser tab title, search and link-preview text |
 | `bio` | The paragraph under the name. Links are written `[text](https://url)` |
+| `featureImage` | Full-width photo under the bio: `src` (file in `images/`), `alt`, `width`, `height` in pixels. Remove the field to hide it. Save new photos as WebP about 1400px wide (`cwebp -q 80 -resize 1400 0 in.png -o images/name.webp`) |
 | `currentProjects[]` | "Current Projects" section, in order: `name`, `url`, `description` |
 | `work[]` | "Work" section, newest first: `company`, `years` (use an en dash: `2021–2025`, `2026–now`), `title`, `description`, optional `link` `{label, url}`, optional `gallery` (only Street FC has one; the page has one gallery slot) |
 | `education` | Line under Work |
